@@ -3,11 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import AuthForm from '../../components/common/AuthForm';
 import { changeInput, initializeForm } from '../../modules/common/auth';
 import AuthTemplate from '../../components/common/AuthTemplate';
+import { withRouter } from 'react-router-dom';
 
 const RegisterForm = () => {
   const dispatch = useDispatch();
-  const { form } = useSelector(({ auth }) => ({
+  const { form, auth, authError } = useSelector(({ auth }) => ({
     form: auth.register,
+    auth: auth.auth,
+    authError: auth.authError,
   }));
 
   const onChange = (e) => {
@@ -42,4 +45,4 @@ const RegisterForm = () => {
   );
 };
 
-export default RegisterForm;
+export default withRouter(RegisterForm);

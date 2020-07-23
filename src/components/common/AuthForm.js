@@ -40,12 +40,19 @@ const Footer = styled.div`
   }
 `;
 
+const ErrorMessage = styled.div`
+  color: red;
+  text-align: center;
+  font-size: 0.875rem;
+  margin-top: 1rem;
+`;
+
 const typeMap = {
   login: '로그인',
   register: '회원가입',
 };
 
-const AuthForm = ({ type, form, onChange, onSubmit }) => {
+const AuthForm = ({ type, form, onChange, onSubmit, error }) => {
   const text = typeMap[type];
   return (
     <AuthFormBlock>
@@ -107,6 +114,7 @@ const AuthForm = ({ type, form, onChange, onSubmit }) => {
             )}
           </div>
         </Footer>
+        {error && <ErrorMessage>{error}</ErrorMessage>}
         <div style={{ textAlign: 'center' }}>
           <Button>{text}</Button>
         </div>
