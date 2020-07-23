@@ -8,12 +8,15 @@ import { takeLatest } from 'redux-saga/effects';
 
 const CHANGE_INPUT = 'auth/CHANGE_INPUT';
 const INITIALIZE_FORM = 'auth/INITIALIZE_FORM';
+const TEMP_SET_USER = 'auth/TEMP_SET_USER';
+const LOGOUT_SUCCESS = 'auth/LOGOUT_SUCCESS';
+const LOGOUT_FAILURE = 'auth/LOGOUT_FAILURE';
 
-const [REGISTER, REGISTER_SUCCESS, REGISTER_FAILURE] = createRequestActionTypes(
-  'auth/REGISTER',
-);
 const [LOGIN, LOGIN_SUCCESS, LOGIN_FAILURE] = createRequestActionTypes(
   'auth/LOGIN',
+);
+const [REGISTER, REGISTER_SUCCESS, REGISTER_FAILURE] = createRequestActionTypes(
+  'auth/REGISTER',
 );
 
 export const changeInput = createAction(
@@ -28,26 +31,28 @@ export const initializeForm = createAction(
   INITIALIZE_FORM,
   (initForm) => initForm,
 );
+export const tempSetUser = createAction(TEMP_SET_USER, (user) => ({
+  user,
+}));
 
-export const register = createAction(
-  REGISTER,
-  ({ id, password, name, phone, email }) => ({
-    id,
-    name,
-    password,
-    phone,
-    email,
-  }),
-);
+export const logoutSuccess = createAction(LOGOUT_SUCCESS);
+export const logoutFailure = createAction(LOGOUT_FAILURE);
 
 export const login = createAction(LOGIN, ({ id, password }) => ({
   id,
   password,
 }));
+export const register = createAction(REGISTER, ({ id, password }) => ({
+  id,
+  password,
+}));
 
 const loginSaga = createRequestSaga(LOGIN, authAPI.login);
+const registerSaga = createRequestSaga(REGISTER, authAPI.singUp);
+
 export function* authSaga() {
   yield takeLatest(LOGIN, loginSaga);
+  yield takeLatest(REGISTER, registerSaga);
 }
 
 const initialState = {
@@ -58,13 +63,11 @@ const initialState = {
   register: {
     id: '',
     password: '',
+    name: '',
     phone: '',
     email: '',
   },
-  auth: {
-    name: '',
-    jwt: '',
-  },
+  user: null,
   authError: null,
 };
 
@@ -78,12 +81,33 @@ const auth = handleActions(
       ...state,
       [initForm]: initialState[initForm],
     }),
-    [LOGIN_SUCCESS]: (state, { payload: { name, jwt } }) => ({
+    [TEMP_SET_USER]: (state, { payload: { user } }) => ({
       ...state,
-      auth: { name, jwt },
+      user,
+    }),
+    [LOGIN_SUCCESS]: (state, { payload: { user } }) => ({
+      ...state,
+      user,
       authError: null,
     }),
     [LOGIN_FAILURE]: (state, { payload: error }) => ({
+      ...state,
+      authError: error,
+    }),
+    [LOGOUT_SUCCESS]: (state) => ({
+      ...state,
+      user: null,
+      authError: null,
+    }),
+    [LOGOUT_FAILURE]: (state, { payload: error }) => ({
+      ...state,
+      authError: error,
+    }),
+    [REGISTER_SUCCESS]: (state, { payload: { user } }) => ({
+      ...state,
+      authError: null,
+    }),
+    [REGISTER_FAILURE]: (state, { payload: error }) => ({
       ...state,
       authError: error,
     }),

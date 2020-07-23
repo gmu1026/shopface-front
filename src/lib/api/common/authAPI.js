@@ -1,4 +1,4 @@
-import Auth from '@aws-amplify/auth';
+import { Auth } from '@aws-amplify/auth';
 
 export const login = async ({ id, password }) => {
   try {
@@ -6,10 +6,37 @@ export const login = async ({ id, password }) => {
     const name = user.signInUserSession.idToken.payload.email;
     const jwt = user.signInUserSession.idToken.jwtToken;
 
-    return { data: { name, jwt } };
+    return { data: { user: { name, jwt } } };
   } catch (error) {
     console.log(error.message);
 
+    throw new Error(error.message);
+  }
+};
+
+//TODO promise 작동 ??
+export const logout = () => {
+  try {
+    Auth.signOut({ global: true });
+    localStorage.removeItem('user');
+  } catch (error) {
+    console.log('error signing out: ', error);
+
+    throw new Error(error.message);
+  }
+};
+
+export const singUp = async ({ id, password }) => {
+  console.log(id + password);
+  try {
+    const user = await Auth.signUp({
+      username: id,
+      password: password,
+    });
+    console.log({ user });
+    return { data: { user } };
+  } catch (error) {
+    console.log('error signing up:', error);
     throw new Error(error.message);
   }
 };
