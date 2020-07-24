@@ -11,16 +11,14 @@ import rootReducer, { rootSaga } from './modules';
 import * as serviceWorker from './serviceWorker';
 import Amplify from 'aws-amplify';
 import config from './config';
-import { tempSetUser } from './modules/member/user';
 import createSagaMiddleware from 'redux-saga';
+import { tempSetUser } from './modules/common/auth';
 
 const sagaMiddleWare = createSagaMiddleware();
 const store = createStore(
   rootReducer,
   composeWithDevTools(applyMiddleware(sagaMiddleWare)),
 );
-
-sagaMiddleWare.run(rootSaga);
 
 Amplify.configure({
   Auth: {
