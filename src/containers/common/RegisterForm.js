@@ -1,16 +1,22 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import AuthForm from '../../components/common/AuthForm';
-import { changeInput, initializeForm } from '../../modules/common/auth';
+import {
+  changeInput,
+  initializeForm,
+  register,
+} from '../../modules/common/auth';
 import AuthTemplate from '../../components/common/AuthTemplate';
 import { withRouter } from 'react-router-dom';
 
-const RegisterForm = () => {
+const RegisterForm = ({ history }) => {
+  const [error, setError] = useState(null);
   const dispatch = useDispatch();
-  const { form, auth, authError } = useSelector(({ auth }) => ({
+  const { form, auth, authError, isRegister } = useSelector(({ auth }) => ({
     form: auth.register,
-    auth: auth.auth,
+    user: auth.user,
     authError: auth.authError,
+    isRegister: auth.isRegister,
   }));
 
   const onChange = (e) => {
@@ -26,12 +32,24 @@ const RegisterForm = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    //TODO 추후 작성
+    const { id, password } = form;
+    if ([id, password].includes('')) {
+      setError('빈칸을 모두 입력해주세요');
+      return;
+    }
+    dispatch(register({ id, password }));
+    history.push('/login');
   };
 
   useEffect(() => {
-    dispatch(initializeForm());
+    dispatch(initializeForm('register'));
   }, [dispatch]);
+
+  useEffect(() => {
+    if (isRegister) {
+      history.push('/login');
+    }
+  }, [history, isRegister]);
 
   return (
     <AuthTemplate>

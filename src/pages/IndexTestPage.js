@@ -1,19 +1,26 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Button from '../components/common/Button';
-import { logout } from '../modules/member/user';
+import { logout } from '../lib/api/common/authAPI';
+import { logoutSuccess, logoutFailure } from '../modules/common/auth';
 const IndexTestPage = () => {
   const dispatch = useDispatch();
-  const { user } = useSelector(({ user }) => ({
-    user: user.user,
+  const { user } = useSelector(({ auth }) => ({
+    user: auth.user,
+    authError: auth.authError,
   }));
 
-  const onLogout = () => {
+  const onLogout = ({ history }) => {
     try {
-      dispatch(logout());
-      localStorage.removeItem('user');
-    } catch (e) {
-      console.log(e);
+      logout();
+      dispatch(logoutSuccess());
+
+      if (user.authError === null) {
+        history.push('/login');
+      }
+    } catch (error) {
+      console.log(error);
+      dispatch(logoutFailure(error));
     }
   };
 
