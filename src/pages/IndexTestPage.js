@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Button from '../components/common/Button';
 import { logout } from '../lib/api/common/authAPI';
 import { logoutSuccess, logoutFailure } from '../modules/common/auth';
+import axios from 'axios';
+
 const IndexTestPage = () => {
   const dispatch = useDispatch();
   const { user } = useSelector(({ auth }) => ({
@@ -23,6 +25,19 @@ const IndexTestPage = () => {
       dispatch(logoutFailure(error));
     }
   };
+
+  useEffect(() => {
+    if (user !== null) {
+      axios
+        .get('https://iamchan.net/sample/1')
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+  }, [user]);
 
   return (
     <div>
