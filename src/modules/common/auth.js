@@ -22,7 +22,7 @@ const [REGISTER, REGISTER_SUCCESS, REGISTER_FAILURE] = createRequestActionTypes(
 export const changeInput = createAction(
   CHANGE_INPUT,
   ({ type, id, value }) => ({
-    type, //login, register
+    type,
     id,
     value,
   }),

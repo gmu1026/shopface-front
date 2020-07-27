@@ -13,6 +13,8 @@ import Amplify from 'aws-amplify';
 import config from './config';
 import createSagaMiddleware from 'redux-saga';
 import { tempSetUser } from './modules/common/auth';
+import './lib/styles/scss/_app.scss';
+import client from './lib/api/client';
 
 const sagaMiddleWare = createSagaMiddleware();
 const store = createStore(
@@ -36,6 +38,9 @@ function loadUser() {
     if (!user) return;
     const parseUser = JSON.parse(user);
     store.dispatch(tempSetUser(parseUser));
+
+    client.defaults.headers.common['Authorization'] =
+      'bearer ' + JSON.parse(user).jwt;
   } catch (e) {
     console.log('localstorage가 동작하지 않습니다.');
   }

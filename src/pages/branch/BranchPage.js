@@ -1,10 +1,14 @@
 import React from 'react';
-import BranchContainer from '../../containers/branch/BranchContainer';
+import { Route, withRouter } from 'react-router-dom';
+import BranchPostContainer from '../../containers/branch/BranchPostContainer';
+import BranchListContainer from '../../containers/branch/BranchListContainer';
+import postCode from '../../containers/branch/BranchPostContainer';
 
-const BranchPage = () => {
+const BranchPage = ({ match }) => {
   return (
     <div>
-      <BranchContainer></BranchContainer>
+      <Route path={match.url} component={BranchListContainer} exact />
+      <Route path={`${match.url}/post`} component={postCode} />
     </div>
   );
 };
