@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Button from '../components/common/Button';
-import { logout } from '../lib/api/common/authAPI';
+import { logout, getTest } from '../lib/api/common/authAPI';
 import { logoutSuccess, logoutFailure } from '../modules/common/auth';
-import axios from 'axios';
+import client from '../lib/api/client';
 
 const IndexTestPage = () => {
   const dispatch = useDispatch();
-  const { user } = useSelector(({ auth }) => ({
+  const { user, authError } = useSelector(({ auth }) => ({
     user: auth.user,
     authError: auth.authError,
   }));
@@ -26,25 +26,15 @@ const IndexTestPage = () => {
     }
   };
 
-  useEffect(() => {
-    if (user !== null) {
-      axios
-        .get('https://iamchan.net/sample/1')
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    }
-  }, [user]);
-
   return (
     <div>
       {user !== null ? (
         <div>
           <h3>안녕하세요 {user.name} 님</h3>
           <button onClick={onLogout}>로그아웃</button>
+          <div>
+            <Button to="/branch">지점</Button>
+          </div>
         </div>
       ) : (
         <div>

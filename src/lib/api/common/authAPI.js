@@ -14,7 +14,6 @@ export const login = async ({ id, password }) => {
   }
 };
 
-//TODO promise 작동 ??
 export const logout = () => {
   try {
     Auth.signOut({ global: true });
@@ -27,13 +26,12 @@ export const logout = () => {
 };
 
 export const singUp = async ({ id, password }) => {
-  console.log(id + password);
   try {
     const user = await Auth.signUp({
       username: id,
       password: password,
     });
-    console.log({ user });
+
     return { data: { user } };
   } catch (error) {
     console.log('error signing up:', error);
