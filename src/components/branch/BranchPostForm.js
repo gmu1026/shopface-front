@@ -1,7 +1,29 @@
 import React from 'react';
 import Button from '../common/Button';
+import styled from 'styled-components';
+import DaumPostcode from 'react-daum-postcode';
+import Modal from '../../../node_modules/react-bootstrap/esm/Modal';
 
-const branchPostForm = ({ postCode, onSubmit, onChange }) => {
+const ErrorMessage = styled.div`
+  color: red;
+  text-align: left;
+  font-size: 0.875rem;
+  margin-top: 1rem;
+  margin-left: 1rem;
+`;
+
+const branchPostForm = ({
+  postCode,
+  onSubmit,
+  onChange,
+  error,
+  handleComplete,
+  show,
+  closeModal,
+  openModal,
+  zoneCode,
+  address,
+}) => {
   return (
     <>
       <div className="content">
@@ -49,13 +71,19 @@ const branchPostForm = ({ postCode, onSubmit, onChange }) => {
                       우편 번호 :
                       <Button
                         style={{ margin: '10px' }}
-                        type="button"
-                        id="searchAddressButton"
                         className="btn btn-outline-primary"
-                        onClick={postCode}
+                        onClick={openModal}
                       >
                         우편번호 찾기
                       </Button>
+                      <Modal show={show} onHide={closeModal}>
+                        <Modal.Header closeButton>
+                          <Modal.Title>우편 번호 찾기</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                          <DaumPostcode onComplete={handleComplete} />
+                        </Modal.Body>
+                      </Modal>
                       <input
                         type="text"
                         id="zipCode"
@@ -63,6 +91,7 @@ const branchPostForm = ({ postCode, onSubmit, onChange }) => {
                         name="zipCode"
                         onChange={onChange}
                         readOnly
+                        value={zoneCode}
                       />
                       <br />
                       <div
@@ -79,6 +108,7 @@ const branchPostForm = ({ postCode, onSubmit, onChange }) => {
                         name="address"
                         onChange={onChange}
                         readOnly
+                        value={address}
                       />
                       <br />
                       <div
@@ -103,13 +133,8 @@ const branchPostForm = ({ postCode, onSubmit, onChange }) => {
                       ></div>
                       {/* ???? 확인 요망 */}
                     </div>
-                    <Button
-                      type="button"
-                      id="add_button"
-                      className="btn btn-outline-primary"
-                    >
-                      등록
-                    </Button>
+                    <ErrorMessage>{error}</ErrorMessage>
+                    <Button className="btn btn-outline-primary">등록</Button>
                     <Button
                       type="button"
                       className="btn btn-outline-primary"

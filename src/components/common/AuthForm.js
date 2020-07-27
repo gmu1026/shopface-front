@@ -42,9 +42,10 @@ const Footer = styled.div`
 
 const ErrorMessage = styled.div`
   color: red;
-  text-align: center;
+  text-align: left;
   font-size: 0.875rem;
   margin-top: 1rem;
+  margin-left: 1rem;
 `;
 
 const typeMap = {

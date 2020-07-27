@@ -1,10 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import BranchListForm from '../../components/branch/BranchListForm';
 import { getBranchList } from '../../modules/branch/branchList';
 
 const BranchListContainer = () => {
+  const [show, setShow] = useState(false);
+
+  const closeModal = () => setShow(false);
+  const openModal = () => setShow(true);
+
   const { branchs, branchError, loading, user } = useSelector(
     ({ branchList, loading, auth }) => ({
       branchs: branchList.branchs,
@@ -27,6 +32,9 @@ const BranchListContainer = () => {
         branchs={branchs}
         branchError={branchError}
         loadind={loading}
+        show={show}
+        closeModal={closeModal}
+        openModal={openModal}
       ></BranchListForm>
     </div>
   );

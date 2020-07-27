@@ -41,7 +41,7 @@ const LoginForm = ({ history }) => {
 
   useEffect(() => {
     if (authError !== null) {
-      console.log(authError);
+      setError(authError.code);
       return;
     }
   }, [authError]);
