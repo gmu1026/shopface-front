@@ -26,15 +26,15 @@ const BranchPostContainer = ({ history }) => {
     }),
   );
 
-  const onChange = (e) => {
-    const { name, value } = e.target;
-    dispatch(
-      changeInput({
-        key: name,
-        value,
-      }),
-    );
-  };
+   const onChange = (e) => {
+     const { name, value } = e.target;
+     dispatch(
+       changeInput({
+         key: name,
+         value,
+       }),
+     );
+   };
 
   const onSubmit = (e) => {
     e.preventDefault();
