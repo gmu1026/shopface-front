@@ -2,7 +2,7 @@ import { createAction, handleActions } from 'redux-actions';
 import createRequestSaga, {
   createRequestActionTypes,
 } from '../../lib/createRequestSaga';
-import * as branchAPI from '../../lib/api/branch/branchApI';
+import * as branchAPI from '../../lib/api/branch/branchAPI';
 import { takeLatest } from 'redux-saga/effects';
 
 const CHANGE_INPUT = 'branchDetail/CHANGE_INPUT';
