@@ -3,7 +3,6 @@ import produce from 'immer';
 import createRequestSaga, {
   createRequestActionTypes,
 } from '../../lib/createRequestSaga';
-import * as branchAPI from '../../lib/api/branch/branchApI';
 
 const CHANGE_INPUT = 'branchPost/CHANGE_INPUT';
 const INITIALIZE_FORM = 'branchPost/INITIALIZE_FORM';
@@ -38,7 +37,7 @@ const initialState = {
 
 export const branchPostSaga = createRequestSaga(
   BRANCH_POST,
-  branchAPI.postBranch,
+  //branchAPI.postBranch,
 );
 
 const branchPost = handleActions(
