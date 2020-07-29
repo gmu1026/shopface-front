@@ -1,6 +1,14 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react';
-const SideBarHeader = () => {
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from './modules/common/auth';
+import Button from './components/common/Button';
+const SideBarHeader = ({ user }) => {
+  const dispatch = useDispatch();
+  const onLogout = () => {
+    dispatch(logout());
+  };
+
   return (
     <>
       <nav className="navbar navbar-expand navbar-light bg-white">
@@ -24,9 +32,9 @@ const SideBarHeader = () => {
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     className="feather feather-bell align-middle mr-2"
                   >
                     <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
@@ -49,7 +57,23 @@ const SideBarHeader = () => {
                 </div>
               </div>
             </li>
-            <li className="nav-item dropdown">
+            <li style={{ marginTop: '0.5rem' }}>
+              {/*  {user !== null && <h4>{user.name}</h4>} */}
+            </li>
+            <li>
+              <div>
+                {user !== null ? (
+                  <div>
+                    <Button onClick={onLogout}>로그아웃</Button>
+                  </div>
+                ) : (
+                  <div>
+                    <Button to="/login">로그인</Button>
+                  </div>
+                )}
+              </div>
+            </li>
+            {/*  <li className="nav-item dropdown">
               <a
                 className="nav-icon dropdown-toggle d-inline-block d-sm-none"
                 href="#"
@@ -62,9 +86,9 @@ const SideBarHeader = () => {
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   className="feather feather-settings align-middle"
                 >
                   <circle cx="12" cy="12" r="3"></circle>
@@ -92,9 +116,9 @@ const SideBarHeader = () => {
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     className="feather feather-user align-middle mr-1"
                   >
                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
@@ -103,11 +127,9 @@ const SideBarHeader = () => {
                   Profile
                 </a>
                 <div className="dropdown-divider"></div>
-                <a className="dropdown-item" href="/logout">
-                  Sign out
-                </a>
+                
               </div>
-            </li>
+            </li> */}
           </ul>
         </div>
       </nav>

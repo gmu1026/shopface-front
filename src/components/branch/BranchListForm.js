@@ -27,6 +27,7 @@ const BranchTableBody = ({ branch, match, show, openModal, closeModal }) => {
     </>
   );
 };
+
 const BranchForm = ({
   branchs,
   branchError,

@@ -12,15 +12,15 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 // import SidebarFooter from '../SidebarFooter';
 
 const IndexPage = () => {
-  const classes = useStyles();
+  /* const classes = useStyles(); */
   const events = [{ title: "today's event", date: new Date() }];
   return (
     <div>
       <div>
-        <SidebarHeader />
+        {/* <SidebarHeader />
         <Drawer variant="permanent" classes={{ paper: classes.drawerPaper }}>
           <SideBarMenu />
-        </Drawer>
+        </Drawer> */}
         {/* <main className={classes.content}>
           <Container className={classes.container}></Container>
         </main> */}
@@ -36,7 +36,7 @@ const IndexPage = () => {
   );
 };
 
-const drawerWidth = 240;
+/* const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -61,6 +61,6 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
   },
-}));
+})); */
 
 export default IndexPage;

@@ -14,7 +14,7 @@ const MemberTableBody = ({ member }) => {
   );
 };
 
-const MemberListForm = (members, memberError, loading) => {
+const MemberListForm = ({ members, memberError, loading }) => {
   return (
     <div className="content">
       <div className="container-fluid p-0">
@@ -23,26 +23,16 @@ const MemberListForm = (members, memberError, loading) => {
           <div className="col-12">
             <div className="card">
               <div className="card-body">
-                <div
-                  id="datatables-buttons_wrapper"
-                  className="dataTables_wrapper dt-bootstrap4 no-footer"
-                >
+                <div className="dataTables_wrapper dt-bootstrap4 no-footer">
                   <div className="row">
-                    <div className="col-sm-12 col-md-8">
-                      <input type="checkbox" id="disableCheck" />
-                      {/* <label for="checkDisabel">비활성화 근무자</label>
-                      <label id="count-Disable"></label> */}{' '}
-                      비활성화 근무자
-                    </div>
+                    <div className="col-sm-12 col-md-8">비활성화 근무자</div>
                     <div className="col-sm-12 col-md-4">
                       <div className="row">
                         <div className="form-inline col">
                           <div className="form-inline col-12"></div>
-                          {/* <label for="searchQuery">이름 : </label> */} 이름
-                          :
+                          이름 :
                           <input
                             type="text"
-                            id="searchQuery"
                             name="searchQuery"
                             className="form-control form-control-sm mr-1 ml-1"
                             placeholder=""
@@ -51,7 +41,6 @@ const MemberListForm = (members, memberError, loading) => {
                           <input
                             type="button"
                             className="btn btn-primary mr-1 ml-1"
-                            id="searchButton"
                             name="searchButton"
                             value="검색"
                           />
@@ -88,7 +77,7 @@ const MemberListForm = (members, memberError, loading) => {
                           ) : (
                             <>
                               <tr role="row">
-                                <td colSpan="4">등록된 지점이 없습니다.</td>
+                                <td colSpan="4">등록된 회원이 없습니다.</td>
                               </tr>
                             </>
                           )}

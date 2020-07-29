@@ -2,7 +2,7 @@ import client from '../client';
 
 export const getMemberList = async () => {
   const response = await client.get('https://iamchan.net/member');
-  return { data: response.data };
+  return response;
 };
 
 export const postMember = ({ data }) => {

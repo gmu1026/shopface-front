@@ -9,7 +9,7 @@ import SideBarMenu from '../../components/common/SidebarMenu';
 import Drawer from '@material-ui/core/Drawer';
 import SidebarHeader from '../../SidebarHeader';
 
-const BranchListContainer = () => {
+const BranchListContainer = ({ history }) => {
   const classes = useStyles();
 
   const [show, setShow] = useState(false);
@@ -30,10 +30,12 @@ const BranchListContainer = () => {
   useEffect(() => {
     if (user !== null) {
       dispatch(getBranchList());
+    } else {
+      history.pushState('/login');
     }
-  }, [dispatch, user]);
+  }, [dispatch, user, history]);
 
-  useEffect(() => {}, [dispatch]);
+  //useEffect(() => {}, [dispatch]);
 
   return (
     <div>

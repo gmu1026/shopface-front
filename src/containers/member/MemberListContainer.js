@@ -9,8 +9,9 @@ import SideBarMenu from '../../components/common/SidebarMenu';
 import Drawer from '@material-ui/core/Drawer';
 import SidebarHeader from '../../SidebarHeader';
 
-const MemberListContainer = () => {
+const MemberListContainer = ({ history }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const { members, memberError, loading } = useSelector(
     ({ memberList, loading }) => ({
       members: memberList.members,
@@ -18,13 +19,10 @@ const MemberListContainer = () => {
       loading: loading,
     }),
   );
-  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (members !== null) {
-      dispatch(getMemberList());
-    }
-  }, [dispatch, members]);
+    dispatch(getMemberList());
+  }, [dispatch, history]);
 
   return (
     <div>

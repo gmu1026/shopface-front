@@ -1,19 +1,17 @@
 import { combineReducers } from 'redux';
 import { all } from 'redux-saga/effects';
-import auth, { authSaga } from './common/auth';
-import loading from './common/loading';
+import branchDetail, { branchDetailSaga } from './branch/branchDetail';
 import branchList, { branchSaga } from './branch/branchList';
 import branchPost, { branchPostSaga } from './branch/branchPost';
-
+import auth, { authSaga } from './common/auth';
+import loading from './common/loading';
+import employList, { employSaga } from './employ/employList';
+import memberList, { memberSaga } from './member/memberList';
 import occupationList, { occupationSaga } from './occupation/occupationList';
 import occupationPost, {
   occupationPostSaga,
 } from './occupation/occupationPost';
-import memberList, { memberSaga } from './member/memberList';
 import recordList, { recordSaga } from './record/recordList';
-import employList, { employSaga } from './employ/employList';=======
-import branchDetail, { branchDetailSaga } from './branch/branchDetail';
-
 
 const rootReducer = combineReducers({
   auth,
@@ -25,7 +23,7 @@ const rootReducer = combineReducers({
   memberList,
   recordList,
   employList,
-   branchDetail,
+  branchDetail,
 });
 
 export function* rootSaga() {
@@ -33,12 +31,13 @@ export function* rootSaga() {
     authSaga(),
     branchSaga(),
     branchPostSaga(),
-     branchDetailSaga()
+    branchDetailSaga(),
     occupationSaga(),
     occupationPostSaga,
     memberSaga(),
     recordSaga(),
     employSaga(),
   ]);
+}
 
 export default rootReducer;
