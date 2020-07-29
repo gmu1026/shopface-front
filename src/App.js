@@ -17,21 +17,26 @@ import { logout } from './modules/common/auth';
 import client from './lib/api/client';
 import SideBarMenu from '../src/components/common/SidebarMenu';
 import Drawer from '@material-ui/core/Drawer';
-import SidebarHeader from './SidebarHeader';
+import SidebarHeader from '../src/components/common/SidebarHeader';
 import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
 
-const App = ({ history }) => {
+const App = ({ history, match }) => {
   const dispatch = useDispatch();
   const { user } = useSelector(({ auth }) => ({ user: auth.user }));
 
   const classes = useStyles();
+
+  const onLogout = () => {
+    dispatch(logout());
+  };
 
   useEffect(() => {
     if (user !== null) {
       client.defaults.headers.common['Authorization'] = 'bearer ' + user.jwt;
       checkExpire().then((isExpired) => {
         if (isExpired) {
-          dispatch(logout());
+          onLogout();
         }
       });
     } else {
@@ -39,26 +44,50 @@ const App = ({ history }) => {
     }
   }, [user, history, dispatch]);
 
-  return (
-    <>
-      <div>
-        <SidebarHeader user={user} />
+  if (
+    window.location.pathname === '/login' ||
+    window.location.pathname === '/register'
+  ) {
+    return (
+      <>
+        <Route path="/login" component={LoginPage} />
+        <Route path="/register" component={RegisterPage} />
+      </>
+    );
+  } else {
+    return (
+      <>
+        {/* <div>
+      <SidebarHeader />
+      <Drawer variant="permanent" classes={{ paper: classes.drawerPaper }}>
+        <SideBarMenu />
+      </Drawer>
+      <main className={classes.content}>
+        <Container className={classes.container}>
+        </Container>
+      </main>
+    </div> */}
+
+        <SidebarHeader user={user} onLogout={onLogout}></SidebarHeader>
         <Drawer variant="permanent" classes={{ paper: classes.drawerPaper }}>
           <SideBarMenu />
         </Drawer>
-        <Route path="/timetable" component={TimetablePage} exact />
-        <Route path="/employ" component={EmployPage} />
-        <Route path="/member" component={MemberPage} />
-        <Route path="/occupation" component={OccupationPage} />
-        <Route path="/record" component={RecordPage} />
-        <Route path="/schedule" component={SchedulePage} />
-        <Route path="/" component={IndexPage} exact />
-        <Route path="/branch" component={BranchPage} />
-      </div>
-      <Route path="/login" component={LoginPage} />
-      <Route path="/register" component={RegisterPage} />
-    </>
-  );
+
+        <main className="content">
+          <Container className={classes.container}>
+            <Route path="/timetable" component={TimetablePage} />
+            <Route path="/employ" component={EmployPage} />
+            <Route path="/member" component={MemberPage} />
+            <Route path="/occupation" component={OccupationPage} />
+            <Route path="/record" component={RecordPage} />
+            <Route path="/schedule" component={SchedulePage} />
+            <Route path="/" component={IndexPage} exact />
+            <Route path="/branch" component={BranchPage} />
+          </Container>
+        </main>
+      </>
+    );
+  }
 };
 
 const drawerWidth = 240;

@@ -1,6 +1,6 @@
 import React from 'react';
 // import TimetableListContainer from '../../containers/timetable/TimetableListContainer';
-import SidebarHeader from '../../SidebarHeader';
+import SidebarHeader from '../../components/common/SidebarHeader';
 import SidebarMenu from '../../components/common/SidebarMenu';
 import SidebarFooter from '../../SidebarFooter';
 const TimetablePage = () => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import SidebarHeader from '../../SidebarHeader';
+import SidebarHeader from '../../components/common/SidebarHeader';
 import SidebarMenu from '../../components/common/SidebarMenu';
 import SidebarFooter from '../../SidebarFooter';
 // import ScheduleListContainer from '../../containers/schedule/ScheduleListContainer';

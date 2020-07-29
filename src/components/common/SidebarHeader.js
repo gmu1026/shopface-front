@@ -1,14 +1,9 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { logout } from './modules/common/auth';
-import Button from './components/common/Button';
-const SideBarHeader = ({ user }) => {
-  const dispatch = useDispatch();
-  const onLogout = () => {
-    dispatch(logout());
-  };
-
+import { logout } from '../../modules/common/auth';
+import Button from './Button';
+const SideBarHeader = ({ user, onLogout }) => {
   return (
     <>
       <nav className="navbar navbar-expand navbar-light bg-white">
