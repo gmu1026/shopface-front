@@ -1,5 +1,19 @@
 import React from 'react';
-const RecordList = () => {
+
+const RecordTableBody = ({ record }) => {
+  return (
+    <>
+      <tr role="row">
+        <td>{record.businessmanName}</td>
+        <td>{record.workStartTime}</td>
+        <td>{record.workEndTime}</td>
+        <td>{record.workingTime}</td>
+      </tr>
+    </>
+  );
+};
+
+const RecordListForm = ({ records, recordError, loading }) => {
   return (
     <div className="content">
       <div className="container-fluid p-0">
@@ -55,7 +69,22 @@ const RecordList = () => {
                           aria-describedby="datatables-buttons_info"
                         >
                           <thead id="table_head"></thead>
-                          <tbody id="table_body"></tbody>
+                          <tbody id="table_body">
+                            {!loading && records !== null ? (
+                              records.map((record, index) => (
+                                <RecordTableBody
+                                  key={index}
+                                  record={record}
+                                ></RecordTableBody>
+                              ))
+                            ) : (
+                              <>
+                                <tr role="row">
+                                  <td colSpan="4">등록된 기록이 없습니다.</td>
+                                </tr>
+                              </>
+                            )}
+                          </tbody>
                         </table>
                       </div>
                     </div>
@@ -69,4 +98,4 @@ const RecordList = () => {
     </div>
   );
 };
-export default RecordList;
+export default RecordListForm;

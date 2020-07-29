@@ -1,39 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import BranchListForm from '../../components/branch/BranchListForm';
-import { getBranchList } from '../../modules/branch/branchList';
+import OccupationListForm from '../../components/occupation/OccupationListForm';
+import { getOccupationList } from '../../modules/occupation/occupationList';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import SideBarMenu from '../../components/common/SidebarMenu';
 import Drawer from '@material-ui/core/Drawer';
 import SidebarHeader from '../../SidebarHeader';
 
-const BranchListContainer = () => {
+const OccupationListContainer = () => {
   const classes = useStyles();
-
-  const [show, setShow] = useState(false);
-
-  const closeModal = () => setShow(false);
-  const openModal = () => setShow(true);
-
-  const { branchs, branchError, loading, user } = useSelector(
-    ({ branchList, loading, auth }) => ({
-      branchs: branchList.branchs,
-      branchError: branchList.branchError,
+  const { occupations, occupationError, loading } = useSelector(
+    ({ occupationList, loading }) => ({
+      occupations: occupationList.occupations,
+      occupationError: occupationList.occupationError,
       loading: loading,
-      user: auth.user,
     }),
   );
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (user !== null) {
-      dispatch(getBranchList());
+    if (occupations !== null) {
+      dispatch(getOccupationList());
     }
-  }, [dispatch, user]);
-
-  useEffect(() => {}, [dispatch]);
+  }, [dispatch, occupations]);
 
   return (
     <div>
@@ -43,14 +34,11 @@ const BranchListContainer = () => {
       </Drawer>
       <main className={classes.content}>
         <Container className={classes.container}>
-          <BranchListForm
-            branchs={branchs}
-            branchError={branchError}
+          <OccupationListForm
+            occupations={occupations}
+            occupationError={occupationError}
             loading={loading}
-            show={show}
-            closeModal={closeModal}
-            openModal={openModal}
-          ></BranchListForm>
+          ></OccupationListForm>
         </Container>
       </main>
     </div>
@@ -85,4 +73,4 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default withRouter(BranchListContainer);
+export default withRouter(OccupationListContainer);
