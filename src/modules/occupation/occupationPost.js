@@ -19,8 +19,8 @@ export const changeInput = createAction(CHANGE_INPUT, ({ key, value }) => ({
   value,
 }));
 
-export const postOccupation = createAction(OCCUPATION_POST, ({ data }) => ({
-  data,
+export const postOccupation = createAction(OCCUPATION_POST, ({ post }) => ({
+  post,
 }));
 
 export const initializeForm = createAction(
@@ -29,8 +29,10 @@ export const initializeForm = createAction(
 );
 
 const initialState = {
-  name: '',
-  color: '',
+  post: {
+    name: '',
+    color: '',
+  },
   occupationPostResult: null,
   occupationPostError: null,
 };
@@ -56,6 +58,7 @@ const occupationPost = handleActions(
     [OCCUPATION_POST_SUCCESS]: (state, { payload: data }) => ({
       ...state,
       postResult: data,
+      postError: null,
     }),
     [OCCUPATION_POST_FAILURE]: (state, { payload: e }) => ({
       ...state,

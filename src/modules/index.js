@@ -8,6 +8,9 @@ import occupationList, { occupationSaga } from './occupation/occupationList';
 import occupationPost, {
   occupationPostSaga,
 } from './occupation/occupationPost';
+import memberList, { memberSaga } from './member/memberList';
+import recordList, { recordSaga } from './record/recordList';
+import employList, { employSaga } from './employ/employList';
 
 const rootReducer = combineReducers({
   auth,
@@ -16,6 +19,9 @@ const rootReducer = combineReducers({
   branchPost,
   occupationList,
   occupationPost,
+  memberList,
+  recordList,
+  employList,
 });
 
 export function* rootSaga() {
@@ -25,6 +31,9 @@ export function* rootSaga() {
     branchPostSaga(),
     occupationSaga(),
     occupationPostSaga,
+    memberSaga(),
+    recordSaga(),
+    employSaga(),
   ]);
 }
 

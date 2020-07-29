@@ -1,10 +1,11 @@
 import client from '../client';
 
 export const getOccupationList = async () => {
-  const response = await client.get('https://iamchan.net/sample');
+  const response = await client.get('https://iamchan.net/occupation');
   return { data: response.data };
 };
 
 export const postOccupation = ({ data }) => {
-  client.post('https://iamchan.net/sample', { data });
+  const response = client.post('https://iamchan.net/occupation', { data });
+  console.log(response);
 };

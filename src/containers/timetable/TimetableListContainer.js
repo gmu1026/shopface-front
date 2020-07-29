@@ -1,36 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import BranchListForm from '../../components/branch/BranchListForm';
-import { getBranchList } from '../../modules/branch/branchList';
+import TimetableListForm from '../../components/timetable/TimetableListForm';
+import { getTimetableList } from '../../modules/timetable/timetableList';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import SideBarMenu from '../../components/common/SidebarMenu';
 import Drawer from '@material-ui/core/Drawer';
 import SidebarHeader from '../../SidebarHeader';
 
-const BranchListContainer = () => {
+const TimetableListContainer = () => {
   const classes = useStyles();
-  const [show, setShow] = useState(false);
-
-  const closeModal = () => setShow(false);
-  const openModal = () => setShow(true);
-
-  const { branchs, branchError, loading, user } = useSelector(
-    ({ branchList, loading, auth }) => ({
-      branchs: branchList.branchs,
-      branchError: branchList.branchError,
+  const { timetables, timetableError, loading } = useSelector(
+    ({ timetableList, loading }) => ({
+      timetables: timetableList.timetables,
+      timetableError: timetableList.timetableError,
       loading: loading,
-      user: auth.user,
     }),
   );
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (user !== null) {
-      dispatch(getBranchList());
+    if (timetables !== null) {
+      dispatch(getTimetableList());
     }
-  }, [dispatch, user]);
+  }, [dispatch, timetables]);
 
   return (
     <div>
@@ -40,14 +34,11 @@ const BranchListContainer = () => {
       </Drawer>
       <main className={classes.content}>
         <Container className={classes.container}>
-          <BranchListForm
-            branchs={branchs}
-            branchError={branchError}
+          <TimetableListForm
+            timetables={timetables}
+            timetableError={timetableError}
             loading={loading}
-            show={show}
-            closeModal={closeModal}
-            openModal={openModal}
-          ></BranchListForm>
+          ></TimetableListForm>
         </Container>
       </main>
     </div>
@@ -81,5 +72,4 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: theme.spacing(4),
   },
 }));
-
-export default withRouter(BranchListContainer);
+export default withRouter(TimetableListContainer);

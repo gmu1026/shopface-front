@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import OccupationListForm from '../../components/occupation/OccupationListForm';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -9,12 +9,10 @@ import {
 const OccupationPostContainer = () => {
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
-  const { occupationPost, occupationPostError } = useSelector(
-    ({ occupationPost }) => ({
-      occupationPost: occupationPost,
-      occupationPostError: occupationPost.occupationPostError,
-    }),
-  );
+  const { occupationPost } = useSelector(({ occupationPost }) => ({
+    occupationPost: occupationPost,
+    occupationPostError: occupationPost.occupationPostError,
+  }));
 
   const onChange = (e) => {
     const { name, value } = e.target;

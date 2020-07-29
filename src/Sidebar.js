@@ -18,7 +18,7 @@ const Sidebar = () => {
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                classNameName="feather feather-box align-middle"
+                className="feather feather-box align-middle"
               >
                 <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
                 <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
@@ -37,9 +37,9 @@ const Sidebar = () => {
               <li className="sidebar-header">Pages</li>
               <li className="sidebar-item">
                 <a
-                  href="#dashboards"
+                  href="/member"
                   data-toggle="collapse"
-                  class="sidebar-link collapsed"
+                  className="sidebar-link collapsed"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -81,9 +81,9 @@ const Sidebar = () => {
 
               <li className="sidebar-item">
                 <a
-                  href="#pages"
+                  href="/timetable"
                   data-toggle="collapse"
-                  class="sidebar-link collapsed"
+                  className="sidebar-link collapsed"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -126,7 +126,7 @@ const Sidebar = () => {
 
               <li className="sidebar-item">
                 <a
-                  href="#auth"
+                  href="/schedule"
                   data-toggle="collapse"
                   class="sidebar-link collapsed"
                 >
@@ -165,7 +165,7 @@ const Sidebar = () => {
 
               <li className="sidebar-item">
                 <a
-                  href="#documentation"
+                  href="/record"
                   data-toggle="collapse"
                   class="sidebar-link collapsed"
                 >

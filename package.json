@@ -5,9 +5,12 @@
   "dependencies": {
     "@adobe/react-spectrum": "^3.1.0",
     "@fortawesome/fontawesome-free": "^5.14.0",
+    "@fullcalendar/core": "^5.1.0",
     "@fullcalendar/daygrid": "^5.1.0",
+    "@fullcalendar/interaction": "^5.1.0",
     "@fullcalendar/react": "^5.1.0",
     "@material-ui/core": "^4.11.0",
+    "@material-ui/icons": "^4.9.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
