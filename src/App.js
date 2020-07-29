@@ -1,6 +1,9 @@
 import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Route, withRouter } from 'react-router-dom';
+
 import LoginPage from './pages/common/LoginPage';
-import { Route, Switch } from 'react-router-dom';
 import RegisterPage from './pages/common/RegisterPage';
 import IndexPage from './pages/IndexPage';
 import BranchPage from './pages/branch/BranchPage';
@@ -10,8 +13,26 @@ import MemberPage from './pages/member/MemberPage';
 import OccupationPage from './pages/occupation/OccupationPage';
 import RecordPage from './pages/record/RecordPage';
 import SchedulePage from './pages/schedule/SchedulePage';
+import { checkExpire } from './lib/api/common/authAPI';
+import { logout } from './modules/common/auth';
 
-const App = () => {
+const App = ({ history }) => {
+  const dispatch = useDispatch();
+  const { user } = useSelector(({ auth }) => ({ user: auth.user }));
+  
+  useEffect(() => {
+    if (user !== null) {
+      client.defaults.headers.common['Authorization'] = 'bearer ' + user.jwt;
+      checkExpire().then((isExpired) => {
+        if (isExpired) {
+          dispatch(logout());
+        }
+      });
+    } else {
+      history.push('/login');
+    }
+  }, [user, history, dispatch]);
+  
   return (
     <div>
       <Switch>
@@ -30,4 +51,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default withRouter(App);

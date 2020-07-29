@@ -48,16 +48,11 @@ const BranchForm = ({
             <div className="col-12">
               <div className="card">
                 <div className="card-body">
-                  <div
-                    id="datatables-buttons_wrapper"
-                    className="dataTables_wrapper dt-bootstrap4 no-footer"
-                  >
+                  <div className="dataTables_wrapper dt-bootstrap4 no-footer">
                     <div className="row">
                       <div className="col-sm-12">
                         <Button
                           style={{ float: 'right' }}
-                          type="button"
-                          id="add_button"
                           className="btn btn-outline-primary"
                           to="/branch/post"
                         >
@@ -68,7 +63,6 @@ const BranchForm = ({
 
                     <div
                       className="modal fade"
-                      id="licenseImageModal"
                       tabIndex="-1"
                       role="dialog"
                       aria-hidden="true"
@@ -90,12 +84,7 @@ const BranchForm = ({
                             </button>
                           </div>
                           <div className="modal-body m-3">
-                            {/* <img
-                              src=""
-                              id="licenseImg"
-                              width="835px"
-                              height="1000px"
-                            /> */}
+                            <img src="" width="835px" height="1000px" />
                           </div>
                           <div className="modal-footer">
                             <button
@@ -112,7 +101,6 @@ const BranchForm = ({
                     <div className="row">
                       <div className="col-sm-12">
                         <table
-                          id="datatables-buttons"
                           className="table table-striped dataTable no-footer dtr-inline"
                           style={{ width: '100%' }}
                           role="grid"

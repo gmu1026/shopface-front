@@ -33,6 +33,8 @@ const BranchListContainer = () => {
     }
   }, [dispatch, user]);
 
+  useEffect(() => {}, [dispatch]);
+
   return (
     <div>
       <SidebarHeader />
