@@ -11,6 +11,7 @@ import SidebarHeader from '../../SidebarHeader';
 
 const BranchListContainer = () => {
   const classes = useStyles();
+
   const [show, setShow] = useState(false);
 
   const closeModal = () => setShow(false);

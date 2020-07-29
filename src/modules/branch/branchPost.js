@@ -3,6 +3,8 @@ import produce from 'immer';
 import createRequestSaga, {
   createRequestActionTypes,
 } from '../../lib/createRequestSaga';
+import * as branchAPI from '../../lib/api/branch/branchApI';
+import { takeLatest } from 'redux-saga/effects';
 
 const CHANGE_INPUT = 'branchPost/CHANGE_INPUT';
 const INITIALIZE_FORM = 'branchPost/INITIALIZE_FORM';
@@ -18,7 +20,7 @@ export const changeInput = createAction(CHANGE_INPUT, ({ key, value }) => ({
   value,
 }));
 
-export const postBranch = createAction(BRANCH_POST, ({ data }) => ({ data }));
+export const postBranch = createAction(BRANCH_POST, ({ post }) => ({ post }));
 
 export const initializeForm = createAction(
   INITIALIZE_FORM,
@@ -26,26 +28,29 @@ export const initializeForm = createAction(
 );
 
 const initialState = {
-  name: '',
-  phone: '',
-  zipCode: '',
-  address: '',
-  detailAddress: '',
-  branchPostResult: null,
-  branchPostError: null,
+  post: {
+    name: '',
+    phone: '',
+    zipCode: '',
+    address: '',
+    detailAddress: '',
+  },
+  postResult: null,
+  postError: null,
 };
 
-export const branchPostSaga = createRequestSaga(
-  BRANCH_POST,
-  //branchAPI.postBranch,
-);
+export const postSaga = createRequestSaga(BRANCH_POST, branchAPI.postBranch);
 
-const branchPost = handleActions(
+export function* branchPostSaga() {
+  yield takeLatest(BRANCH_POST, postSaga);
+}
+
+export const branchPost = handleActions(
   {
-    [CHANGE_INPUT]: (state, { payload: { key, value } }) => ({
-      ...state,
-      [key]: value,
-    }),
+    [CHANGE_INPUT]: (state, { payload: { key, value } }) =>
+      produce(state, (draft) => {
+        draft['post'][key] = value;
+      }),
     [INITIALIZE_FORM]: (state, { payload: initForm }) => ({
       ...state,
       [initForm]: initialState[initForm],
@@ -53,6 +58,7 @@ const branchPost = handleActions(
     [BRANCH_POST_SUCCESS]: (state, { payload: data }) => ({
       ...state,
       postResult: data,
+      postError: null,
     }),
     [BRANCH_POST_FAILURE]: (state, { payload: e }) => ({
       ...state,

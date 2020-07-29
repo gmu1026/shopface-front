@@ -1,17 +1,41 @@
 import React from 'react';
 import Button from '../common/Button';
+import { Link, withRouter } from 'react-router-dom';
+import Modal from '../../../node_modules/react-bootstrap/esm/Modal';
 
-const BranchTableBody = ({ branch }) => {
+const BranchTableBody = ({ branch, match, show, openModal, closeModal }) => {
   return (
     <>
       <tr role="row">
-        <td>{branch.no}</td>
-        <td>{branch.note}</td>
+        <td>
+          <Link to={`${match.url}/${branch.no}`}> {branch.name}</Link>
+        </td>
+        <td>{branch.phone}</td>
+        <td>
+          {branch.approvalStatus === 'W'
+            ? '승인 대기중'
+            : branch.approvalStatus === 'Y'
+            ? '승인 완료'
+            : '승인 거부'}
+        </td>
+        <td>
+          <Button className="btn btn-outline-primary" onClick={openModal}>
+            보기
+          </Button>
+        </td>
       </tr>
     </>
   );
 };
-const BranchForm = ({ branchs, branchError, loading }) => {
+const BranchForm = ({
+  branchs,
+  branchError,
+  loading,
+  match,
+  show,
+  closeModal,
+  openModal,
+}) => {
   if (branchError) {
     return <h1>에러가 발생했습니다.</h1>;
   }
@@ -108,6 +132,10 @@ const BranchForm = ({ branchs, branchError, loading }) => {
                                 <BranchTableBody
                                   key={index}
                                   branch={branch}
+                                  match={match}
+                                  show={show}
+                                  closeModal={closeModal}
+                                  openModal={openModal}
                                 ></BranchTableBody>
                               ))
                             ) : (
@@ -119,6 +147,19 @@ const BranchForm = ({ branchs, branchError, loading }) => {
                             )}
                           </tbody>
                         </table>
+                        <div>
+                          <Modal show={show} onHide={closeModal}>
+                            <Modal.Header closeButton>
+                              <Modal.Title>사업자 등록증 이미지</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>이미지~~~~~~~~</Modal.Body>
+                            <Modal.Footer>
+                              <Button variant="secondary" onClick={closeModal}>
+                                Close
+                              </Button>
+                            </Modal.Footer>
+                          </Modal>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -132,4 +173,4 @@ const BranchForm = ({ branchs, branchError, loading }) => {
   );
 };
 
-export default BranchForm;
+export default withRouter(BranchForm);

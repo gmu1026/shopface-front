@@ -10,7 +10,6 @@ const StyledButton = styled.button`
   padding: 0.25rem 1rem;
   color: white;
   outline: none;
-  margin-top: 1.5rem;
   margin-left: 0.5rem;
   cursor: pointer;
   background: #64bdc4;
