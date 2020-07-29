@@ -1,29 +1,16 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Button from '../components/common/Button';
-import { logout, getTest } from '../lib/api/common/authAPI';
-import { logoutSuccess, logoutFailure } from '../modules/common/auth';
-import client from '../lib/api/client';
+import { logout } from '../modules/common/auth';
 
 const IndexTestPage = () => {
   const dispatch = useDispatch();
-  const { user, authError } = useSelector(({ auth }) => ({
+  const { user } = useSelector(({ auth }) => ({
     user: auth.user,
-    authError: auth.authError,
   }));
 
-  const onLogout = ({ history }) => {
-    try {
-      logout();
-      dispatch(logoutSuccess());
-
-      if (user.authError === null) {
-        history.push('/login');
-      }
-    } catch (error) {
-      console.log(error);
-      dispatch(logoutFailure(error));
-    }
+  const onLogout = () => {
+    dispatch(logout());
   };
 
   return (

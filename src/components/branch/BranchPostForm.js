@@ -21,7 +21,7 @@ const branchPostForm = ({
   show,
   closeModal,
   openModal,
-  zoneCode,
+  zipCode,
   address,
 }) => {
   return (
@@ -35,11 +35,6 @@ const branchPostForm = ({
                 <div className="card-header"></div>
                 <div className="card-body">
                   <form onSubmit={onSubmit}>
-                    <input
-                      type="hidden"
-                      name="memberId"
-                      value="${#authentication.principal.username}" /* 추후 수정 */
-                    />
                     <div className="form-group col-md-4">
                       사업장 이름 :
                       <input
@@ -50,7 +45,6 @@ const branchPostForm = ({
                         onChange={onChange}
                       />
                       <br />
-                      <div className="text-center-mt-3" id="checkNameDiv"></div>
                     </div>
                     <div className="form-group col-md-4">
                       전화번호 :
@@ -62,10 +56,6 @@ const branchPostForm = ({
                         onChange={onChange}
                       />
                       <br />
-                      <div
-                        className="text-center-mt-3"
-                        id="checkPhoneDiv"
-                      ></div>
                     </div>
                     <div className="form-group col-md-4">
                       우편 번호 :
@@ -91,13 +81,9 @@ const branchPostForm = ({
                         name="zipCode"
                         onChange={onChange}
                         readOnly
-                        value={zoneCode}
+                        value={zipCode}
                       />
                       <br />
-                      <div
-                        className="text-center-mt-3"
-                        id="checkZipCodeDiv"
-                      ></div>
                     </div>
                     <div className="form-group col-md-4">
                       주소 :
@@ -111,11 +97,6 @@ const branchPostForm = ({
                         value={address}
                       />
                       <br />
-                      <div
-                        className="text-center-mt-3"
-                        id="checkAddressDiv"
-                      ></div>
-                      {/* ???? 확인 요망 */}
                     </div>
                     <div className="form-group col-md-2">
                       상세 주소 :
@@ -127,19 +108,10 @@ const branchPostForm = ({
                         onChange={onChange}
                       />
                       <br />
-                      <div
-                        className="text-center-mt-3"
-                        id="checkDetailAddressDiv"
-                      ></div>
-                      {/* ???? 확인 요망 */}
                     </div>
                     <ErrorMessage>{error}</ErrorMessage>
                     <Button className="btn btn-outline-primary">등록</Button>
-                    <Button
-                      type="button"
-                      className="btn btn-outline-primary"
-                      to="/branch"
-                    >
+                    <Button className="btn btn-outline-primary" to="/branch">
                       목록
                     </Button>
                   </form>

@@ -30,18 +30,22 @@ const LoginForm = ({ history }) => {
     const { id, password } = form;
     if ([id, password].includes('')) {
       setError('빈 칸을 모두 입력하세요');
+
       return;
     }
     dispatch(login({ id, password }));
   };
 
   useEffect(() => {
+    setError(null);
     dispatch(initializeForm('login'));
   }, [dispatch]);
 
   useEffect(() => {
     if (authError !== null) {
-      setError(authError.code);
+      if (authError === 'Incorrect username or password.') {
+        setError('아이디 또는 비밀번호가 틀렸습니다.');
+      }
       return;
     }
   }, [authError]);
