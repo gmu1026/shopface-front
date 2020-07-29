@@ -2,20 +2,25 @@ import client from '../client';
 
 export const getBranchList = async () => {
   const response = await client.get('https://iamchan.net/branch');
-  console.log(response);
-  return { data: response.data };
+  return response;
 };
 
-export const postBranch = ({ post }) => {
-  console.log(JSON.stringify(post));
-
-  const response = client.post('https://iamchan.net/sample', JSON.parse(post)); // 데이터 형식 확인 필요
-  console.log(response);
+export const postBranch = async ({ post }) => {
+  const response = await client.post('https://iamchan.net/branch', post);
+  return response;
 };
 
-export const getBranch = ({ no }) => {
-  console.log(no);
+export const getBranch = async ({ no }) => {
+  const response = await client.get(`https://iamchan.net/branch/${no}`);
+  return response;
+};
 
-  const response = client.put('https://iamchan.net/sample', no); // 데이터 형식 확인 필요
-  console.log(response);
+export const updataBranch = async ({ no, data }) => {
+  const response = await client.put(`https://iamchan.net/branch/${no}`, data);
+  return response;
+};
+
+export const deleteBranch = async ({ no }) => {
+  const response = await client.delete(`https://iamchan.net/branch/${no}`);
+  return response;
 };

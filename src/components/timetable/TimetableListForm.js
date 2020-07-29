@@ -1,9 +1,21 @@
 import React from 'react';
-//  import Header from '../components/common/Header';
-//   import Sidebar from '../Sidebar';
-//   import { Items } from '../components/common/Items';
+// import FullCalendar from '@fullcalendar/react';
 
-function TimetableList() {
+const TimetableTableBody = ({ timetable }) => {
+  return (
+    <>
+      <tr role="row">
+        <td>{timetable.branchNo}</td>
+        <td>{timetable.occupName}</td>
+        <td>{timetable.workStartTime}</td>
+        <td>{timetable.workEndTime}</td>
+        <td>{timetable.RegisterDate}</td>
+      </tr>
+    </>
+  );
+};
+
+const TimeTableListForm = ({ timetables, timetableError, loading }) => {
   return (
     <div className="content">
       <div className="container-fluid p-0">
@@ -112,7 +124,24 @@ function TimetableList() {
                               aria-describedby="datatables-buttons_info"
                             >
                               <thead></thead>
-                              <tbody id="table_body_edit"></tbody>
+                              <tbody id="table_body_edit">
+                                {!loading && timetables !== null ? (
+                                  timetables.map((timetable, index) => (
+                                    <TimetableTableBody
+                                      key={index}
+                                      timetable={timetable}
+                                    ></TimetableTableBody>
+                                  ))
+                                ) : (
+                                  <>
+                                    <tr role="row">
+                                      <td colSpan="4">
+                                        등록된 시간표가 없습니다.
+                                      </td>
+                                    </tr>
+                                  </>
+                                )}
+                              </tbody>
                             </table>
                           </div>
                         </form>
@@ -143,5 +172,6 @@ function TimetableList() {
       </div>
     </div>
   );
-}
-export default TimetableList;
+};
+
+export default TimeTableListForm;

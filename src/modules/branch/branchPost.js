@@ -3,7 +3,7 @@ import produce from 'immer';
 import createRequestSaga, {
   createRequestActionTypes,
 } from '../../lib/createRequestSaga';
-import * as branchAPI from '../../lib/api/branch/branchApI';
+import * as branchAPI from '../../lib/api/branch/branchAPI';
 import { takeLatest } from 'redux-saga/effects';
 
 const CHANGE_INPUT = 'branchPost/CHANGE_INPUT';
@@ -55,9 +55,9 @@ export const branchPost = handleActions(
       ...state,
       [initForm]: initialState[initForm],
     }),
-    [BRANCH_POST_SUCCESS]: (state, { payload: data }) => ({
+    [BRANCH_POST_SUCCESS]: (state, { payload: { message } }) => ({
       ...state,
-      postResult: data,
+      postResult: message,
       postError: null,
     }),
     [BRANCH_POST_FAILURE]: (state, { payload: e }) => ({

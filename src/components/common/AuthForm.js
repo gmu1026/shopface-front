@@ -42,7 +42,7 @@ const Footer = styled.div`
 
 const ErrorMessage = styled.div`
   color: red;
-  text-align: left;
+  text-align: center;
   font-size: 0.875rem;
   margin-top: 1rem;
   margin-left: 1rem;
@@ -53,7 +53,7 @@ const typeMap = {
   register: '회원가입',
 };
 
-const AuthForm = ({ type, form, onChange, onSubmit, error }) => {
+const AuthForm = ({ type, onChange, onSubmit, error }) => {
   const text = typeMap[type];
   return (
     <AuthFormBlock>
@@ -64,14 +64,12 @@ const AuthForm = ({ type, form, onChange, onSubmit, error }) => {
           name="id"
           placeholder="이메일"
           onChange={onChange}
-          value={form.id}
         />
         <StyledInput
           type="password"
           name="password"
           placeholder="비밀번호"
           onChange={onChange}
-          value={form.password}
         />
         {type === 'register' && (
           <>
@@ -80,21 +78,18 @@ const AuthForm = ({ type, form, onChange, onSubmit, error }) => {
               name="name"
               placeholder="이름"
               onChange={onChange}
-              value={form.name}
             />
             <StyledInput
               type="text"
               name="phone"
               placeholder="전화번호"
               onChange={onChange}
-              value={form.phone}
             />
             <StyledInput
               type="text"
               name="email"
               placeholder="이메일"
               onChange={onChange}
-              value={form.email}
             />
           </>
         )}
