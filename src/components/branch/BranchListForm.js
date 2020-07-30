@@ -37,9 +37,6 @@ const BranchForm = ({
   closeModal,
   openModal,
 }) => {
-  if (branchError) {
-    return <h1>에러가 발생했습니다.</h1>;
-  }
   return (
     <>
       <div className="content">
@@ -116,7 +113,7 @@ const BranchForm = ({
                             </tr>
                           </thead>
                           <tbody id="table_body">
-                            {!loading && branchs !== null ? (
+                            {branchs !== null ? (
                               branchs.map((branch, index) => (
                                 <BranchTableBody
                                   key={index}

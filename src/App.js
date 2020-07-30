@@ -1,25 +1,24 @@
+import Container from '@material-ui/core/Container';
+import Drawer from '@material-ui/core/Drawer';
+import { makeStyles } from '@material-ui/core/styles';
 import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Route, withRouter, Switch } from 'react-router-dom';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { Route, withRouter } from 'react-router-dom';
+import SidebarHeader from '../src/components/common/SidebarHeader';
+import SideBarMenu from '../src/components/common/SidebarMenu';
+import client from './lib/api/client';
+import { checkExpire } from './lib/api/common/authAPI';
+import { logout } from './modules/common/auth';
+import BranchPage from './pages/branch/BranchPage';
 import LoginPage from './pages/common/LoginPage';
 import RegisterPage from './pages/common/RegisterPage';
-import IndexPage from './pages/IndexPage';
-import BranchPage from './pages/branch/BranchPage';
-import TimetablePage from './pages/timetable/TimetablePage';
 import EmployPage from './pages/employ/EmployPage';
+import IndexPage from './pages/IndexPage';
 import MemberPage from './pages/member/MemberPage';
 import OccupationPage from './pages/occupation/OccupationPage';
 import RecordPage from './pages/record/RecordPage';
 import SchedulePage from './pages/schedule/SchedulePage';
-import { checkExpire } from './lib/api/common/authAPI';
-import { logout } from './modules/common/auth';
-import client from './lib/api/client';
-import SideBarMenu from '../src/components/common/SidebarMenu';
-import Drawer from '@material-ui/core/Drawer';
-import SidebarHeader from '../src/components/common/SidebarHeader';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
+import TimetablePage from './pages/timetable/TimetablePage';
 
 const App = ({ history, match }) => {
   const dispatch = useDispatch();
@@ -67,13 +66,13 @@ const App = ({ history, match }) => {
         </Container>
       </main>
     </div> */}
-        {/* 
+
         <SidebarHeader user={user} onLogout={onLogout}></SidebarHeader>
         <Drawer variant="permanent" classes={{ paper: classes.drawerPaper }}>
           <SideBarMenu />
         </Drawer>
 
-        <main className="content">
+        <main className={classes.content}>
           <Container className={classes.container}>
             <Route path="/timetable" component={TimetablePage} />
             <Route path="/employ" component={EmployPage} />
@@ -82,9 +81,9 @@ const App = ({ history, match }) => {
             <Route path="/record" component={RecordPage} />
             <Route path="/schedule" component={SchedulePage} />
             <Route path="/" component={IndexPage} exact />
+            <Route path="/branch" component={BranchPage} />
           </Container>
-        </main> */}
-        <Route path="/branch" component={BranchPage} />
+        </main>
       </>
     );
   }
