@@ -15,7 +15,7 @@ const EmployTableBody = ({ employ }) => {
   );
 };
 
-const EmployList = ({ employs, employError, loading }) => {
+const EmployListForm = ({ employs, employError, loading }) => {
   return (
     <div className="container-fluid p-0">
       <h1 className="h3 mb-3">근무자 관리</h1>
@@ -60,7 +60,7 @@ const EmployList = ({ employs, employError, loading }) => {
                     </div>
                   </div>
                 </div>
-                <div
+                {/* <div
                   className="modal fade"
                   tabIndex="-1"
                   role="dialog"
@@ -118,7 +118,7 @@ const EmployList = ({ employs, employError, loading }) => {
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
                 <div className="row">
                   <div className="col-sm-12">
                     <form>
@@ -135,12 +135,10 @@ const EmployList = ({ employs, employError, loading }) => {
                             <th>이메일</th>
                             <th>급여</th>
                             <th>상태</th>
-                            <th>관리</th>
-                            <th></th>
                           </tr>
                         </thead>
                         <tbody id="table_body">
-                          {!loading && employs !== null ? (
+                          {employs !== null ? (
                             employs.map((employ, index) => (
                               <EmployTableBody
                                 key={index}
@@ -157,7 +155,7 @@ const EmployList = ({ employs, employError, loading }) => {
                         </tbody>
                       </table>
                     </form>
-                    <div
+                    {/* <div
                       className="modal fade"
                       tabIndex="-1"
                       role="dialog"
@@ -206,7 +204,7 @@ const EmployList = ({ employs, employError, loading }) => {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>
@@ -217,4 +215,4 @@ const EmployList = ({ employs, employError, loading }) => {
     </div>
   );
 };
-export default EmployList;
+export default EmployListForm;

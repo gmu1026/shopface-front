@@ -22,15 +22,14 @@ const OccupationPostContainer = ({ history }) => {
     occupationPost,
     occupationPostResult,
     occupationPostError,
-  } = useSelector(
-    ({ occupationPost, occupationPostResult, occupationPostError }) => ({
-      occupationPost: occupationPost,
-      occupationResult: occupationPost.occupationResult,
-      occupationPostError: occupationPost.occupationPostError,
-    }),
-  );
+  } = useSelector(({ occupationPost }) => ({
+    occupationPost: occupationPost.occupationPost,
+    occupationPostResult: occupationPost.occupationPostResult,
+    occupationPostError: occupationPost.occupationPostError,
+  }));
 
   const onChange = (e) => {
+    console.log('rere');
     const { name, value } = e.target;
     dispatch(
       changeInput({

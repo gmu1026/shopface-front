@@ -4,10 +4,23 @@ const RecordTableBody = ({ record }) => {
   return (
     <>
       <tr role="row">
-        <td>{record.businessmanName}</td>
-        <td>{record.workStartTime}</td>
-        <td>{record.workEndTime}</td>
+        <td>{record.no}</td>
+        <td>{record.businessmanId}</td>
+        <td>{record.branchNo}</td>
+        <td>{record.branchName}</td>
+        <td>{record.branchPhone}</td>
+        <td>{record.memberId}</td>
+        <td>{record.memberName}</td>
+        <td>{record.memberPhone}</td>
+        <td>{record.workingStartTime}</td>
+        <td>{record.workingEndTime}</td>
         <td>{record.workingTime}</td>
+        <td>{record.quittingTime}</td>
+        <td>{record.occupationName}</td>
+        <td>{record.salayPlan}</td>
+        <td>{record.salayPay}</td>
+        <td>{record.evaluation}</td>
+        <td>{record.note}</td>
       </tr>
     </>
   );
@@ -69,7 +82,7 @@ const RecordListForm = ({ records, recordError, loading }) => {
                       >
                         <thead id="table_head"></thead>
                         <tbody id="table_body">
-                          {!loading && records !== null ? (
+                          {records !== null ? (
                             records.map((record, index) => (
                               <RecordTableBody
                                 key={index}

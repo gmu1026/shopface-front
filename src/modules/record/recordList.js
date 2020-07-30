@@ -6,17 +6,17 @@ import { takeLatest } from 'redux-saga/effects';
 import * as recordAPI from '../../lib/api/record/recordAPI';
 
 const [
-  record_LIST,
-  record_LIST_SUCCESS,
-  record_LIST_FAILURE,
+  RECORD_LIST,
+  RECORD_LIST_SUCCESS,
+  RECORD_LIST_FAILURE,
 ] = createRequestActionTypes('recordList/record_LIST');
 
-export const getRecordList = createAction(record_LIST);
+export const getRecordList = createAction(RECORD_LIST);
 
-const recordListSaga = createRequestSaga(record_LIST, recordAPI.getRecordList);
+const recordListSaga = createRequestSaga(RECORD_LIST, recordAPI.getRecordList);
 
 export function* recordSaga() {
-  yield takeLatest(record_LIST, recordListSaga);
+  yield takeLatest(RECORD_LIST, recordListSaga);
 }
 
 const initialState = {
@@ -26,12 +26,12 @@ const initialState = {
 
 const recordList = handleActions(
   {
-    [record_LIST_SUCCESS]: (state, { payload: { data } }) => ({
+    [RECORD_LIST_SUCCESS]: (state, { payload: { data } }) => ({
       ...state,
       records: data,
       recordError: null,
     }),
-    [record_LIST_FAILURE]: (state, { payload: { e } }) => ({
+    [RECORD_LIST_FAILURE]: (state, { payload: { e } }) => ({
       ...state,
       recordError: e,
     }),

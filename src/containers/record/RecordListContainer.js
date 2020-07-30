@@ -15,10 +15,8 @@ const RecordListContainer = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (records !== null) {
-      dispatch(getRecordList());
-    }
-  }, [dispatch, records]);
+    dispatch(getRecordList());
+  }, [dispatch]);
 
   return (
     <RecordListForm

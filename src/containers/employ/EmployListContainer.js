@@ -15,10 +15,8 @@ const EmployListContainer = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (employs !== null) {
-      dispatch(getEmployList());
-    }
-  }, [dispatch, employs]);
+    dispatch(getEmployList());
+  }, [dispatch]);
 
   return (
     <EmployListForm

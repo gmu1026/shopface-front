@@ -6,20 +6,20 @@ import { takeLatest } from 'redux-saga/effects';
 import * as scheduleAPI from '../../lib/api/schedule/scheduleAPI';
 
 const [
-  schedule_LIST,
-  schedule_LIST_SUCCESS,
-  schedule_LIST_FAILURE,
+  SCHEDULE_LIST,
+  SCHEDULE_LIST_SUCCESS,
+  SCHEDULE_LIST_FAILURE,
 ] = createRequestActionTypes('scheduleList/schedule_LIST');
 
-export const getScheduleList = createAction(schedule_LIST);
+export const getScheduleList = createAction(SCHEDULE_LIST);
 
 const scheduleListSaga = createRequestSaga(
-  schedule_LIST,
+  SCHEDULE_LIST,
   scheduleAPI.getScheduleList,
 );
 
 export function* scheduleSaga() {
-  yield takeLatest(schedule_LIST, scheduleListSaga);
+  yield takeLatest(SCHEDULE_LIST, scheduleListSaga);
 }
 
 const initialState = {
@@ -29,12 +29,12 @@ const initialState = {
 
 const scheduleList = handleActions(
   {
-    [schedule_LIST_SUCCESS]: (state, { payload: { data } }) => ({
+    [SCHEDULE_LIST_SUCCESS]: (state, { payload: { data } }) => ({
       ...state,
       schedules: data,
       scheduleError: null,
     }),
-    [schedule_LIST_FAILURE]: (state, { payload: { e } }) => ({
+    [SCHEDULE_LIST_FAILURE]: (state, { payload: { e } }) => ({
       ...state,
       scheduleError: e,
     }),
