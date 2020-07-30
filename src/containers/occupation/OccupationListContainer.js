@@ -15,10 +15,8 @@ const OccupationListContainer = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (occupations !== null) {
-      dispatch(getOccupationList());
-    }
-  }, [dispatch, occupations]);
+    dispatch(getOccupationList());
+  }, [dispatch]);
 
   return (
     <OccupationListForm

@@ -1,6 +1,16 @@
 import React from 'react';
 import Button from '../common/Button';
+import styled from 'styled-components';
 // import spectrum from '../../spect';
+// import Modal from '../../../node_modules/react-bootstrap/esm/Modal';
+
+const ErrorMessage = styled.div`
+  color: red;
+  text-align: left;
+  font-size: 0.875rem;
+  margin-top: 1rem;
+  margin-left: 1rem;
+`;
 
 const OccupationTableBody = ({ occupation }) => {
   return (
@@ -8,6 +18,10 @@ const OccupationTableBody = ({ occupation }) => {
       <tr role="row">
         <td>{occupation.name}</td>
         <td>{occupation.color}</td>
+        <td>
+          <Button className="btn btn-primary">수정</Button>
+          <Button className="btn btn-primary">삭제</Button>
+        </td>
       </tr>
     </>
   );
@@ -20,6 +34,12 @@ const OccupationListForm = ({
   onSubmit,
   onChange,
   error,
+  handleComplete,
+  show,
+  closeModal,
+  openModal,
+  name,
+  color,
 }) => {
   return (
     <div className="content">
@@ -30,7 +50,7 @@ const OccupationListForm = ({
             <div className="card">
               <div className="card-body">
                 <div className="col-sm-6">
-                  <form onSubmit={onsubmit}>
+                  {/* <form onSubmit={onsubmit}>
                     <input
                       type="hidden"
                       id="occupationNo-input"
@@ -53,9 +73,9 @@ const OccupationListForm = ({
                       name="color"
                       onChange={onChange}
                     />
+                    <ErrorMessage>{error}</ErrorMessage>
                     <div className="ml-4 mr-2">
                       <Button
-                        type="button"
                         className="btn btn-primary"
                         id="post-button"
                         name="postBtn"
@@ -63,7 +83,7 @@ const OccupationListForm = ({
                         등록
                       </Button>
                     </div>
-                  </form>
+                  </form> */}
                 </div>
                 <div
                   id="datatables-buttons_wrapper"
@@ -85,7 +105,7 @@ const OccupationListForm = ({
                           </tr>
                         </thead>
                         <tbody id="table-body">
-                          {!loading && occupations !== null ? (
+                          {occupations !== null ? (
                             occupations.map((occupation, index) => (
                               <OccupationTableBody
                                 key={index}
@@ -101,57 +121,55 @@ const OccupationListForm = ({
                           )}
                         </tbody>
                       </table>
-                      <div
-                        className="modal fade"
-                        id="color-modal-form"
-                        tabIndex="-1"
-                        role="dialog"
-                        aria-hidden="true"
-                      >
-                        <div
-                          className="modal-dialog modal-dialog-centered"
-                          role="document"
-                        >
-                          <div className="modal-content">
-                            <div className="modal-header">
-                              <h5 className="modal-title">색상 선택</h5>
-                              <Button
-                                type="button"
-                                className="close"
-                                data-dismiss="modal"
-                                aria-label="Close"
-                              >
-                                <span aria-hidden="true">&times;</span>
-                              </Button>
-                            </div>
-                            <div className="modal-body m-3">
-                              색상:
-                              <input
-                                type="text"
-                                id="modal-color"
-                                name="modalColor"
-                                onChange={onChange}
-                              />
-                            </div>
-                            <div className="modal-footer">
-                              <Button
-                                type="button"
-                                className="btn btn-primary"
-                                data-dismiss="modal"
-                              >
-                                취소
-                              </Button>
-                              <Button
-                                type="button"
-                                className="btn btn-primary"
-                                id="change-color-button"
-                              >
-                                선택
-                              </Button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                      {/* <div
+              className="modal fade"
+              id="color-modal-form"
+              tabIndex="-1"
+              role="dialog"
+              aria-hidden="true"
+            >
+              <div
+                className="modal-dialog modal-dialog-centered"
+                role="document"
+              >
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <h5 className="modal-title">색상 선택</h5>
+                    <Button
+                      type="button"
+                      className="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </Button>
+                  </div>
+                  <div className="modal-body m-3">
+                    색상:
+                    <input
+                      type="text"
+                      id="color"
+                      name="color"
+                      onChange={onChange}
+                    />
+                  </div>
+                  <div className="modal-footer">
+                    <Button
+                      className="btn btn-primary"
+                      data-dismiss="modal"
+                    >
+                      취소
+                    </Button>
+                    <Button
+                      className="btn btn-primary"
+                      id="change-color-button"
+                    >
+                      선택
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div> */}
                     </div>
                   </div>
                 </div>

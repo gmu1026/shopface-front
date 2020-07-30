@@ -1,14 +1,9 @@
 import React from 'react';
-import SidebarHeader from '../../components/common/SidebarHeader';
-import SidebarMenu from '../../components/common/SidebarMenu';
-import SidebarFooter from '../../SidebarFooter';
 // import ScheduleListContainer from '../../containers/schedule/ScheduleListContainer';
 const SchedulePage = () => {
   return (
     <div>
-      <SidebarHeader />
-      <SidebarMenu />
-      <SidebarFooter />
+      <h1> 스케줄</h1>
     </div>
   );
 };

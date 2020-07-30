@@ -6,20 +6,20 @@ import { takeLatest } from 'redux-saga/effects';
 import * as occupationAPI from '../../lib/api/occupation/occupationAPI';
 
 const [
-  occupation_LIST,
-  occupation_LIST_SUCCESS,
-  occupation_LIST_FAILURE,
+  OCCUPATION_LIST,
+  OCCUPATION_LIST_SUCCESS,
+  OCCUPATION_LIST_FAILURE,
 ] = createRequestActionTypes('occupationList/occupation_LIST');
 
-export const getOccupationList = createAction(occupation_LIST);
+export const getOccupationList = createAction(OCCUPATION_LIST);
 
 const occupationListSaga = createRequestSaga(
-  occupation_LIST,
+  OCCUPATION_LIST,
   occupationAPI.getOccupationList,
 );
 
 export function* occupationSaga() {
-  yield takeLatest(occupation_LIST, occupationListSaga);
+  yield takeLatest(OCCUPATION_LIST, occupationListSaga);
 }
 
 const initialState = {
@@ -29,12 +29,12 @@ const initialState = {
 
 const occupationList = handleActions(
   {
-    [occupation_LIST_SUCCESS]: (state, { payload: { data } }) => ({
+    [OCCUPATION_LIST_SUCCESS]: (state, { payload: { data } }) => ({
       ...state,
       occupations: data,
       occupationError: null,
     }),
-    [occupation_LIST_FAILURE]: (state, { payload: { e } }) => ({
+    [OCCUPATION_LIST_FAILURE]: (state, { payload: { e } }) => ({
       ...state,
       occupationError: e,
     }),

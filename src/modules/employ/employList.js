@@ -6,17 +6,17 @@ import { takeLatest } from 'redux-saga/effects';
 import * as employAPI from '../../lib/api/employ/employAPI';
 
 const [
-  employ_LIST,
-  employ_LIST_SUCCESS,
-  employ_LIST_FAILURE,
+  EMPLOY_LIST,
+  EMPLOY_LIST_SUCCESS,
+  EMPLOY_LIST_FAILURE,
 ] = createRequestActionTypes('employList/employ_LIST');
 
-export const getEmployList = createAction(employ_LIST);
+export const getEmployList = createAction(EMPLOY_LIST);
 
-const employListSaga = createRequestSaga(employ_LIST, employAPI.getEmployList);
+const employListSaga = createRequestSaga(EMPLOY_LIST, employAPI.getEmployList);
 
 export function* employSaga() {
-  yield takeLatest(employ_LIST, employListSaga);
+  yield takeLatest(EMPLOY_LIST, employListSaga);
 }
 
 const initialState = {
@@ -26,12 +26,12 @@ const initialState = {
 
 const employList = handleActions(
   {
-    [employ_LIST_SUCCESS]: (state, { payload: { data } }) => ({
+    [EMPLOY_LIST_SUCCESS]: (state, { payload: { data } }) => ({
       ...state,
       employs: data,
       employError: null,
     }),
-    [employ_LIST_FAILURE]: (state, { payload: { e } }) => ({
+    [EMPLOY_LIST_FAILURE]: (state, { payload: { e } }) => ({
       ...state,
       employError: e,
     }),
