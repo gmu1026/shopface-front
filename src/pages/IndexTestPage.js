@@ -9,16 +9,12 @@ const IndexTestPage = () => {
     user: auth.user,
   }));
 
-  const onLogout = () => {
-    dispatch(logout());
-  };
-
   return (
     <div>
       {user !== null ? (
         <div>
           <h3>안녕하세요 {user.name} 님</h3>
-          <button onClick={onLogout}>로그아웃</button>
+          {/* <button onClick={onLogout}>로그아웃</button> */}
           <div>
             <Button to="/branch">지점</Button>
           </div>

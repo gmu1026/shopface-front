@@ -4,29 +4,24 @@ import { withRouter } from 'react-router-dom';
 import BranchListForm from '../../components/branch/BranchListForm';
 import { getBranchList } from '../../modules/branch/branchList';
 
-const BranchListContainer = ({ history }) => {
+const BranchListContainer = () => {
   const [show, setShow] = useState(false);
 
   const closeModal = () => setShow(false);
   const openModal = () => setShow(true);
 
-  const { branchs, branchError, loading, user } = useSelector(
+  const { branchs, branchError, loading } = useSelector(
     ({ branchList, loading, auth }) => ({
       branchs: branchList.branchs,
       branchError: branchList.branchError,
       loading: loading,
-      user: auth.user,
     }),
   );
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (user !== null) {
-      dispatch(getBranchList());
-    } else {
-      history.push('/login');
-    }
-  }, [dispatch, user, history]);
+    dispatch(getBranchList());
+  }, [dispatch]);
 
   return (
     <div>
@@ -42,4 +37,4 @@ const BranchListContainer = ({ history }) => {
   );
 };
 
-export default withRouter(BranchListContainer);
+export default BranchListContainer;

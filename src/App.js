@@ -42,7 +42,7 @@ const App = ({ history, match }) => {
     } else {
       history.push('/login');
     }
-  }, [user, history, dispatch]);
+  }, [user, history]);
 
   if (
     window.location.pathname === '/login' ||
@@ -67,7 +67,7 @@ const App = ({ history, match }) => {
         </Container>
       </main>
     </div> */}
-
+        {/* 
         <SidebarHeader user={user} onLogout={onLogout}></SidebarHeader>
         <Drawer variant="permanent" classes={{ paper: classes.drawerPaper }}>
           <SideBarMenu />
@@ -82,9 +82,9 @@ const App = ({ history, match }) => {
             <Route path="/record" component={RecordPage} />
             <Route path="/schedule" component={SchedulePage} />
             <Route path="/" component={IndexPage} exact />
-            <Route path="/branch" component={BranchPage} />
           </Container>
-        </main>
+        </main> */}
+        <Route path="/branch" component={BranchPage} />
       </>
     );
   }
