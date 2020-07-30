@@ -66,7 +66,7 @@ const MemberListForm = ({ members, memberError, loading }) => {
                         </tr>
                       </thead>
                       <tbody id="table_body">
-                        {!loading && members !== null ? (
+                        {members !== null ? (
                           members.map((member, index) => (
                             <MemberTableBody
                               key={index}
@@ -82,7 +82,6 @@ const MemberListForm = ({ members, memberError, loading }) => {
                         )}
                       </tbody>
                     </table>
-                    {!loading && <div>test</div>}
                   </div>
                 </div>
               </div>
