@@ -19,7 +19,7 @@ const OccupationTableBody = ({ occupation }) => {
       <tr role="row">
         <td>{occupation.name}</td>
         <td>
-          <div classname="btn btn-primary">{occupation.color}</div>
+          <div className="btn btn-primary">{occupation.color}</div>
         </td>
         <td>
           <Button className="btn btn-primary">수정</Button>

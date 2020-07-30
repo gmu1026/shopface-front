@@ -26,7 +26,7 @@ const OccupationListContainer = () => {
       });
       dispatch(getOccupationList());
     }
-  }, [dispatch, occupations, user]);
+  }, [dispatch, user]);
 
   return (
     <OccupationListForm
