@@ -81,7 +81,7 @@ const BranchForm = ({
                           </button>
                         </div>
                         <div className="modal-body m-3">
-                          <img src="" width="835px" height="1000px" />
+                          {/* <img src="" width="835px" height="1000px" /> */}
                         </div>
                         <div className="modal-footer">
                           <button

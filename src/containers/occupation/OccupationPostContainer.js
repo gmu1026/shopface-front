@@ -1,17 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import OccupationListForm from '../../components/occupation/OccupationListForm';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   changeInput,
   postOccupation,
 } from '../../modules/occupation/occupationPost';
+import { checkExpire } from '../../lib/api/common/authAPI';
+import { logout } from '../../modules/common/auth';
 
 const OccupationPostContainer = () => {
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
-  const { occupationPost } = useSelector(({ occupationPost }) => ({
+  const { occupationPost, user } = useSelector(({ occupationPost, auth }) => ({
     occupationPost: occupationPost,
     occupationPostError: occupationPost.occupationPostError,
+    user: auth.user,
   }));
 
   const onChange = (e) => {
@@ -34,6 +37,16 @@ const OccupationPostContainer = () => {
     }
     dispatch(postOccupation());
   };
+
+  useEffect(() => {
+    if (user !== null) {
+      checkExpire().then((isExpired) => {
+        if (isExpired) {
+          dispatch(logout());
+        }
+      });
+    }
+  }, [dispatch, user]);
 
   return (
     <OccupationListForm

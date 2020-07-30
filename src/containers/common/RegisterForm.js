@@ -12,7 +12,7 @@ import { withRouter } from 'react-router-dom';
 const RegisterForm = ({ history }) => {
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
-  const { register, auth, authError, isRegister } = useSelector(({ auth }) => ({
+  const { register, user, authError, isRegister } = useSelector(({ auth }) => ({
     register: auth.register,
     user: auth.user,
     authError: auth.authError,
@@ -64,6 +64,12 @@ const RegisterForm = ({ history }) => {
       history.push('/login');
     }
   }, [history, isRegister]);
+
+  useEffect(() => {
+    if (user !== null) {
+      history.push('/');
+    }
+  });
 
   return (
     <AuthTemplate>

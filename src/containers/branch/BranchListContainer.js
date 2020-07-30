@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import BranchListForm from '../../components/branch/BranchListForm';
 import { getBranchList } from '../../modules/branch/branchList';
 import { withRouter } from 'react-router-dom';
+import { checkExpire } from '../../lib/api/common/authAPI';
+import { logout } from '../../modules/common/auth';
 
 const BranchListContainer = ({ history }) => {
   const [show, setShow] = useState(false);
@@ -21,8 +23,15 @@ const BranchListContainer = ({ history }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getBranchList());
-  }, [dispatch]);
+    if (user !== null) {
+      checkExpire().then((isExpired) => {
+        if (isExpired) {
+          dispatch(logout());
+        }
+      });
+      dispatch(getBranchList());
+    }
+  }, [dispatch, user]);
 
   return (
     <div>

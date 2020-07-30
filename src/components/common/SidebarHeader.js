@@ -1,7 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { logout } from '../../modules/common/auth';
+import React from 'react';
 import Button from './Button';
 const SideBarHeader = ({ user, onLogout }) => {
   return (
