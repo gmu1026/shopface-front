@@ -1,6 +1,6 @@
 import Container from '@material-ui/core/Container';
 import Drawer from '@material-ui/core/Drawer';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, StylesProvider } from '@material-ui/core/styles';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, withRouter } from 'react-router-dom';
@@ -19,13 +19,14 @@ import OccupationPage from './pages/occupation/OccupationPage';
 import RecordPage from './pages/record/RecordPage';
 import SchedulePage from './pages/schedule/SchedulePage';
 import TimetablePage from './pages/timetable/TimetablePage';
+import styled from 'styled-components';
+import context from '../node_modules/react-bootstrap/esm/AccordionContext';
 
 const App = ({ history, match }) => {
   const dispatch = useDispatch();
   const { user } = useSelector(({ auth }) => ({ user: auth.user }));
 
   const classes = useStyles();
-
   const onLogout = () => {
     dispatch(logout());
   };
@@ -35,13 +36,13 @@ const App = ({ history, match }) => {
       client.defaults.headers.common['Authorization'] = 'bearer ' + user.jwt;
       checkExpire().then((isExpired) => {
         if (isExpired) {
-          onLogout();
+          dispatch(logout());
         }
       });
     } else {
       history.push('/login');
     }
-  }, [user, history]);
+  }, [history, user]);
 
   if (
     window.location.pathname === '/login' ||
@@ -56,55 +57,53 @@ const App = ({ history, match }) => {
   } else {
     return (
       <>
-        {/* <div>
-      <SidebarHeader />
-      <Drawer variant="permanent" classes={{ paper: classes.drawerPaper }}>
-        <SideBarMenu />
-      </Drawer>
-      <main className={classes.content}>
-        <Container className={classes.container}>
-        </Container>
-      </main>
-    </div> */}
+        <div className="row">
+          <div>
+            <Drawer
+              variant="permanent"
+              classes={{ paper: classes.drawerPaper }}
+            >
+              <SideBarMenu />
+            </Drawer>
+          </div>
 
-        <SidebarHeader user={user} onLogout={onLogout}></SidebarHeader>
-        <Drawer variant="permanent" classes={{ paper: classes.drawerPaper }}>
-          <SideBarMenu />
-        </Drawer>
-
-        <main className={classes.content}>
-          <Container className={classes.container}>
-            <Route path="/timetable" component={TimetablePage} />
-            <Route path="/employ" component={EmployPage} />
-            <Route path="/member" component={MemberPage} />
-            <Route path="/occupation" component={OccupationPage} />
-            <Route path="/record" component={RecordPage} />
-            <Route path="/schedule" component={SchedulePage} />
-            <Route path="/" component={IndexPage} exact />
-            <Route path="/branch" component={BranchPage} />
-          </Container>
-        </main>
+          <div className="col p-0">
+            <SidebarHeader onLogout={onLogout} />
+            <div className="content">
+              <Route path="/member" component={MemberPage} />
+              <Route path="/" component={IndexPage} exact />
+              <Route path="/timetable" component={TimetablePage} />
+              <Route path="/employ" component={EmployPage} />
+              <Route path="/occupation" component={OccupationPage} />
+              <Route path="/record" component={RecordPage} />
+              <Route path="/schedule" component={SchedulePage} />
+              <Route path="/branch" component={BranchPage} />
+            </div>
+          </div>
+        </div>
       </>
     );
   }
 };
 
-const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
+    width: '15.5rem',
   },
   drawerPaper: {
-    // position: 'relative',
+    position: 'relative',
     // whiteSpace: 'nowrap',
-    width: drawerWidth,
+    width: '17rem',
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
-    background: '#535454',
+    paddingLeft: '1.5rem',
+    background: '#354052',
     color: '#fff',
+    height: '100vh',
   },
   content: {
-    position: 'relative',
+    //position: 'relative',
     left: '100px',
     flexGrow: 1,
     height: '100vh',

@@ -1,6 +1,6 @@
 import React from 'react';
 import MemberListContainer from '../../containers/member/MemberListContainer';
-const MemberPage = ({ match }) => {
+const MemberPage = () => {
   return (
     <div>
       <MemberListContainer />

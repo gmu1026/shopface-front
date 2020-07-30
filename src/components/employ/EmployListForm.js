@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from '../common/Button';
 
 const EmployTableBody = ({ employ }) => {
   return (
@@ -16,48 +17,40 @@ const EmployTableBody = ({ employ }) => {
 
 const EmployList = ({ employs, employError, loading }) => {
   return (
-    <div className="content">
-      <div class="container-fluid p-0">
-        <h1 class="h3 mb-3">근무자 관리</h1>
-        <div class="row">
-          <div class="col-12">
-            <div class="card">
-              <div class="card-body">
-                <div
-                  id="datatables-buttons_wrapper"
-                  class="dataTables_wrapper dt-bootstrap4 no-footer"
-                >
-                  <div class="row">
-                    <div class="col-sm-12 col-md-6">
-                      <div class="form-group" id="check-disable" />
-                      <input type="checkbox" id="disableCheck" />
-                      <label for="checkDisabel">비활성화 근무자</label>
-                      <label id="count-Disable"></label>
-                    </div>
+    <div className="container-fluid p-0">
+      <h1 className="h3 mb-3">근무자 관리</h1>
+      <div className="row">
+        <div className="col-12">
+          <div className="card">
+            <div className="card-body">
+              <div className="dataTables_wrapper dt-bootstrap4 no-footer">
+                <div className="row">
+                  <div className="col-sm-12 col-md-6">
+                    <div className="form-group" id="check-disable" />
+                    <input type="checkbox" />
+                    비활성화 근무자
                   </div>
-                  <div class="col-sm-12 col-md-6">
-                    <div class="row">
-                      <div class="form-inline col-5"></div>
-                      <div class="form-inline col ml-6">
-                        <label for="name">이름:</label>
+                  <div className="col-sm-12 col-md-6">
+                    <div className="row">
+                      <div className="form-inline col-5"></div>
+                      <div className="form-inline col ml-6">
+                        이름:
                         <input
                           type="search"
-                          id="search-name"
-                          class="form-control form-control-sm mr-1 ml-1"
+                          className="form-control form-control-sm mr-1 ml-1"
                           placeholder=""
                           aria-controls="datatables-buttons"
                         />
                         <button
                           type="button"
-                          class="btn btn-primary mr-1 ml-1"
-                          id="searchBtn"
+                          className="btn btn-primary mr-1 ml-1"
                           name="searchButton"
                         >
                           검색
                         </button>
                         <button
                           type="button"
-                          class="btn btn-primary mr-1 ml-1"
+                          className="btn btn-primary mr-1 ml-1"
                           data-toggle="modal"
                           data-target="#inviteModal"
                         >
@@ -66,164 +59,150 @@ const EmployList = ({ employs, employError, loading }) => {
                       </div>
                     </div>
                   </div>
+                </div>
+                <div
+                  className="modal fade"
+                  tabIndex="-1"
+                  role="dialog"
+                  aria-hidden="true"
+                >
                   <div
-                    class="modal fade"
-                    id="inviteModal"
-                    tabindex="-1"
-                    role="dialog"
-                    aria-hidden="true"
+                    className="modal-dialog modal-dialog-centered"
+                    role="document"
                   >
-                    <div
-                      class="modal-dialog modal-dialog-centered"
-                      role="document"
-                    >
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title">근무자 초대하기</h5>
+                    <div className="modal-content">
+                      <div className="modal-header">
+                        <h5 className="modal-title">근무자 초대하기</h5>
+                        <button
+                          type="button"
+                          className="close"
+                          data-dismiss="modal"
+                          aria-label="Close"
+                        >
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div className="modal-body m-3">
+                        <form id="validation-invite-form">
+                          <input type="hidden" />
+                          <div className="form-group">
+                            이름
+                            <input
+                              type="text"
+                              className="form-control"
+                              name="inviteName"
+                              placeholder="이름을 입력해주세요"
+                            />{' '}
+                            <br />
+                            이메일
+                            <input
+                              type="text"
+                              className="form-control"
+                              id="inviteEmail"
+                              placeholder="이메일을 입력해주세요"
+                            />
+                          </div>
+                        </form>
+                        <div className="modal-footer">
                           <button
                             type="button"
-                            class="close"
+                            className="btn btn-primary"
                             data-dismiss="modal"
-                            aria-label="Close"
                           >
-                            <span aria-hidden="true">&times;</span>
+                            Close
                           </button>
-                        </div>
-                        <div class="modal-body m-3">
-                          <form id="validation-invite-form">
-                            <input type="hidden" />
-                            <div class="form-group">
-                              <label class="form-label">이름</label>
-                              <input
-                                type="text"
-                                class="form-control"
-                                id="inviteName"
-                                name="inviteName"
-                                placeholder="이름을 입력해주세요"
-                              />{' '}
-                              <br />
-                              <label class="form-label">이메일</label>
-                              <input
-                                type="text"
-                                class="form-control"
-                                id="inviteEmail"
-                                name="inviteEmail"
-                                placeholder="이메일을 입력해주세요"
-                              />
-                            </div>
-                          </form>
-                          <div class="modal-footer">
-                            <button
-                              type="button"
-                              class="btn btn-primary"
-                              data-dismiss="modal"
-                            >
-                              Close
-                            </button>
-                            <button
-                              type="button"
-                              class="btn btn-primary"
-                              id="inviteBtn"
-                            >
-                              초대하기
-                            </button>
-                          </div>
+                          <button type="button" className="btn btn-primary">
+                            초대하기
+                          </button>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div class="row">
-                    <div class="col-sm-12">
-                      <form>
-                        <input type="hidden" id="employNo-input" name="no" />
-                        <table
-                          id="datatables-buttons"
-                          class="table table-striped dataTable no-footer dtr-inline"
-                          role="grid"
-                          aria-describedby="datatables-buttons_info"
-                        >
-                          <thead>
-                            <tr role="row">
-                              <th>이름</th>
-                              <th>휴대폰 번호</th>
-                              <th>이메일</th>
-                              <th>급여</th>
-                              <th>상태</th>
-                              <th>관리</th>
-                              <th></th>
-                            </tr>
-                          </thead>
-                          <tbody id="table_body">
-                            {!loading && employs !== null ? (
-                              employs.map((employ, index) => (
-                                <EmployTableBody
-                                  key={index}
-                                  employ={employ}
-                                ></EmployTableBody>
-                              ))
-                            ) : (
-                              <>
-                                <tr role="row">
-                                  <td colSpan="4">등록된 고용이 없습니다.</td>
-                                </tr>
-                              </>
-                            )}
-                          </tbody>
-                        </table>
-                      </form>
-                      <div
-                        class="modal fade"
-                        id="resendInviteModal"
-                        tabindex="-1"
-                        role="dialog"
-                        aria-hidden="true"
+                </div>
+                <div className="row">
+                  <div className="col-sm-12">
+                    <form>
+                      <input type="hidden" name="no" />
+                      <table
+                        className="table table-striped dataTable no-footer dtr-inline"
+                        role="grid"
+                        aria-describedby="datatables-buttons_info"
                       >
-                        <div
-                          class="modal-dialog modal-dialog-centered"
-                          role="document"
-                        >
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title">다시 초대하기</h5>
-                              <button
-                                type="button"
-                                class="close"
-                                data-dismiss="modal"
-                                aria-label="Close"
-                              >
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>
-                            <div class="modal-body m-3">
-                              <form id="validation-reinvite-form">
-                                <div class="form-group">
-                                  <label class="form-label">이메일</label>
-                                  <input
-                                    type="text"
-                                    class="form-control"
-                                    id="resendInviteEmail"
-                                    name="reInviteEmail"
-                                    placeholder="이메일을 입력해주세요"
-                                  />
-                                </div>
-                              </form>
-                            </div>
-                            <div class="modal-footer">
-                              <button
-                                type="button"
-                                class="btn btn-primary"
-                                data-dismiss="modal"
-                              >
-                                Close
-                              </button>
-                              <button
-                                type="button"
-                                class="btn btn-primary"
-                                id="resendInviteBtn"
-                              >
-                                초대하기
-                              </button>
-                            </div>
+                        <thead>
+                          <tr role="row">
+                            <th>이름</th>
+                            <th>휴대폰 번호</th>
+                            <th>이메일</th>
+                            <th>급여</th>
+                            <th>상태</th>
+                            <th>관리</th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tbody id="table_body">
+                          {!loading && employs !== null ? (
+                            employs.map((employ, index) => (
+                              <EmployTableBody
+                                key={index}
+                                employ={employ}
+                              ></EmployTableBody>
+                            ))
+                          ) : (
+                            <>
+                              <tr role="row">
+                                <td colSpan="4">등록된 고용이 없습니다.</td>
+                              </tr>
+                            </>
+                          )}
+                        </tbody>
+                      </table>
+                    </form>
+                    <div
+                      className="modal fade"
+                      tabIndex="-1"
+                      role="dialog"
+                      aria-hidden="true"
+                    >
+                      <div
+                        className="modal-dialog modal-dialog-centered"
+                        role="document"
+                      >
+                        <div className="modal-content">
+                          <div className="modal-header">
+                            <h5 className="modal-title">다시 초대하기</h5>
+                            <button
+                              type="button"
+                              className="close"
+                              data-dismiss="modal"
+                              aria-label="Close"
+                            >
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div className="modal-body m-3">
+                            <form id="validation-reinvite-form">
+                              <div className="form-group">
+                                이메일
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  name="reInviteEmail"
+                                  placeholder="이메일을 입력해주세요"
+                                />
+                              </div>
+                            </form>
+                          </div>
+                          <div className="modal-footer">
+                            <button
+                              type="button"
+                              className="btn btn-primary"
+                              data-dismiss="modal"
+                            >
+                              Close
+                            </button>
+                            <Button type="button" className="btn btn-primary">
+                              초대하기
+                            </Button>
                           </div>
                         </div>
                       </div>

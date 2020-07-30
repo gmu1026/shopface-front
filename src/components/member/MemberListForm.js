@@ -16,74 +16,73 @@ const MemberTableBody = ({ member }) => {
 
 const MemberListForm = ({ members, memberError, loading }) => {
   return (
-    <div className="content">
-      <div className="container-fluid p-0">
-        <h1 className="h3 mb-3">회원 목록</h1>
-        <div className="row">
-          <div className="col-12">
-            <div className="card">
-              <div className="card-body">
-                <div className="dataTables_wrapper dt-bootstrap4 no-footer">
-                  <div className="row">
-                    <div className="col-sm-12 col-md-8">비활성화 근무자</div>
-                    <div className="col-sm-12 col-md-4">
-                      <div className="row">
-                        <div className="form-inline col">
-                          <div className="form-inline col-12"></div>
-                          이름 :
-                          <input
-                            type="text"
-                            name="searchQuery"
-                            className="form-control form-control-sm mr-1 ml-1"
-                            placeholder=""
-                            aria-controls="datatables-buttons"
-                          />
-                          <input
-                            type="button"
-                            className="btn btn-primary mr-1 ml-1"
-                            name="searchButton"
-                            value="검색"
-                          />
-                        </div>
+    <div className="container-fluid p-0">
+      <h1 className="h3 mb-3">회원 목록</h1>
+      <div className="row">
+        <div className="col-12">
+          <div className="card">
+            <div className="card-body">
+              <div className="dataTables_wrapper dt-bootstrap4 no-footer">
+                <div className="row">
+                  <div className="col-sm-12 col-md-8">비활성화 근무자</div>
+                  <div className="col-sm-12 col-md-4">
+                    <div className="row">
+                      <div className="form-inline col">
+                        <div className="form-inline col-12"></div>
+                        이름 :
+                        <input
+                          type="text"
+                          name="searchQuery"
+                          className="form-control form-control-sm mr-1 ml-1"
+                          placeholder=""
+                          aria-controls="datatables-buttons"
+                        />
+                        <input
+                          type="button"
+                          className="btn btn-primary mr-1 ml-1"
+                          name="searchButton"
+                          value="검색"
+                        />
                       </div>
                     </div>
                   </div>
-                  <div className="row">
-                    <div className="col-sm-12">
-                      <table
-                        id="datatables-buttons"
-                        className="table table-striped dataTable no-footer dtr-inline"
-                        // style="width: 100%;"
-                        role="grid"
-                        aria-describedby="datatables-buttons_info"
-                      >
-                        <thead>
-                          <tr role="row">
-                            <th>이름</th>
-                            <th>휴대폰 번호</th>
-                            <th>이메일</th>
-                            <th>구분</th>
-                            <th>상태</th>
-                          </tr>
-                        </thead>
-                        <tbody id="table_body">
-                          {members !== null ? (
-                            members.map((member, index) => (
-                              <MemberTableBody
-                                key={index}
-                                member={member}
-                              ></MemberTableBody>
-                            ))
-                          ) : (
-                            <>
-                              <tr role="row">
-                                <td colSpan="4">등록된 회원이 없습니다.</td>
-                              </tr>
-                            </>
-                          )}
-                        </tbody>
-                      </table>
-                    </div>
+                </div>
+                <div className="row">
+                  <div className="col-sm-12">
+                    <table
+                      id="datatables-buttons"
+                      className="table table-striped dataTable no-footer dtr-inline"
+                      // style="width: 100%;"
+                      role="grid"
+                      aria-describedby="datatables-buttons_info"
+                    >
+                      <thead>
+                        <tr role="row">
+                          <th>이름</th>
+                          <th>휴대폰 번호</th>
+                          <th>이메일</th>
+                          <th>구분</th>
+                          <th>상태</th>
+                        </tr>
+                      </thead>
+                      <tbody id="table_body">
+                        {!loading && members !== null ? (
+                          members.map((member, index) => (
+                            <MemberTableBody
+                              key={index}
+                              member={member}
+                            ></MemberTableBody>
+                          ))
+                        ) : (
+                          <>
+                            <tr role="row">
+                              <td colSpan="4">등록된 회원이 없습니다.</td>
+                            </tr>
+                          </>
+                        )}
+                      </tbody>
+                    </table>
+                    {!loading && <div>test</div>}
                   </div>
                 </div>
               </div>
