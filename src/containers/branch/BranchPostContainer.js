@@ -7,6 +7,8 @@ import {
   initializeForm,
 } from '../../modules/branch/branchPost';
 import { withRouter } from 'react-router-dom';
+import { checkExpire } from '../../lib/api/common/authAPI';
+import { logout } from '../../modules/common/auth';
 
 const BranchPostContainer = ({ history }) => {
   const [error, setError] = useState(null);
@@ -18,23 +20,24 @@ const BranchPostContainer = ({ history }) => {
   const openModal = () => setShow(true);
 
   const dispatch = useDispatch();
-  const { branchPost, postResult, postError } = useSelector(
-    ({ branchPost }) => ({
+  const { branchPost, postResult, postError, user } = useSelector(
+    ({ branchPost, auth }) => ({
       branchPost: branchPost.post,
       postResult: branchPost.postResult,
       postError: branchPost.postError,
+      user: auth.user,
     }),
   );
 
-   const onChange = (e) => {
-     const { name, value } = e.target;
-     dispatch(
-       changeInput({
-         key: name,
-         value,
-       }),
-     );
-   };
+  const onChange = (e) => {
+    const { name, value } = e.target;
+    dispatch(
+      changeInput({
+        key: name,
+        value,
+      }),
+    );
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -92,8 +95,15 @@ const BranchPostContainer = ({ history }) => {
   }, [postError]);
 
   useEffect(() => {
+    if (user !== null) {
+      checkExpire().then((isExpired) => {
+        if (isExpired) {
+          dispatch(logout());
+        }
+      });
+    }
     dispatch(initializeForm('post'));
-  }, [dispatch]);
+  }, [dispatch, user]);
 
   return (
     <BranchPostForm

@@ -7,6 +7,8 @@ import {
   initializeForm,
 } from '../../modules/occupation/occupationPost';
 import { withRouter } from 'react-router-dom';
+import { checkExpire } from '../../lib/api/common/authAPI';
+import { logout } from '../../modules/common/auth';
 
 const OccupationPostContainer = ({ history }) => {
   const [error, setError] = useState(null);
@@ -22,10 +24,12 @@ const OccupationPostContainer = ({ history }) => {
     occupationPost,
     occupationPostResult,
     occupationPostError,
-  } = useSelector(({ occupationPost }) => ({
+    user,
+  } = useSelector(({ occupationPost, auth }) => ({
     occupationPost: occupationPost.occupationPost,
     occupationPostResult: occupationPost.occupationPostResult,
     occupationPostError: occupationPost.occupationPostError,
+    user: auth.user,
   }));
 
   const onChange = (e) => {
@@ -83,8 +87,15 @@ const OccupationPostContainer = ({ history }) => {
   }, [occupationPostError]);
 
   useEffect(() => {
-    dispatch(initializeForm('post'));
-  }, [dispatch]);
+    if (user !== null) {
+      checkExpire().then((isExpired) => {
+        if (isExpired) {
+          dispatch(logout());
+        }
+      });
+      dispatch(initializeForm('post'));
+    }
+  }, [dispatch, user]);
 
   return (
     <OccupationListForm

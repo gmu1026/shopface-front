@@ -49,9 +49,9 @@ export const checkExpire = async () => {
   let isExpired = false;
   await Auth.currentSession()
     .then((session) => {
-      var AccessTokenExpire = session.getAccessToken().getExpiration();
-      var currentTimeSeconds = Math.round(+new Date() / 1000);
-      if (AccessTokenExpire < currentTimeSeconds) {
+      const accessTokenExpire = session.getAccessToken().getExpiration();
+      const currentTimeSeconds = Math.round(+new Date() / 1000);
+      if (accessTokenExpire < currentTimeSeconds) {
         return (isExpired = true);
       }
     })

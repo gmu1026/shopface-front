@@ -9,9 +9,10 @@ import {
   initializeResult,
 } from '../../modules/branch/branchDetail';
 import { withRouter } from 'react-router-dom';
+import { checkExpire } from '../../lib/api/common/authAPI';
+import { logout } from '../../modules/common/auth';
 
 const BranchDetailContainer = ({ match, history }) => {
-  const [no, setNo] = useState('');
   const [error, setError] = useState(null);
   const [zoneCode, setZoneCode] = useState('');
   const [address, setAddress] = useState('');
@@ -84,6 +85,11 @@ const BranchDetailContainer = ({ match, history }) => {
 
   useEffect(() => {
     if (user !== null) {
+      checkExpire().then((isExpired) => {
+        if (isExpired) {
+          dispatch(logout());
+        }
+      });
       const url = match.url;
       const no = url.substring(url.lastIndexOf('/') + 1);
 

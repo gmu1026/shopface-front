@@ -1,6 +1,5 @@
-import Container from '@material-ui/core/Container';
 import Drawer from '@material-ui/core/Drawer';
-import { makeStyles, StylesProvider } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, withRouter } from 'react-router-dom';
@@ -19,8 +18,6 @@ import OccupationPage from './pages/occupation/OccupationPage';
 import RecordPage from './pages/record/RecordPage';
 import SchedulePage from './pages/schedule/SchedulePage';
 import TimetablePage from './pages/timetable/TimetablePage';
-import styled from 'styled-components';
-import context from '../node_modules/react-bootstrap/esm/AccordionContext';
 
 const App = ({ history, match }) => {
   const dispatch = useDispatch();
@@ -42,7 +39,7 @@ const App = ({ history, match }) => {
     } else {
       history.push('/login');
     }
-  }, [history, user]);
+  }, [history, user, dispatch]);
 
   if (
     window.location.pathname === '/login' ||
