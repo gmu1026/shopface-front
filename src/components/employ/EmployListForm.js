@@ -15,7 +15,15 @@ const EmployTableBody = ({ employ }) => {
   );
 };
 
-const EmployListForm = ({ employs, employError, loading }) => {
+const EmployListForm = ({
+  employs,
+  employError,
+  loading,
+  onChange,
+  onSearch,
+  onKeyPress,
+  filterEmploys,
+}) => {
   return (
     <div className="container-fluid p-0">
       <h1 className="h3 mb-3">근무자 관리</h1>
@@ -36,18 +44,20 @@ const EmployListForm = ({ employs, employError, loading }) => {
                       <div className="form-inline col ml-6">
                         이름:
                         <input
-                          type="search"
+                          type="text"
                           className="form-control form-control-sm mr-1 ml-1"
                           placeholder=""
                           aria-controls="datatables-buttons"
+                          name="name"
+                          onChange={onChange}
+                          onKeyPress={onKeyPress}
                         />
-                        <button
-                          type="button"
+                        <Button
                           className="btn btn-primary mr-1 ml-1"
-                          name="searchButton"
+                          onClick={onSearch}
                         >
                           검색
-                        </button>
+                        </Button>
                         <button
                           type="button"
                           className="btn btn-primary mr-1 ml-1"
@@ -122,7 +132,6 @@ const EmployListForm = ({ employs, employError, loading }) => {
                 <div className="row">
                   <div className="col-sm-12">
                     <form>
-                      <input type="hidden" name="no" />
                       <table
                         className="table table-striped dataTable no-footer dtr-inline"
                         role="grid"
@@ -137,8 +146,16 @@ const EmployListForm = ({ employs, employError, loading }) => {
                             <th>상태</th>
                           </tr>
                         </thead>
+
                         <tbody id="table_body">
-                          {employs !== null ? (
+                          {filterEmploys !== null ? (
+                            filterEmploys.map((filterEmploy, index) => (
+                              <EmployTableBody
+                                key={index}
+                                employ={filterEmploy}
+                              ></EmployTableBody>
+                            ))
+                          ) : employs !== null ? (
                             employs.map((employ, index) => (
                               <EmployTableBody
                                 key={index}
@@ -148,7 +165,7 @@ const EmployListForm = ({ employs, employError, loading }) => {
                           ) : (
                             <>
                               <tr role="row">
-                                <td colSpan="4">등록된 고용이 없습니다.</td>
+                                <td colSpan="4">등록된 회원이 없습니다.</td>
                               </tr>
                             </>
                           )}

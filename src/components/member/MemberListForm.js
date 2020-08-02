@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from '../common/Button';
 
 const MemberTableBody = ({ member }) => {
   return (
@@ -14,7 +15,16 @@ const MemberTableBody = ({ member }) => {
   );
 };
 
-const MemberListForm = ({ members, memberError, loading }) => {
+const MemberListForm = ({
+  members,
+  memberError,
+  loading,
+  onChange,
+  onSearch,
+  onKeyPress,
+  filterMembers,
+  searchRef,
+}) => {
   return (
     <div className="container-fluid p-0">
       <h1 className="h3 mb-3">회원 목록</h1>
@@ -32,17 +42,18 @@ const MemberListForm = ({ members, memberError, loading }) => {
                         이름 :
                         <input
                           type="text"
-                          name="searchQuery"
+                          name="name"
                           className="form-control form-control-sm mr-1 ml-1"
-                          placeholder=""
                           aria-controls="datatables-buttons"
+                          onChange={onChange}
+                          onKeyPress={onKeyPress}
                         />
-                        <input
-                          type="button"
+                        <Button
                           className="btn btn-primary mr-1 ml-1"
-                          name="searchButton"
-                          value="검색"
-                        />
+                          onClick={onSearch}
+                        >
+                          검색
+                        </Button>
                       </div>
                     </div>
                   </div>
@@ -66,7 +77,14 @@ const MemberListForm = ({ members, memberError, loading }) => {
                         </tr>
                       </thead>
                       <tbody id="table_body">
-                        {members !== null ? (
+                        {filterMembers !== null ? (
+                          filterMembers.map((filterMember, index) => (
+                            <MemberTableBody
+                              key={index}
+                              member={filterMember}
+                            ></MemberTableBody>
+                          ))
+                        ) : members !== null ? (
                           members.map((member, index) => (
                             <MemberTableBody
                               key={index}

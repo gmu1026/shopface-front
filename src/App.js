@@ -39,7 +39,7 @@ const App = ({ history, match }) => {
     } else {
       history.push('/login');
     }
-  }, [history, user, dispatch]);
+  }, [history, user]);
 
   if (
     window.location.pathname === '/login' ||
