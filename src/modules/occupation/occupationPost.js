@@ -31,7 +31,7 @@ export const initializeForm = createAction(
 const initialState = {
   post: {
     name: '',
-    color: '',
+    color: '#967373',
   },
   occupationPostResult: null,
   occupationPostError: null,

@@ -19,7 +19,7 @@ const OccupationTableBody = ({ occupation }) => {
       <tr role="row">
         <td>{occupation.name}</td>
         <td>
-          <div className="btn btn-primary">{occupation.color}</div>
+          <input type="color" value={occupation.color} />
         </td>
         <td>
           <Button className="btn btn-primary">수정</Button>
@@ -82,7 +82,6 @@ const OccupationListForm = ({
                       <div className="ml-4 mr-2">
                         <ErrorMessage>{error}</ErrorMessage>
                         <Button
-                          type="button"
                           className="btn btn-primary"
                           id="post-button"
                           name="postBtn"
@@ -170,7 +169,7 @@ const OccupationListForm = ({
                             <div className="modal-body m-3">
                               색상:
                               <input
-                                type="text"
+                                type="color"
                                 id="modal-color"
                                 name="modalColor"
                                 onChange={onChange}

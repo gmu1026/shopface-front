@@ -24,7 +24,6 @@ const OccupationPostContainer = ({ history }) => {
     occupationPost,
     occupationPostResult,
     occupationPostError,
-    user,
   } = useSelector(({ occupationPost, auth }) => ({
     occupationPost: occupationPost.occupationPost,
     occupationPostResult: occupationPost.occupationPostResult,
@@ -86,16 +85,16 @@ const OccupationPostContainer = ({ history }) => {
     }
   }, [occupationPostError]);
 
-  useEffect(() => {
-    if (user !== null) {
-      checkExpire().then((isExpired) => {
-        if (isExpired) {
-          dispatch(logout());
-        }
-      });
-      dispatch(initializeForm('post'));
-    }
-  }, [dispatch, user]);
+  // useEffect(() => {
+  //   if (user !== null) {
+  //     checkExpire().then((isExpired) => {
+  //       if (isExpired) {
+  //         dispatch(logout());
+  //       }
+  //     });
+  //     dispatch(initializeForm('post'));
+  //   }
+  // }, [dispatch, user]);
 
   return (
     <OccupationListForm
