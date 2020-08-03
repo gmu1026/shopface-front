@@ -1,9 +1,12 @@
 import React from 'react';
+import { Route, Switch } from 'react-router-dom';
+import MemberDetailContainer from '../../containers/member/MemberDetailContainer';
 import MemberListContainer from '../../containers/member/MemberListContainer';
-const MemberPage = () => {
+const MemberPage = ({ match }) => {
   return (
     <div>
-      <MemberListContainer />
+      <Route path={match.url} component={MemberListContainer} exact />
+      <Route path={`${match.url}/:id`} component={MemberDetailContainer} />
     </div>
   );
 };

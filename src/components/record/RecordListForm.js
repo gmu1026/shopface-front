@@ -4,19 +4,12 @@ const RecordTableBody = ({ record }) => {
   return (
     <>
       <tr role="row">
-        <td>{record.no}</td>
-        <td>{record.businessmanId}</td>
-        <td>{record.branchNo}</td>
+        <td>{record.occupationName}</td>
         <td>{record.branchName}</td>
-        <td>{record.branchPhone}</td>
-        <td>{record.memberId}</td>
         <td>{record.memberName}</td>
-        <td>{record.memberPhone}</td>
         <td>{record.workingStartTime}</td>
-        <td>{record.workingEndTime}</td>
         <td>{record.workingTime}</td>
         <td>{record.quittingTime}</td>
-        <td>{record.occupationName}</td>
         <td>{record.salayPlan}</td>
         <td>{record.salayPay}</td>
         <td>{record.evaluation}</td>
@@ -80,7 +73,20 @@ const RecordListForm = ({ records, recordError, loading }) => {
                         role="grid"
                         aria-describedby="datatables-buttons_info"
                       >
-                        <thead id="table_head"></thead>
+                        <thead id="table_head">
+                          <tr>
+                            <th>업무 명</th>
+                            <th>사업자 명</th>
+                            <th>근무자 명</th>
+                            <th>근무 시간</th>
+                            <th>출근 시간</th>
+                            <th>퇴근 시간</th>
+                            <th>급여(예상)</th>
+                            <th>급여(지급)</th>
+                            <th>평점</th>
+                            <th>비고</th>
+                          </tr>
+                        </thead>
                         <tbody id="table_body">
                           {records !== null ? (
                             records.map((record, index) => (
