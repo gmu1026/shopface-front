@@ -51,9 +51,10 @@ export const branchPost = handleActions(
       produce(state, (draft) => {
         draft['post'][key] = value;
       }),
-    [INITIALIZE_FORM]: (state, { payload: initForm }) => ({
+    [INITIALIZE_FORM]: (state) => ({
       ...state,
-      [initForm]: initialState[initForm],
+      post: initialState['post'],
+      postResult: null,
     }),
     [BRANCH_POST_SUCCESS]: (state, { payload: { message } }) => ({
       ...state,

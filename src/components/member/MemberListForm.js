@@ -11,8 +11,8 @@ const MemberTableBody = ({ member }) => {
         </td>
         <td>{member.phone}</td>
         <td>{member.email}</td>
-        <td>{member.type}</td>
-        <td>{member.state}</td>
+        <td>{member.type === 'B' ? '사업자' : '회원'}</td>
+        <td>{member.state === 'A' ? '활성화' : '비활성화'}</td>
       </tr>
     </>
   );

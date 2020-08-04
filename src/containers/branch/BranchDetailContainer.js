@@ -17,6 +17,7 @@ const BranchDetailContainer = ({ match, history }) => {
   const [zoneCode, setZoneCode] = useState('');
   const [address, setAddress] = useState('');
   const [show, setShow] = useState(false);
+  const [imgFile, setImgFile] = useState(null);
 
   const closeModal = () => setShow(false);
   const openModal = () => setShow(true);
@@ -46,6 +47,9 @@ const BranchDetailContainer = ({ match, history }) => {
 
   const onChange = (e) => {
     const { name, value } = e.target;
+    if (name === 'licenseImage') {
+      setImgFile(e.target.files[0]);
+    }
     dispatch(
       changeInput({
         key: name,
@@ -57,7 +61,7 @@ const BranchDetailContainer = ({ match, history }) => {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    const data = originBranch;
+    let data = originBranch;
     if (
       [
         data.name,
@@ -72,14 +76,20 @@ const BranchDetailContainer = ({ match, history }) => {
       return;
     }
 
-    const url = match.url;
-    const no = url.substring(url.lastIndexOf('/') + 1);
-    dispatch(branchUpdate({ no, data }));
+    const formData = new FormData();
+    formData.append('name', data.name);
+    formData.append('phone', data.phone);
+    formData.append('address', data.address);
+    formData.append('detailAddress', data.detailAddress);
+    formData.append('zipCode', data.zipCode);
+    formData.append('licenseImage', imgFile);
+
+    const no = match.params.no;
+    dispatch(branchUpdate({ no, formData }));
   };
 
   const onDelete = () => {
-    const url = match.url;
-    const no = url.substring(url.lastIndexOf('/') + 1);
+    const no = match.params.no;
     dispatch(branchDelete({ no }));
   };
 
@@ -90,12 +100,10 @@ const BranchDetailContainer = ({ match, history }) => {
           dispatch(logout());
         }
       });
-      const url = match.url;
-      const no = url.substring(url.lastIndexOf('/') + 1);
-
+      const no = match.params.no;
       dispatch(getbranchDetail({ no }));
     }
-  }, [dispatch, match.url, user]);
+  }, [dispatch, match.params.no, user]);
 
   useEffect(() => {
     if (branchResult === 'Success') {

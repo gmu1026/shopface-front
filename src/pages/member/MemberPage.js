@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import MemberDetailContainer from '../../containers/member/MemberDetailContainer';
 import MemberListContainer from '../../containers/member/MemberListContainer';
 const MemberPage = ({ match }) => {

@@ -1,11 +1,14 @@
 import React from 'react';
 import EmployListContainer from '../../containers/employ/EmployListContainer';
-const EmployPage = () => {
+import { Route, withRouter } from 'react-router-dom';
+import EmployDetailContainer from '../../containers/employ/EmployDetailContainer';
+const EmployPage = ({ match }) => {
   return (
     <div>
-      <EmployListContainer />
+      <Route path={match.url} component={EmployListContainer} exact />
+      <Route path={`${match.url}/:no`} component={EmployDetailContainer} />
     </div>
   );
 };
 
-export default EmployPage;
+export default withRouter(EmployPage);

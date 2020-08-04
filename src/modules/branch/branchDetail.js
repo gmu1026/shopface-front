@@ -36,9 +36,9 @@ export const initializeResult = createAction(INITIALIZE_RESULT);
 export const getbranchDetail = createAction(BRANCH_DETAIL, ({ no }) => ({
   no,
 }));
-export const branchUpdate = createAction(BRANCH_UPDATE, ({ no, data }) => ({
+export const branchUpdate = createAction(BRANCH_UPDATE, ({ no, formData }) => ({
   no,
-  data,
+  formData,
 }));
 export const branchDelete = createAction(BRANCH_DELETE, ({ no }) => ({
   no,
@@ -50,7 +50,7 @@ export const getBranchSaga = createRequestSaga(
 );
 export const branchUpdateSaga = createRequestSaga(
   BRANCH_UPDATE,
-  branchAPI.updataBranch,
+  branchAPI.putBranch,
 );
 export const branchDeleteSaga = createRequestSaga(
   BRANCH_DELETE,
