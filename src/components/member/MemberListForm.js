@@ -1,15 +1,18 @@
 import React from 'react';
 import Button from '../common/Button';
+import { Link } from 'react-router-dom';
 
 const MemberTableBody = ({ member }) => {
   return (
     <>
       <tr role="row">
-        <td>{member.name}</td>
+        <td>
+          <Link to={`/member/${member.id}`}>{member.name}</Link>
+        </td>
         <td>{member.phone}</td>
         <td>{member.email}</td>
-        <td>{member.type}</td>
-        <td>{member.state}</td>
+        <td>{member.type === 'B' ? '사업자' : '회원'}</td>
+        <td>{member.state === 'A' ? '활성화' : '비활성화'}</td>
       </tr>
     </>
   );

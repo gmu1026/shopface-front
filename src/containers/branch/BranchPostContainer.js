@@ -84,9 +84,10 @@ const BranchPostContainer = ({ history }) => {
 
   useEffect(() => {
     if (postResult === 'Success') {
+      dispatch(initializeForm('post'));
       history.push('/branch');
     }
-  }, [history, postResult]);
+  }, [history, dispatch, postResult]);
 
   useEffect(() => {
     if (postError !== null) {

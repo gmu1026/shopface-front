@@ -7,6 +7,7 @@ import auth, { authSaga } from './common/auth';
 import loading from './common/loading';
 import employList, { employSaga } from './employ/employList';
 import memberList, { memberSaga } from './member/memberList';
+import memberDetail, { memberDetailSaga } from './member/memberDetail';
 import occupationList, { occupationSaga } from './occupation/occupationList';
 import occupationPost, {
   occupationPostSaga,
@@ -32,6 +33,7 @@ const rootReducer = combineReducers({
   recordList,
   employList,
   branchDetail,
+  memberDetail,
 });
 
 export function* rootSaga() {
@@ -47,6 +49,7 @@ export function* rootSaga() {
     memberSaga(),
     recordSaga(),
     employSaga(),
+    memberDetailSaga(),
   ]);
 }
 

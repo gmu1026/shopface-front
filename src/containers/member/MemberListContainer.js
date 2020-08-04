@@ -23,13 +23,16 @@ const MemberListContainer = ({ history }) => {
     const value = e.target.value;
     dispatch(changeInput(value));
   };
+
   const onSearch = () => {
     const searchName = name;
     const filterMembers = members.filter((member) =>
       member.name.toLowerCase().includes(searchName),
     );
+
     setFilterMembers(filterMembers);
   };
+
   const onKeyPress = (e) => {
     if (e.key === 'Enter') {
       onSearch();

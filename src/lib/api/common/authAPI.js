@@ -7,7 +7,7 @@ export const login = async ({ id, password }) => {
     const name = user.signInUserSession.idToken.payload.email;
     const jwt = user.signInUserSession.idToken.jwtToken;
 
-    return { data: { user: { name, jwt } } };
+    return { user: { name, jwt } };
   } catch (error) {
     console.log(error.message);
 
@@ -21,7 +21,7 @@ export const logout = async () => {
   });
   try {
     localStorage.removeItem('user');
-    return { data: { message: 'Success' } };
+    return { message: 'Success' };
   } catch (error) {
     throw new Error('로그아웃 실패');
   }
@@ -61,39 +61,3 @@ export const checkExpire = async () => {
     });
   return isExpired;
 };
-
-/* const checkExpire = () => {
-  axios.interceptors.request.use(function (config) {
-    return new Promise((resolve, reject) => {
-      Auth.currentSession()
-        .then((session) => {
-          var idTokenExpire = session.getIdToken().getExpiration();
-          var refreshToken = session.getRefreshToken();
-          var currentTimeSeconds = Math.round(+new Date() / 1000);
-          if (idTokenExpire < currentTimeSeconds) {
-            Auth.signOut({ global: true });
-            Auth.currentAuthenticatedUser().then((res) => {
-              res.refreshSession(refreshToken, (err, data) => {
-                if (err) {
-                  Auth.signOut();
-                } else {
-                  config.headers.Authorization =
-                    'Bearer ' + data.getIdToken().getJwtToken();
-                  resolve(config);
-                }
-              });
-            });
-          } else {
-            config.headers.Authorization =
-              'Bearer ' + session.getIdToken().getJwtToken();
-            resolve(config);
-          }
-        })
-        .catch(() => {
-          // No logged-in user: don't set auth header
-          resolve(config);
-        });
-    });
-  });
-};
- */

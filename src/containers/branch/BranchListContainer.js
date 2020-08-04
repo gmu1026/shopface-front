@@ -6,12 +6,12 @@ import { withRouter } from 'react-router-dom';
 import { checkExpire } from '../../lib/api/common/authAPI';
 import { logout } from '../../modules/common/auth';
 
-const BranchListContainer = ({ history }) => {
+const BranchListContainer = () => {
   const [show, setShow] = useState(false);
-
   const closeModal = () => setShow(false);
   const openModal = () => setShow(true);
 
+  const dispatch = useDispatch();
   const { branchs, branchError, loading, user } = useSelector(
     ({ branchList, loading, auth }) => ({
       branchs: branchList.branchs,
@@ -20,7 +20,6 @@ const BranchListContainer = ({ history }) => {
       user: auth.user,
     }),
   );
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (user !== null) {
@@ -29,7 +28,8 @@ const BranchListContainer = ({ history }) => {
           dispatch(logout());
         }
       });
-      dispatch(getBranchList());
+      const { name } = { user };
+      dispatch(getBranchList({ name }));
     }
   }, [dispatch, user]);
 

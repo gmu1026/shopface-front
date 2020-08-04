@@ -9,7 +9,13 @@ const EmployTableBody = ({ employ }) => {
         <td>{employ.phone}</td>
         <td>{employ.email}</td>
         <td>{employ.salary}</td>
-        <td>{employ.state}</td>
+        <td>
+          {employ.state === 'B'
+            ? '초대'
+            : employ.state === 'C'
+            ? '합류'
+            : '비활성화'}
+        </td>
       </tr>
     </>
   );
