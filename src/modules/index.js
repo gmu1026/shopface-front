@@ -11,6 +11,12 @@ import occupationList, { occupationSaga } from './occupation/occupationList';
 import occupationPost, {
   occupationPostSaga,
 } from './occupation/occupationPost';
+import occupationUpdate, {
+  occupationUpdateSaga,
+} from './occupation/occupationUpdate';
+import occupationDelete, {
+  occupationDeleteSaga,
+} from './occupation/occupationDelete';
 import recordList, { recordSaga } from './record/recordList';
 
 const rootReducer = combineReducers({
@@ -20,6 +26,8 @@ const rootReducer = combineReducers({
   branchPost,
   occupationList,
   occupationPost,
+  occupationUpdate,
+  occupationDelete,
   memberList,
   recordList,
   employList,
@@ -33,7 +41,9 @@ export function* rootSaga() {
     branchPostSaga(),
     branchDetailSaga(),
     occupationSaga(),
-    occupationPostSaga,
+    occupationPostSaga(),
+    occupationUpdateSaga(),
+    occupationDeleteSaga(),
     memberSaga(),
     recordSaga(),
     employSaga(),

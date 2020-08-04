@@ -1,8 +1,7 @@
 import React from 'react';
 import Button from '../common/Button';
 import styled from 'styled-components';
-import Modal from '../../../node_modules/react-bootstrap/esm/Modal';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 // import spectrum from '../../spect';
 
 const ErrorMessage = styled.div`
@@ -13,17 +12,17 @@ const ErrorMessage = styled.div`
   margin-left: 1rem;
 `;
 
-const OccupationTableBody = ({ occupation }) => {
+const OccupationTableBody = ({ occupation, onChange, onDelete }) => {
   return (
     <>
       <tr role="row">
         <td>{occupation.name}</td>
-        <td>
-          <input type="color" value={occupation.color} />
-        </td>
+        <td>{occupation.color}</td>
         <td>
           <Button className="btn btn-primary">수정</Button>
-          <Button className="btn btn-primary">삭제</Button>
+          <Button className="btn btn-primary" onClick={onDelete}>
+            삭제
+          </Button>
         </td>
       </tr>
     </>
@@ -38,9 +37,6 @@ const OccupationListForm = ({
   onChange,
   error,
   handleComplete,
-  show,
-  closeModal,
-  openModal,
   name,
   color,
 }) => {
@@ -53,7 +49,7 @@ const OccupationListForm = ({
             <div className="card">
               <div className="card-body">
                 <div className="col-sm-6">
-                  <form onSubmit={onsubmit}>
+                  <form onSubmit={onSubmit}>
                     <div className="row">
                       <div>
                         <div className="row"></div>
@@ -62,7 +58,6 @@ const OccupationListForm = ({
                           <input
                             type="text"
                             className="form-control ml-2 mr-2"
-                            id="occupation-input"
                             name="name"
                             onChange={onChange}
                           />
@@ -74,18 +69,14 @@ const OccupationListForm = ({
                         <input
                           className="form-control ml-2 mr-2"
                           type="color"
-                          id="occupation-color"
+                          id="color"
                           name="color"
                           onChange={onChange}
                         />
                       </div>
                       <div className="ml-4 mr-2">
                         <ErrorMessage>{error}</ErrorMessage>
-                        <Button
-                          className="btn btn-primary"
-                          id="post-button"
-                          name="postBtn"
-                        >
+                        <Button className="btn btn-primary" name="postBtn">
                           등록
                         </Button>
                       </div>
@@ -117,9 +108,6 @@ const OccupationListForm = ({
                               <OccupationTableBody
                                 key={index}
                                 occupation={occupation}
-                                show={show}
-                                closeModal={closeModal}
-                                openModal={openModal}
                               ></OccupationTableBody>
                             ))
                           ) : (
@@ -131,69 +119,6 @@ const OccupationListForm = ({
                           )}
                         </tbody>
                       </table>
-                      <Modal show={show} onHide={closeModal}>
-                        <Modal.Header closeButton>
-                          <Modal.Title>색상 변경</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>색상</Modal.Body>
-                        <Modal.Footer>
-                          <Button variant="secondary" onClick={closeModal}>
-                            Close
-                          </Button>
-                        </Modal.Footer>
-                      </Modal>
-                      <div
-                        className="modal fade"
-                        id="color-modal-form"
-                        tabIndex="-1"
-                        role="dialog"
-                        aria-hidden="true"
-                        style={{ display: 'none' }}
-                      >
-                        <div
-                          className="modal-dialog modal-dialog-centered"
-                          role="document"
-                        >
-                          <div className="modal-content">
-                            <div className="modal-header">
-                              <h5 className="modal-title">색상 선택</h5>
-                              <Button
-                                type="button"
-                                className="close"
-                                data-dismiss="modal"
-                                aria-label="Close"
-                              >
-                                <span aria-hidden="true">&times;</span>
-                              </Button>
-                            </div>
-                            <div className="modal-body m-3">
-                              색상:
-                              <input
-                                type="color"
-                                id="modal-color"
-                                name="modalColor"
-                                onChange={onChange}
-                              />
-                            </div>
-                            <div className="modal-footer">
-                              <Button
-                                type="button"
-                                className="btn btn-primary"
-                                data-dismiss="modal"
-                              >
-                                취소
-                              </Button>
-                              <Button
-                                type="button"
-                                className="btn btn-primary"
-                                id="change-color-button"
-                              >
-                                선택
-                              </Button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </div>

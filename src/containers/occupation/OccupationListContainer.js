@@ -11,36 +11,49 @@ import {
   initializeForm,
 } from '../../modules/occupation/occupationPost';
 
+import {
+  changeInputUpdate,
+  initializeResult,
+  updateOccupation,
+} from '../../modules/occupation/occupationUpdate';
+
+import { deleteOccupation } from '../../modules/occupation/occupationDelete';
+
 const OccupationListContainer = ({ history }) => {
   const [error, setError] = useState(null);
-  const [name, setName] = useState('');
-  const [color, setColor] = useState('');
-  const [show, setShow] = useState('');
-
-  const closeModal = () => setShow(false);
-  const openModal = () => setShow(true);
 
   const dispatch = useDispatch();
   const {
-    occupations,
-    occupationError,
-    loading,
     occupationPost,
     occupationPostResult,
     occupationPostError,
+    occupationUpdate,
+    occupationUpdateResult,
+    occupationUpdateError,
+    // occupationDelete,
     user,
-  } = useSelector(({ occupationList, loading, auth, occupationPost }) => ({
-    occupations: occupationList.occupations,
-    occupationError: occupationList.occupationError,
-    occupationPost: occupationPost.occupationPost,
-    occupationPostResult: occupationPost.occupationPostResult,
-    occupationPostError: occupationPost.occupationPostError,
-    loading: loading,
-    user: auth.user,
-  }));
+    occupations,
+    occupationError,
+    loading,
+  } = useSelector(
+    ({ occupationPost, auth, occupationUpdate, occupationList, loading }) => ({
+      occupations: occupationList.occupations,
+      occupationError: occupationList.occupationError,
+      occupationPost: occupationPost.post,
+      occupationPostResult: occupationPost.occupationPostResult,
+      occupationPostError: occupationPost.occupationPostError,
+      user: auth.user,
+      occupationUpdate: occupationUpdate.occupationUpdate,
+      occupationUpdateResult: occupationUpdate.occupationUpdateResult,
+      occupationUpdateError: occupationUpdate.occupationUpdateError,
+      //  occupationDelete: occupationDelete.occupations,
+      //  occupationDelteResult: occupationDelete.occupationResult,
+      //  occupationDeleteError: occupationDelete.occupationError,
+      loading: loading,
+    }),
+  );
 
   const onChange = (e) => {
-    console.log('rere');
     const { name, value } = e.target;
     dispatch(
       changeInput({
@@ -50,21 +63,12 @@ const OccupationListContainer = ({ history }) => {
     );
   };
 
-  const handleComplete = (data) => {
-    let value = data.name;
-    setName(value);
-    dispatch(changeInput({ key: 'name', value }));
-
-    value = data.color;
-    setColor(value);
-    dispatch(changeInput({ key: 'color', value }));
-
-    closeModal();
-  };
-
+  //등록
   const onSubmit = (e) => {
     e.preventDefault();
+
     const data = occupationPost;
+    console.log(data);
     if ([data.name, data.color].includes('')) {
       setError('빈 칸을 모두 입력하세요');
       return;
@@ -81,22 +85,32 @@ const OccupationListContainer = ({ history }) => {
     );
   };
 
-  useEffect(() => {
-    if (user !== null) {
-      checkExpire().then((isExpired) => {
-        if (isExpired) {
-          dispatch(logout());
-        }
-      });
-      dispatch(getOccupationList());
-    }
-  }, [dispatch, user]);
+  //  const onEdit = (e) => {
+  //    e.preventDefault();
+  //    const data = occupationUpdate;
+  //    if ([data.name, data.color].includes('')) {
+  //      setError('빈 칸을 모두 입력하세요');
+  //      return;
+  //    }
+
+  //    const idx = occupations.map((occupation,index) =>
+  //      <li key={index} />
+  //    );
+  //    dispatch(occupationUpdate({ index,data }));
+  //  };= async () => {
+
+  // const onDelete = (id) => {
+  //   const result = occupations.filter((test) => test.id !== id);
+  //   console.log(test.post.color);
+  //   console.log(test.post.name);
+  //   // dispatch(occupationDelete({}));
+  // };
 
   useEffect(() => {
     if (occupationPostResult === 'Success') {
-      history.push('/occupation');
+      //TODO   리 랜더링 하기
     }
-  }, [history, occupationPostResult]);
+  }, [occupationPostResult]);
 
   useEffect(() => {
     if (occupationPostError !== null) {
@@ -111,7 +125,7 @@ const OccupationListContainer = ({ history }) => {
           dispatch(logout());
         }
       });
-      dispatch(initializeForm('post'));
+      dispatch(getOccupationList());
     }
   }, [dispatch, user]);
 
@@ -122,13 +136,9 @@ const OccupationListContainer = ({ history }) => {
       loading={loading}
       onSubmit={onSubmit}
       onChange={onChange}
+      // onEdit={onEdit}
+      // onDelete={onDelete}
       error={error}
-      handleComplete={handleComplete}
-      show={show}
-      closeModal={closeModal}
-      openModal={openModal}
-      name={name}
-      color={color}
     ></OccupationListForm>
   );
 };

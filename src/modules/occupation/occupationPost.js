@@ -4,6 +4,7 @@ import createRequestSaga, {
 } from '../../lib/createRequestSaga';
 import * as occupationAPI from '../../lib/api/occupation/occupationAPI';
 import { takeLatest } from 'redux-saga/effects';
+import produce from 'immer';
 
 const INITIALIZE_FORM = 'occupationPost/INITIALIZE_FORM';
 const CHANGE_INPUT = 'occupationPost/CHANGE_INPUT';
@@ -31,38 +32,38 @@ export const initializeForm = createAction(
 const initialState = {
   post: {
     name: '',
-    color: '#967373',
+    color: '#00B050',
   },
   occupationPostResult: null,
   occupationPostError: null,
 };
 
-export const occupationpostSaga = createRequestSaga(
+export const postSaga = createRequestSaga(
   OCCUPATION_POST,
   occupationAPI.postOccupation,
 );
 export function* occupationPostSaga() {
-  yield takeLatest(OCCUPATION_POST, occupationpostSaga);
+  yield takeLatest(OCCUPATION_POST, postSaga);
 }
 
 const occupationPost = handleActions(
   {
-    [CHANGE_INPUT]: (state, { payload: { key, value } }) => ({
-      ...state,
-      [key]: value,
-    }),
+    [CHANGE_INPUT]: (state, { payload: { key, value } }) =>
+      produce(state, (draft) => {
+        draft['post'][key] = value;
+      }),
     [INITIALIZE_FORM]: (state, { payload: initForm }) => ({
       ...state,
       [initForm]: initialState[initForm],
     }),
-    [OCCUPATION_POST_SUCCESS]: (state, { payload: data }) => ({
+    [OCCUPATION_POST_SUCCESS]: (state, { payload: message }) => ({
       ...state,
-      postResult: data,
-      postError: null,
+      occupationPostResult: message,
+      occupationPostError: null,
     }),
     [OCCUPATION_POST_FAILURE]: (state, { payload: e }) => ({
       ...state,
-      postError: e,
+      occupationPostError: e,
     }),
   },
   initialState,
