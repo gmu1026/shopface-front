@@ -50,7 +50,7 @@ export const getEmploySaga = createRequestSaga(
 );
 export const employUpdateSaga = createRequestSaga(
   EMPLOY_UPDATE,
-  employAPI.updataEmploy,
+  employAPI.updateEmploy,
 );
 export const employhDeleteSaga = createRequestSaga(
   EMPLOY_DELETE,
@@ -63,32 +63,50 @@ export function* employDetailSaga() {
   yield takeLatest(EMPLOY_DELETE, employhDeleteSaga);
 }
 
-const initialState = {};
-
+const initialState = {
+  employs: null,
+  employResult: null,
+  employError: null,
+};
 export const employDetail = handleActions(
   {
     [CHANGE_INPUT]: (state, { payload: { key, value } }) =>
-      produce(state, (draft) => {}),
+      produce(state, (draft) => {
+        draft['employs'][key] = value;
+      }),
     [INITIALIZE_RESULT]: (state) => ({
       ...state,
+      employResult: null,
     }),
     [EMPLOY_DETAIL_SUCCESS]: (state, { payload: { data } }) => ({
       ...state,
+      employs: data,
+      employResult: null,
+      employError: null,
     }),
     [EMPLOY_DETAIL_FAILURE]: (state, { payload: { message } }) => ({
       ...state,
+      employError: message,
     }),
-    [EMPLOY_UPDATE_SUCCESS]: (state, { payload: { message } }) => ({
+    [EMPLOY_UPDATE_SUCCESS]: (state, { payload: { status } }) => ({
       ...state,
+      employResult: status,
+      employError: null,
     }),
     [EMPLOY_UPDATE_FAILURE]: (state, { payload: { message } }) => ({
       ...state,
+      employResult: null,
+      employError: message,
     }),
-    [EMPLOY_DELETE_SUCCESS]: (state, { payload: { message } }) => ({
+    [EMPLOY_DELETE_SUCCESS]: (state, { payload: { status } }) => ({
       ...state,
+      employResult: status,
+      employError: null,
     }),
     [EMPLOY_DELETE_FAILURE]: (state, { payload: { message } }) => ({
       ...state,
+      employResult: null,
+      employError: message,
     }),
   },
   initialState,

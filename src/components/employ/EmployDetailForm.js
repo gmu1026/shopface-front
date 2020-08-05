@@ -12,12 +12,9 @@ const EmployDetailForm = ({ employ, onSubmit, onChange, onDelete, error }) => {
             <div class="card">
               <div class="card-header">
                 <h5 class="card-title">근무자 기본정보</h5>
-                <Button type="button" class="btn btn-primary">
-                  비활성화
-                </Button>
               </div>
               <div class="card-body">
-                <form class="form-group">
+                <form onSubmit={onSubmit}>
                   <div class="col-12 col-lg-6">
                     <div class="form-group">
                       <label>이름</label>
@@ -25,6 +22,7 @@ const EmployDetailForm = ({ employ, onSubmit, onChange, onDelete, error }) => {
                         type="text"
                         class="form-control"
                         name="name"
+                        onChange={onChange}
                         value={employ.name !== null ? employ.name : ''}
                       />
                     </div>
@@ -76,11 +74,20 @@ const EmployDetailForm = ({ employ, onSubmit, onChange, onDelete, error }) => {
                         type="text"
                         class="form-control"
                         name="salary"
+                        onChange={onChange}
                         value={employ.salary !== null ? employ.salary : ''}
                       />
                     </div>
                     <div class="mb-3">
-                      <Button type="button" class="btn btn-primary">
+                      <Button
+                        type="button"
+                        class="btn btn-primary"
+                        onChange={onChange}
+                        disabled={employ.state === 'C'}
+                      >
+                        비활성화
+                      </Button>
+                      <Button to="/employ" class="btn btn-primary">
                         수정
                       </Button>
                       <Button

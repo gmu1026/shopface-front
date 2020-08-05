@@ -10,10 +10,8 @@ const [
   EMPLOY_LIST_SUCCESS,
   EMPLOY_LIST_FAILURE,
 ] = createRequestActionTypes('employList/employ_LIST');
-const CHANGE_INPUT = 'employList/CHANGE_INPUT';
 
 export const getEmployList = createAction(EMPLOY_LIST);
-export const changeInput = createAction(CHANGE_INPUT, (value) => value);
 
 const employListSaga = createRequestSaga(EMPLOY_LIST, employAPI.getEmployList);
 
@@ -22,7 +20,7 @@ export function* employSaga() {
 }
 
 const initialState = {
-  name: '',
+  // name: '',
   employs: null,
   employError: null,
 };
@@ -37,10 +35,6 @@ const employList = handleActions(
     [EMPLOY_LIST_FAILURE]: (state, { payload: { e } }) => ({
       ...state,
       employError: e,
-    }),
-    [CHANGE_INPUT]: (state, { payload: value }) => ({
-      ...state,
-      name: value,
     }),
   },
   initialState,

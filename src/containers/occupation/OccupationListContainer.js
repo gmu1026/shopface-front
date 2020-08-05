@@ -68,7 +68,6 @@ const OccupationListContainer = ({ history }) => {
     e.preventDefault();
 
     const data = occupationPost;
-    console.log(data);
     if ([data.name, data.color].includes('')) {
       setError('빈 칸을 모두 입력하세요');
       return;
