@@ -28,7 +28,7 @@ const BranchListContainer = () => {
           dispatch(logout());
         }
       });
-      const { name } = { user };
+      const { name } = user;
       dispatch(getBranchList({ name }));
     }
   }, [dispatch, user]);

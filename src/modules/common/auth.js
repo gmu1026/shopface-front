@@ -83,6 +83,7 @@ const auth = handleActions(
     [INITIALIZE_FORM]: (state, { payload: initForm }) => ({
       ...state,
       [initForm]: initialState[initForm],
+      authError: null,
     }),
     [TEMP_SET_USER]: (state, { payload: { user } }) => ({
       ...state,
@@ -106,9 +107,9 @@ const auth = handleActions(
       ...state,
       authError: e,
     }),
-    [REGISTER_MEMBER_SUCCESS]: (state, { payload: { message } }) => ({
+    [REGISTER_MEMBER_SUCCESS]: (state, { payload: { status } }) => ({
       ...state,
-      isRegister: message,
+      isRegister: status,
       authError: null,
     }),
     [REGISTER_MEMBER_FAILURE]: (state, { payload: error }) => ({

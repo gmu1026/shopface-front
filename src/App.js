@@ -21,7 +21,10 @@ import TimetablePage from './pages/timetable/TimetablePage';
 
 const App = ({ history, match }) => {
   const dispatch = useDispatch();
-  const { user } = useSelector(({ auth }) => ({ user: auth.user }));
+  const { user, branchs } = useSelector(({ auth, branchList }) => ({
+    user: auth.user,
+    branchs: branchList.branchs,
+  }));
 
   const classes = useStyles();
   const onLogout = () => {
@@ -37,18 +40,26 @@ const App = ({ history, match }) => {
         }
       });
     } else {
+      if (window.location.pathname === '/register/employ') {
+        history.push('/register/employ');
+        return;
+      }
       history.push('/login');
     }
   }, [history, user]);
 
   if (
     window.location.pathname === '/login' ||
-    window.location.pathname === '/register'
+    window.location.pathname === '/register' ||
+    window.location.pathname === '/register/employ'
   ) {
     return (
       <>
         <Route path="/login" component={LoginPage} />
-        <Route path="/register" component={RegisterPage} />
+        <Route
+          path={['/register', '/register/employ']}
+          component={RegisterPage}
+        />
       </>
     );
   } else {
@@ -65,11 +76,11 @@ const App = ({ history, match }) => {
           </div>
 
           <div className="col p-0">
-            <SidebarHeader onLogout={onLogout} />
+            <SidebarHeader onLogout={onLogout} branchs={branchs} />
             <div className="content">
               <Route path="/member" component={MemberPage} />
-              <Route path="/" component={IndexPage} exact />
               <Route path="/timetable" component={TimetablePage} />
+              <Route path="/" component={IndexPage} exact />
               <Route path="/employ" component={EmployPage} />
               <Route path="/occupation" component={OccupationPage} />
               <Route path="/record" component={RecordPage} />
