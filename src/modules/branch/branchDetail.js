@@ -36,9 +36,9 @@ export const initializeResult = createAction(INITIALIZE_RESULT);
 export const getbranchDetail = createAction(BRANCH_DETAIL, ({ no }) => ({
   no,
 }));
-export const branchUpdate = createAction(BRANCH_UPDATE, ({ no, formData }) => ({
+export const branchUpdate = createAction(BRANCH_UPDATE, ({ no, data }) => ({
   no,
-  formData,
+  data,
 }));
 export const branchDelete = createAction(BRANCH_DELETE, ({ no }) => ({
   no,
@@ -89,9 +89,9 @@ export const branchDetail = handleActions(
       ...state,
       branchError: message,
     }),
-    [BRANCH_UPDATE_SUCCESS]: (state, { payload: { message } }) => ({
+    [BRANCH_UPDATE_SUCCESS]: (state, { payload: { status } }) => ({
       ...state,
-      branchResult: message,
+      branchResult: status,
       branchError: null,
     }),
     [BRANCH_UPDATE_FAILURE]: (state, { payload: { message } }) => ({
@@ -99,9 +99,9 @@ export const branchDetail = handleActions(
       branchResult: null,
       branchError: message,
     }),
-    [BRANCH_DELETE_SUCCESS]: (state, { payload: { message } }) => ({
+    [BRANCH_DELETE_SUCCESS]: (state, { payload: { status } }) => ({
       ...state,
-      branchResult: message,
+      branchResult: status,
       branchError: null,
     }),
     [BRANCH_DELETE_FAILURE]: (state, { payload: { message } }) => ({

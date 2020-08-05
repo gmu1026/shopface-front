@@ -9,7 +9,7 @@ import {
 import AuthTemplate from '../../components/common/AuthTemplate';
 import { withRouter } from 'react-router-dom';
 
-const RegisterForm = ({ history }) => {
+const RegisterForm = ({ history, match }) => {
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const { register, user, authError, isRegister } = useSelector(({ auth }) => ({
@@ -32,7 +32,7 @@ const RegisterForm = ({ history }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    const member = register;
+    let member = Object.assign({}, register);
     if (
       [
         member.id,
@@ -44,6 +44,11 @@ const RegisterForm = ({ history }) => {
     ) {
       setError('빈칸을 모두 입력해주세요');
       return;
+    }
+    if (match.url === '/register') {
+      member.type = 'B';
+    } else {
+      member.type = 'E';
     }
     dispatch(registerMember({ member }));
   };
@@ -60,7 +65,7 @@ const RegisterForm = ({ history }) => {
   }, [authError]);
 
   useEffect(() => {
-    if (isRegister === 'Success') {
+    if (isRegister === 200) {
       history.push('/login');
     }
   }, [history, isRegister]);

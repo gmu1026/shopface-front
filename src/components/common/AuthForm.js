@@ -93,6 +93,7 @@ const AuthForm = ({ type, onChange, onSubmit, error }) => {
             />
           </>
         )}
+        <ErrorMessage>{error}</ErrorMessage>
         <Footer>
           {type === 'login' && (
             <div>
@@ -110,7 +111,6 @@ const AuthForm = ({ type, onChange, onSubmit, error }) => {
             )}
           </div>
         </Footer>
-        {error && <ErrorMessage>{error}</ErrorMessage>}
         <div style={{ textAlign: 'center' }}>
           <Button>{text}</Button>
         </div>

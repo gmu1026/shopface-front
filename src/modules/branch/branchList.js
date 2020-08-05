@@ -11,7 +11,9 @@ const [
   BRANCH_LIST_FAILURE,
 ] = createRequestActionTypes('branchList/BRANCH_LIST');
 
-export const getBranchList = createAction(BRANCH_LIST);
+export const getBranchList = createAction(BRANCH_LIST, ({ name }) => ({
+  name,
+}));
 
 const branchListSaga = createRequestSaga(BRANCH_LIST, branchAPI.getBranchList); //branchAPI.getBranchList
 

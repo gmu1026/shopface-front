@@ -64,7 +64,7 @@ const BranchPostContainer = ({ history }) => {
           address: data.address,
           detailAddress: data.detailAddress,
           zipCode: data.zipCode,
-          memberId: 'test',
+          memberId: user.name,
         },
       }),
     );
@@ -83,7 +83,7 @@ const BranchPostContainer = ({ history }) => {
   };
 
   useEffect(() => {
-    if (postResult === 'Success') {
+    if (postResult === 200) {
       dispatch(initializeForm('post'));
       history.push('/branch');
     }

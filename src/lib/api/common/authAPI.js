@@ -21,28 +21,29 @@ export const logout = async () => {
   });
   try {
     localStorage.removeItem('user');
-    return { message: 'Success' };
+    return { message: 'Success' }; // 수정요망
   } catch (error) {
     throw new Error('로그아웃 실패');
   }
 };
 
 export const singUp = async ({ member }) => {
-  try {
-    /* const user = await Auth.signUp({
-      username: member.id,
-      password: member.password,
+  const response = await Auth.signUp({
+    username: member.id,
+    password: member.password,
+  })
+    .then(() => {
+      const response = client.post('/member', member);
+      return response;
+    })
+    .catch((e) => {
+      throw new Error(e);
     });
-    return { data: { user } };
-    console.log(user); */
-    const response = await client.post('/member', member);
-    console.log(response);
 
-    return response;
-  } catch (error) {
-    console.log('error signing up:', error);
-    throw new Error(error.message);
-  }
+  return response;
+
+  /* console.log('error signing up:', error);
+    throw new Error(error.message); */
 };
 
 export const checkExpire = async () => {

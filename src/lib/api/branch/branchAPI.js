@@ -1,7 +1,7 @@
 import client from '../client';
 
 export const getBranchList = async ({ name }) => {
-  const response = await client.get(`/branch/member/${name}`);
+  const response = await client.get(`/member/${name}/branch`);
   return response;
 };
 
@@ -15,9 +15,8 @@ export const getBranch = async ({ no }) => {
   return response;
 };
 
-export const putBranch = async ({ no, formData }) => {
-  const response = await client.put(`/branch/${no}`, formData);
-  console.log(response);
+export const putBranch = async ({ no, data }) => {
+  const response = await client.put(`/branch/${no}`, data);
   return response;
 };
 

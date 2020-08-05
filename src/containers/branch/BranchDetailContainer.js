@@ -76,16 +76,16 @@ const BranchDetailContainer = ({ match, history }) => {
       return;
     }
 
-    const formData = new FormData();
+    /* const formData = new FormData();
     formData.append('name', data.name);
     formData.append('phone', data.phone);
     formData.append('address', data.address);
     formData.append('detailAddress', data.detailAddress);
     formData.append('zipCode', data.zipCode);
     formData.append('licenseImage', imgFile);
-
+ */
     const no = match.params.no;
-    dispatch(branchUpdate({ no, formData }));
+    dispatch(branchUpdate({ no, data }));
   };
 
   const onDelete = () => {
@@ -106,7 +106,7 @@ const BranchDetailContainer = ({ match, history }) => {
   }, [dispatch, match.params.no, user]);
 
   useEffect(() => {
-    if (branchResult === 'Success') {
+    if (branchResult === 200) {
       dispatch(initializeResult());
       history.push('/branch');
     }
