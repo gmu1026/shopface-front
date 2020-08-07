@@ -37,10 +37,8 @@ export const singUp = async ({ member }) => {
       return response;
     })
     .catch((e) => {
-      throw new Error(e);
+      throw new Error(e.code);
     });
-
-  return response;
 
   /* console.log('error signing up:', error);
     throw new Error(error.message); */

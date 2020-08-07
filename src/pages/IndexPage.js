@@ -3,7 +3,7 @@ import React from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 //import timeGridPlugin from '@fullcalendar/timegrid';
-//import interactionPlugin from '@fullcalendar/interaction';
+import interactionPlugin from '@fullcalendar/interaction';
 // import '@fullcalendar/core/main.css';
 // import '@fullcalendar/daygrid/main.css';
 
@@ -12,8 +12,8 @@ const IndexPage = () => {
     {
       id: 1,
       title: `today's event`,
-      start: '2020-08-05 16:00',
-      end: '2020-08-06 18:00',
+      start: '2020-08-07 16:00',
+      end: '2020-08-08 18:00',
       color: 'black',
     },
   ];
@@ -68,11 +68,7 @@ const IndexPage = () => {
                   </div>
                   <>
                     <FullCalendar
-                      plugins={[
-                        dayGridPlugin,
-                        //timeGridPlugin,
-                        //interactionPlugin,
-                      ]}
+                      plugins={[dayGridPlugin, interactionPlugin]}
                       headerToolbar={{
                         left: 'prev,next today',
                         center: 'title',

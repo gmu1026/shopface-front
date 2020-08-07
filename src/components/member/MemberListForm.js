@@ -87,7 +87,7 @@ const MemberListForm = ({
                               member={filterMember}
                             ></MemberTableBody>
                           ))
-                        ) : members !== null ? (
+                        ) : members !== null && members.length > 0 ? (
                           members.map((member, index) => (
                             <MemberTableBody
                               key={index}

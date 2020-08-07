@@ -21,6 +21,7 @@ import occupationDelete, {
   occupationDeleteSaga,
 } from './occupation/occupationDelete';
 import recordList, { recordSaga } from './record/recordList';
+import select from './common/select';
 
 const rootReducer = combineReducers({
   auth,
@@ -38,6 +39,7 @@ const rootReducer = combineReducers({
   employDetail,
   branchDetail,
   memberDetail,
+  select,
 });
 
 export function* rootSaga() {
