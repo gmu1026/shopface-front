@@ -30,10 +30,7 @@ export const initializeForm = createAction(
 const initialState = {
   post: {
     name: '',
-    email: '',
-    branchNo: 1,
-    roleNo: '',
-    departmentNo: '',
+    // email: '',
   },
   postResult: null,
   postError: null,

@@ -63,27 +63,30 @@ const EmployListContainer = ({ history }) => {
     }
   };
 
-  // const onSubmit = (e) => {
-  //   e.preventDefault();
-  //   const data = employPost;
-  //   if (
-  //     [data.nameNo, data.branchNo, data.roleNo, data.departmentNo].includes('')
-  //   ) {
-  //     setError('빈 칸을 모두 입력하세요');
-  //     return;
-  //   }
-  //   setError(null);
-  //   dispatch(
-  //     postEmploy({
-  //       post: {
-  //         name: data.name,
-  //         branchNo: data.branchNo,
-  //         roleNo: data.roleNo,
-  //         departmentNo: data.departmentNo,
-  //       },
-  //     }),
-  //   );
-  // };
+  const onSubmit = (e) => {
+    closeModal();
+    e.preventDefault();
+    const data = employPost;
+    if (
+      // [data.nameNo, data.branchNo, data.roleNo, data.departmentNo].includes('')
+      [data.name].includes('')
+    ) {
+      setError('빈 칸을 모두 입력하세요');
+      return;
+    }
+    setError(null);
+    dispatch(
+      postEmploy({
+        post: {
+          name: data.name,
+          state: 'B',
+          branchNo: 1,
+          roleNo: 3,
+          departmentNo: 2,
+        },
+      }),
+    );
+  };
 
   useEffect(() => {
     if (user !== null) {
@@ -126,7 +129,7 @@ const EmployListContainer = ({ history }) => {
       employError={employError}
       loading={loading}
       onChange={onChange}
-      // onSubmit={onSubmit}
+      onSubmit={onSubmit}
       onSearch={onSearch}
       onKeyPress={onKeyPress}
       error={error}

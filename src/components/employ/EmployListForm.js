@@ -134,14 +134,15 @@ const EmployListForm = ({
                   </table>
                 </form>
 
-                <form onSubmit={onSubmit}>
-                  <input type="hidden" />
-                  <div className="form-group">
+                <div className="form-group">
+                  <form onSubmit={onSubmit}>
+                    <input type="hidden" />
                     <Modal show={show} onHide={closeModal}>
                       <Modal.Header closeButton>
                         <Modal.Title>근무자 초대하기</Modal.Title>
                       </Modal.Header>
                       <Modal.Body>
+                        <input type="hidden" />
                         이름
                         <input
                           type="text"
@@ -163,7 +164,7 @@ const EmployListForm = ({
                         />
                       </Modal.Body>
                       <Modal.Footer>
-                        <button
+                        <Button
                           type="button"
                           variant="secondary"
                           className="btn btn-outline-primary"
@@ -171,19 +172,19 @@ const EmployListForm = ({
                           onClick={closeModal}
                         >
                           Close
-                        </button>
+                        </Button>
                         <Button
                           variant="secondary"
                           className="btn btn-outline-primary"
-                          onClick={closeModal}
+                          onClick={onSubmit}
                         >
                           초대하기
                         </Button>
                       </Modal.Footer>
                     </Modal>
-                  </div>
-                </form>
-                <div
+                  </form>
+                </div>
+                {/* <div
                   className="modal fade"
                   tabIndex="-1"
                   role="dialog"
@@ -206,31 +207,29 @@ const EmployListForm = ({
                         </button>
                       </div>
                       <div className="modal-body m-3">
-                        <form id="validation-reinvite-form">
-                          <div className="form-group">
-                            이메일
-                            <input
-                              type="text"
-                              className="form-control"
-                              name="reInviteEmail"
-                              placeholder="이메일을 입력해주세요"
-                            />
-                          </div>
-                        </form>
+                        <div className="form-group">
+                          이메일
+                          <input
+                            type="text"
+                            className="form-control"
+                            name="reInviteEmail"
+                            placeholder="이메일을 입력해주세요"
+                          />
+                        </div>
                       </div>
                       <div className="modal-footer">
-                        <button
+                        <Button
                           type="button"
                           className="btn btn-primary"
                           data-dismiss="modal"
                         >
                           Close
-                        </button>
+                        </Button>
                         <Button className="btn btn-primary">초대하기</Button>
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

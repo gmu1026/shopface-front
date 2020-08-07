@@ -30,7 +30,7 @@ const OccupationListContainer = ({ history }) => {
     occupationUpdate,
     occupationUpdateResult,
     occupationUpdateError,
-    // occupationDelete,
+    occupationDelete,
     user,
     occupations,
     occupationError,
@@ -46,9 +46,9 @@ const OccupationListContainer = ({ history }) => {
       occupationUpdate: occupationUpdate.occupationUpdate,
       occupationUpdateResult: occupationUpdate.occupationUpdateResult,
       occupationUpdateError: occupationUpdate.occupationUpdateError,
-      //  occupationDelete: occupationDelete.occupations,
-      //  occupationDelteResult: occupationDelete.occupationResult,
-      //  occupationDeleteError: occupationDelete.occupationError,
+      occupationDelete: occupationDelete.occupations,
+      occupationDelteResult: occupationDelete.occupationResult,
+      occupationDeleteError: occupationDelete.occupationError,
       loading: loading,
     }),
   );
@@ -63,7 +63,6 @@ const OccupationListContainer = ({ history }) => {
     );
   };
 
-  //등록
   const onSubmit = (e) => {
     e.preventDefault();
 
@@ -78,36 +77,34 @@ const OccupationListContainer = ({ history }) => {
         post: {
           name: data.name,
           color: data.color,
-          branchNo: 43,
+          branchNo: 1,
         },
       }),
     );
   };
 
-  //  const onEdit = (e) => {
-  //    e.preventDefault();
-  //    const data = occupationUpdate;
-  //    if ([data.name, data.color].includes('')) {
-  //      setError('빈 칸을 모두 입력하세요');
-  //      return;
-  //    }
+  const onEdit = (e) => {
+    e.preventDefault();
+    const data = occupationUpdate;
+    if ([data.name, data.color].includes('')) {
+      setError('빈 칸을 모두 입력하세요');
+      return;
+    }
 
-  //    const idx = occupations.map((occupation,index) =>
-  //      <li key={index} />
-  //    );
-  //    dispatch(occupationUpdate({ index,data }));
-  //  };= async () => {
+    // const idx = occupations.map((occupation, index) => <li key={index} />);
+    // dispatch(occupationUpdate({ index, data }));
+  };
 
-  // const onDelete = (id) => {
-  //   const result = occupations.filter((test) => test.id !== id);
-  //   console.log(test.post.color);
-  //   console.log(test.post.name);
-  //   // dispatch(occupationDelete({}));
-  // };
+  //  const onDelete = (id) => {
+  //    const result = occupations.filter((test) => test.id !== id);
+  //    console.log(test.post.color);
+  //    console.log(test.post.name);
+  //     dispatch(occupationDelete({}));
+  //  };
 
   useEffect(() => {
     if (occupationPostResult === 'Success') {
-      //TODO   리 랜더링 하기
+      // TODO   리 랜더링 하기
     }
   }, [occupationPostResult]);
 
@@ -135,7 +132,7 @@ const OccupationListContainer = ({ history }) => {
       loading={loading}
       onSubmit={onSubmit}
       onChange={onChange}
-      // onEdit={onEdit}
+      onEdit={onEdit}
       // onDelete={onDelete}
       error={error}
     ></OccupationListForm>
