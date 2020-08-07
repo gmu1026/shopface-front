@@ -27,6 +27,7 @@ const OccupationListContainer = ({ history }) => {
     occupationPost,
     occupationPostResult,
     occupationPostError,
+    post,
     occupationUpdate,
     occupationUpdateResult,
     occupationUpdateError,
@@ -43,12 +44,10 @@ const OccupationListContainer = ({ history }) => {
       occupationPostResult: occupationPost.occupationPostResult,
       occupationPostError: occupationPost.occupationPostError,
       user: auth.user,
+      post: occupationUpdate.post,
       occupationUpdate: occupationUpdate.occupationUpdate,
       occupationUpdateResult: occupationUpdate.occupationUpdateResult,
       occupationUpdateError: occupationUpdate.occupationUpdateError,
-      occupationDelete: occupationDelete.occupations,
-      occupationDelteResult: occupationDelete.occupationResult,
-      occupationDeleteError: occupationDelete.occupationError,
       loading: loading,
     }),
   );
@@ -66,7 +65,7 @@ const OccupationListContainer = ({ history }) => {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    const data = occupationPost;
+    const data = post;
     if ([data.name, data.color].includes('')) {
       setError('빈 칸을 모두 입력하세요');
       return;
@@ -103,18 +102,6 @@ const OccupationListContainer = ({ history }) => {
   //  };
 
   useEffect(() => {
-    if (occupationPostResult === 'Success') {
-      // TODO   리 랜더링 하기
-    }
-  }, [occupationPostResult]);
-
-  useEffect(() => {
-    if (occupationPostError !== null) {
-      setError('등록에 실패 했습니다');
-    }
-  }, [occupationPostError]);
-
-  useEffect(() => {
     if (user !== null) {
       checkExpire().then((isExpired) => {
         if (isExpired) {
@@ -124,6 +111,34 @@ const OccupationListContainer = ({ history }) => {
       dispatch(getOccupationList());
     }
   }, [dispatch, user]);
+
+  useEffect(() => {
+    if (occupationPostResult === '200') {
+      // TODO   리 랜더링 하기
+      dispatch(initializeResult());
+      history.push('/occupation');
+    }
+  }, [occupationPostResult, history, dispatch]);
+
+  useEffect(() => {
+    if (occupationUpdateResult === '200') {
+      // TODO   리 랜더링 하기
+      dispatch(initializeResult());
+      history.push('/occupation');
+    }
+  }, [occupationUpdateResult, history, dispatch]);
+
+  useEffect(() => {
+    if (occupationPostError !== null) {
+      setError('등록에 실패 했습니다');
+    }
+  }, [occupationPostError]);
+
+  useEffect(() => {
+    if (occupationUpdateError !== null) {
+      setError('수정에 실패 했습니다');
+    }
+  }, [occupationUpdateError]);
 
   return (
     <OccupationListForm

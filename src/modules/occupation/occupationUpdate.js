@@ -25,17 +25,21 @@ export const changeInputUpdate = createAction(
 );
 
 export const initializeResult = createAction(INITIALIZE_RESULT);
-export const updateOccupation = createAction(OCCUPATION_UPDATE, ({ post }) => ({
-  post,
-}));
+export const updateOccupation = createAction(
+  OCCUPATION_UPDATE,
+  ({ no, data }) => ({
+    no,
+    data,
+  }),
+);
 
 const initialState = {
   post: {
     name: '',
     color: '#00B050',
   },
-  occupationResult: null,
-  occupationError: null,
+  occupationUpdaateResult: null,
+  occupationUpdateError: null,
 };
 
 export const occupationupdateSaga = createRequestSaga(
@@ -55,16 +59,16 @@ const occupationUpdate = handleActions(
       }),
     [INITIALIZE_RESULT]: (state) => ({
       ...state,
-      occupationResult: null,
+      occupationUpdateResult: null,
     }),
-    [OCCUPATION_UPDATE_SUCCESS]: (state, { payload: { message } }) => ({
+    [OCCUPATION_UPDATE_SUCCESS]: (state, { payload: { status } }) => ({
       ...state,
-      occupationResult: message,
-      occupationError: null,
+      occupationUpdateResult: status,
+      occupationUpdateError: null,
     }),
     [OCCUPATION_UPDATE_FAILURE]: (state, { payload: { e } }) => ({
       ...state,
-      occupationError: e,
+      occupationUpdateError: e,
     }),
   },
   initialState,

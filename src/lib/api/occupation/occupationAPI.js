@@ -10,8 +10,8 @@ export const postOccupation = async ({ post }) => {
   return response;
 };
 
-export const updateOccupation = async ({ post }) => {
-  const response = await client.put('/occupation', post);
+export const updateOccupation = async ({ no, data }) => {
+  const response = await client.put(`/occupation/${no}`, data);
   return response;
 };
 

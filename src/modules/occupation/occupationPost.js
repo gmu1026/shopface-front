@@ -57,9 +57,9 @@ const occupationPost = handleActions(
       post: initialState['post'],
       postResult: null,
     }),
-    [OCCUPATION_POST_SUCCESS]: (state, { payload: message }) => ({
+    [OCCUPATION_POST_SUCCESS]: (state, { payload: status }) => ({
       ...state,
-      occupationPostResult: message,
+      occupationPostResult: status,
       occupationPostError: null,
     }),
     [OCCUPATION_POST_FAILURE]: (state, { payload: e }) => ({
