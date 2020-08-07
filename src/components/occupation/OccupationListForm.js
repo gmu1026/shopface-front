@@ -16,7 +16,9 @@ const OccupationTableBody = ({ occupation, onChange, onDelete }) => {
   return (
     <>
       <tr role="row">
-        <td>{occupation.name}</td>
+        <td>
+          <input type="text" value={occupation.name} />
+        </td>
         <td>{occupation.color}</td>
         <td>
           <Button className="btn btn-primary">수정</Button>
