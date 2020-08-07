@@ -93,7 +93,7 @@ const AuthForm = ({ type, onChange, onSubmit, error }) => {
             />
           </>
         )}
-        <ErrorMessage>{error}</ErrorMessage>
+        {/*  <ErrorMessage>{error}</ErrorMessage> */}
         <Footer>
           {type === 'login' && (
             <div>

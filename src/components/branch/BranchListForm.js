@@ -28,7 +28,7 @@ const BranchTableBody = ({ branch, match, show, openModal, closeModal }) => {
   );
 };
 
-const BranchForm = ({
+const BranchListForm = ({
   branchs,
   branchError,
   loading,
@@ -112,7 +112,7 @@ const BranchForm = ({
                           </tr>
                         </thead>
                         <tbody id="table_body">
-                          {branchs !== null ? (
+                          {branchs !== null && branchs.length > 0 ? (
                             branchs.map((branch, index) => (
                               <BranchTableBody
                                 key={index}
@@ -121,7 +121,7 @@ const BranchForm = ({
                                 show={show}
                                 closeModal={closeModal}
                                 openModal={openModal}
-                              ></BranchTableBody>
+                              />
                             ))
                           ) : (
                             <>
@@ -157,4 +157,4 @@ const BranchForm = ({
   );
 };
 
-export default withRouter(BranchForm);
+export default withRouter(BranchListForm);

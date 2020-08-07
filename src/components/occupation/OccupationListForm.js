@@ -103,7 +103,7 @@ const OccupationListForm = ({
                           </tr>
                         </thead>
                         <tbody id="table-body">
-                          {occupations !== null ? (
+                          {occupations !== null && occupations.length > 0 ? (
                             occupations.map((occupation, index) => (
                               <OccupationTableBody
                                 key={index}

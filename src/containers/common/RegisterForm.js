@@ -54,8 +54,8 @@ const RegisterForm = ({ history, match }) => {
   };
 
   useEffect(() => {
-    setError(null);
     dispatch(initializeForm('register'));
+    setError(null);
   }, [dispatch]);
 
   useEffect(() => {

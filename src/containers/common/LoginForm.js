@@ -5,7 +5,7 @@ import { changeInput, initializeForm, login } from '../../modules/common/auth';
 import AuthTemplate from '../../components/common/AuthTemplate';
 import { withRouter } from 'react-router-dom';
 
-const LoginForm = ({ history }) => {
+const LoginForm = ({ history, match }) => {
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const { form, user, authError } = useSelector(({ auth }) => ({
