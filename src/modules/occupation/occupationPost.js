@@ -55,9 +55,10 @@ const occupationPost = handleActions(
     [INITIALIZE_FORM]: (state) => ({
       ...state,
       post: initialState['post'],
+      occupationPostResult: null,
       postResult: null,
     }),
-    [OCCUPATION_POST_SUCCESS]: (state, { payload: status }) => ({
+    [OCCUPATION_POST_SUCCESS]: (state, { payload: { status } }) => ({
       ...state,
       occupationPostResult: status,
       occupationPostError: null,

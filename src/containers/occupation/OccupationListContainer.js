@@ -36,8 +36,17 @@ const OccupationListContainer = ({ history }) => {
     occupations,
     occupationError,
     loading,
+    selectedBranch,
   } = useSelector(
-    ({ occupationPost, auth, occupationUpdate, occupationList, loading }) => ({
+    ({
+      occupationPost,
+      auth,
+      occupationUpdate,
+      occupationDelete,
+      occupationList,
+      loading,
+      select,
+    }) => ({
       occupations: occupationList.occupations,
       occupationError: occupationList.occupationError,
       occupationPost: occupationPost.post,
@@ -49,6 +58,7 @@ const OccupationListContainer = ({ history }) => {
       occupationUpdateResult: occupationUpdate.occupationUpdateResult,
       occupationUpdateError: occupationUpdate.occupationUpdateError,
       loading: loading,
+      selectedBranch: select.selectedBranch,
     }),
   );
 
@@ -76,7 +86,7 @@ const OccupationListContainer = ({ history }) => {
         post: {
           name: data.name,
           color: data.color,
-          branchNo: 1,
+          branchNo: selectedBranch,
         },
       }),
     );
@@ -108,17 +118,16 @@ const OccupationListContainer = ({ history }) => {
           dispatch(logout());
         }
       });
-      dispatch(getOccupationList());
+      dispatch(getOccupationList({ selectedBranch }));
     }
-  }, [dispatch, user]);
+  }, [dispatch, selectedBranch, user]);
 
   useEffect(() => {
-    if (occupationPostResult === '200') {
-      // TODO   리 랜더링 하기
-      dispatch(initializeResult());
-      history.push('/occupation');
+    if (occupationPostResult === 200) {
+      dispatch(initializeForm());
+      dispatch(getOccupationList({ selectedBranch }));
     }
-  }, [occupationPostResult, history, dispatch]);
+  }, [occupationPostResult, dispatch, selectedBranch]);
 
   useEffect(() => {
     if (occupationUpdateResult === '200') {

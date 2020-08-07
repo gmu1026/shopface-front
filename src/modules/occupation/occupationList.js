@@ -11,7 +11,10 @@ const [
   OCCUPATION_LIST_FAILURE,
 ] = createRequestActionTypes('occupationList/occupation_LIST');
 
-export const getOccupationList = createAction(OCCUPATION_LIST);
+export const getOccupationList = createAction(
+  OCCUPATION_LIST,
+  (selectedBranch) => selectedBranch,
+);
 
 const occupationListSaga = createRequestSaga(
   OCCUPATION_LIST,
