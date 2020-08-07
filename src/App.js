@@ -18,6 +18,7 @@ import OccupationPage from './pages/occupation/OccupationPage';
 import RecordPage from './pages/record/RecordPage';
 import SchedulePage from './pages/schedule/SchedulePage';
 import TimetablePage from './pages/timetable/TimetablePage';
+import { getBranchList } from './modules/branch/branchList';
 
 const App = ({ history, match }) => {
   const dispatch = useDispatch();
@@ -39,9 +40,13 @@ const App = ({ history, match }) => {
           dispatch(logout());
         }
       });
+
+      const { name } = user;
+      dispatch(getBranchList({ name }));
     } else {
       if (window.location.pathname === '/register/employ') {
         history.push('/register/employ');
+
         return;
       }
       history.push('/login');
