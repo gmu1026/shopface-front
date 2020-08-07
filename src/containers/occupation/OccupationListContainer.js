@@ -35,8 +35,17 @@ const OccupationListContainer = ({ history }) => {
     occupations,
     occupationError,
     loading,
+    selectedBranch,
   } = useSelector(
-    ({ occupationPost, auth, occupationUpdate, occupationList, loading }) => ({
+    ({
+      occupationPost,
+      auth,
+      occupationUpdate,
+      occupationDelete,
+      occupationList,
+      loading,
+      select,
+    }) => ({
       occupations: occupationList.occupations,
       occupationError: occupationList.occupationError,
       occupationPost: occupationPost.post,
@@ -50,6 +59,7 @@ const OccupationListContainer = ({ history }) => {
       occupationDelteResult: occupationDelete.occupationResult,
       occupationDeleteError: occupationDelete.occupationError,
       loading: loading,
+      selectedBranch: select.selectedBranch,
     }),
   );
 
@@ -77,7 +87,7 @@ const OccupationListContainer = ({ history }) => {
         post: {
           name: data.name,
           color: data.color,
-          branchNo: 1,
+          branchNo: selectedBranch,
         },
       }),
     );
@@ -103,10 +113,11 @@ const OccupationListContainer = ({ history }) => {
   //  };
 
   useEffect(() => {
-    if (occupationPostResult === 'Success') {
-      // TODO   리 랜더링 하기
+    if (occupationPostResult === 200) {
+      dispatch(initializeForm());
+      dispatch(getOccupationList({ selectedBranch }));
     }
-  }, [occupationPostResult]);
+  }, [occupationPostResult, dispatch, selectedBranch]);
 
   useEffect(() => {
     if (occupationPostError !== null) {
@@ -121,9 +132,9 @@ const OccupationListContainer = ({ history }) => {
           dispatch(logout());
         }
       });
-      dispatch(getOccupationList());
+      dispatch(getOccupationList({ selectedBranch }));
     }
-  }, [dispatch, user]);
+  }, [dispatch, user, selectedBranch]);
 
   return (
     <OccupationListForm
