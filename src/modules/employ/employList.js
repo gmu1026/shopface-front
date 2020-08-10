@@ -11,7 +11,10 @@ const [
   EMPLOY_LIST_FAILURE,
 ] = createRequestActionTypes('employList/employ_LIST');
 
-export const getEmployList = createAction(EMPLOY_LIST);
+export const getEmployList = createAction(
+  EMPLOY_LIST,
+  (selectedBranch) => selectedBranch,
+);
 
 const employListSaga = createRequestSaga(EMPLOY_LIST, employAPI.getEmployList);
 

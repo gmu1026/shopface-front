@@ -118,7 +118,8 @@ const App = ({ history, match }) => {
             <SidebarHeader onLogout={onLogout} branchs={branchs} />
             <div className="content">
               <Route path="/member" component={MemberPage} />
-              <Route path="/timetable" component={TimetablePage} />
+              <Route path="/timetable" component={IndexPage} />
+              {/* timetable Component */}
               <Route path="/" component={IndexPage} exact />
               <Route path="/employ" component={EmployPage} />
               <Route path="/occupation" component={OccupationPage} />
