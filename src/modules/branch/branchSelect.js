@@ -1,6 +1,6 @@
 import { createAction, handleActions } from 'redux-actions';
 
-const CHANGE_SELECT = 'select/CHANGE_SELECT';
+const CHANGE_SELECT = 'branchSelect/CHANGE_SELECT';
 
 export const changeSelect = createAction(CHANGE_SELECT);
 
@@ -8,7 +8,7 @@ const initalState = {
   selectedBranch: '',
 };
 
-const select = handleActions(
+const branchSelect = handleActions(
   {
     [CHANGE_SELECT]: (state, { payload: value }) => ({
       ...state,
@@ -18,4 +18,4 @@ const select = handleActions(
   initalState,
 );
 
-export default select;
+export default branchSelect;

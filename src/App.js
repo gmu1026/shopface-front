@@ -19,6 +19,7 @@ import RecordPage from './pages/record/RecordPage';
 import SchedulePage from './pages/schedule/SchedulePage';
 import TimetablePage from './pages/timetable/TimetablePage';
 import { getBranchList } from './modules/branch/branchList';
+import AuthCodePage from './pages/common/AuthCodePage';
 
 const App = ({ history, match }) => {
   const dispatch = useDispatch();
@@ -27,6 +28,34 @@ const App = ({ history, match }) => {
     branchs: branchList.branchs,
   }));
 
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      display: 'flex',
+      width: '15.5rem',
+    },
+    drawerPaper: {
+      position: 'fixed',
+      // whiteSpace: 'nowrap',
+      width: '17rem',
+      paddingTop: theme.spacing(4),
+      paddingBottom: theme.spacing(4),
+      paddingLeft: '1.5rem',
+      background: '#354052',
+      color: '#fff',
+      height: '100vh',
+    },
+    content: {
+      position: 'relative',
+      left: '100px',
+      flexGrow: 1,
+      height: '100vh',
+      overflow: 'auto',
+    },
+    container: {
+      paddingTop: theme.spacing(4),
+      paddingBottom: theme.spacing(4),
+    },
+  }));
   const classes = useStyles();
   const onLogout = () => {
     dispatch(logout());
@@ -44,9 +73,11 @@ const App = ({ history, match }) => {
       const { name } = user;
       dispatch(getBranchList({ name }));
     } else {
-      if (window.location.pathname === '/register/employ') {
-        history.push('/register/employ');
-
+      if (
+        window.location.pathname === '/register/employ' ||
+        window.location.pathname === '/register/check' ||
+        window.location.pathname === '/authcode'
+      ) {
         return;
       }
       history.push('/login');
@@ -56,15 +87,18 @@ const App = ({ history, match }) => {
   if (
     window.location.pathname === '/login' ||
     window.location.pathname === '/register' ||
-    window.location.pathname === '/register/employ'
+    window.location.pathname === '/register/employ' ||
+    window.location.pathname === '/register/check' ||
+    window.location.pathname === '/authcode'
   ) {
     return (
       <>
         <Route path="/login" component={LoginPage} />
         <Route
-          path={['/register', '/register/employ']}
+          path={['/register', '/register/employ', '/register/check']}
           component={RegisterPage}
         />
+        <Route path="/authcode" component={AuthCodePage} />
       </>
     );
   } else {
@@ -80,7 +114,7 @@ const App = ({ history, match }) => {
             </Drawer>
           </div>
 
-          <div className="col p-0">
+          <div className="col p-0" style={{ marginLeft: '18.5rem' }}>
             <SidebarHeader onLogout={onLogout} branchs={branchs} />
             <div className="content">
               <Route path="/member" component={MemberPage} />
@@ -98,34 +132,5 @@ const App = ({ history, match }) => {
     );
   }
 };
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    width: '15.5rem',
-  },
-  drawerPaper: {
-    position: 'relative',
-    // whiteSpace: 'nowrap',
-    width: '17rem',
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
-    paddingLeft: '1.5rem',
-    background: '#354052',
-    color: '#fff',
-    height: '100vh',
-  },
-  content: {
-    //position: 'relative',
-    left: '100px',
-    flexGrow: 1,
-    height: '100vh',
-    overflow: 'auto',
-  },
-  container: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
-  },
-}));
 
 export default withRouter(App);

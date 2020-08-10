@@ -3,12 +3,13 @@ import { all } from 'redux-saga/effects';
 import branchDetail, { branchDetailSaga } from './branch/branchDetail';
 import branchList, { branchSaga } from './branch/branchList';
 import branchPost, { branchPostSaga } from './branch/branchPost';
+import branchSelect from './branch/branchSelect';
 import auth, { authSaga } from './common/auth';
+import authCode, { authCodeSaga } from './common/authCode';
 import loading from './common/loading';
+import employDetail, { employDetailSaga } from './employ/employDetail';
 import employList, { employSaga } from './employ/employList';
 import employPost, { employPostSaga } from './employ/employPost';
-import employDetail, { employDetailSaga } from './employ/employDetail';
-import memberList, { memberSaga } from './member/memberList';
 import memberDetail, { memberDetailSaga } from './member/memberDetail';
 import occupationList, {
   occupationSaga,
@@ -16,12 +17,13 @@ import occupationList, {
   occupationUpdateSaga,
   occupationDeleteSaga,
 } from './occupation/occupationList';
-
+import memberList, { memberSaga } from './member/memberList';
+// import occupationSelect from './occupation/occupationSelect';
 import recordList, { recordSaga } from './record/recordList';
-import select from './common/select';
 
 const rootReducer = combineReducers({
   auth,
+  authCode,
   loading,
   branchList,
   branchPost,
@@ -33,12 +35,14 @@ const rootReducer = combineReducers({
   employPost,
   employDetail,
   memberDetail,
-  select,
+  branchSelect,
+  // occupationSelect,
 });
 
 export function* rootSaga() {
   yield all([
     authSaga(),
+    authCodeSaga(),
     branchSaga(),
     branchPostSaga(),
     branchDetailSaga(),

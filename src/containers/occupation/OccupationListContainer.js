@@ -37,7 +37,7 @@ const OccupationListContainer = ({ history }) => {
       occupationList,
       auth,
       loading,
-      select,
+      branchSelect,
     }) => ({
       occupations: occupationList.occupations,
       occupationError: occupationList.occupationError,
@@ -48,7 +48,7 @@ const OccupationListContainer = ({ history }) => {
       occupationDelete: occupationList.occupationDelete,
       user: auth.user,
       loading: loading,
-      selectedBranch: select.selectedBranch,
+      selectedBranch: branchSelect.selectedBranch,
     }),
   );
 
@@ -62,8 +62,14 @@ const OccupationListContainer = ({ history }) => {
     );
   };
 
+  // const onUpdateChange = (e, rowInfo) => {
+  //   const { no, key, value } = e.target;
+  //   dispatch(changeInputUpdate(no, key, value));
+  // };
+
   const onSubmit = (e) => {
     e.preventDefault();
+
     const data = occupationPost;
     if ([data.name, data.color].includes('')) {
       setError('빈 칸을 모두 입력하세요');
@@ -87,6 +93,15 @@ const OccupationListContainer = ({ history }) => {
     ));
     console.log(occupation.name);
     dispatch(deleteOccupation());
+  };
+
+  const onEdit = (e) => {
+    e.preventDefault();
+    const data = occupationUpdate;
+    if ([data.name, data.color].includes('')) {
+      setError('빈 칸을 모두 입력하세요');
+      return;
+    }
   };
 
   useEffect(() => {
@@ -114,8 +129,9 @@ const OccupationListContainer = ({ history }) => {
       loading={loading}
       onSubmit={onSubmit}
       onChange={onChange}
-      //onEdit={onEdit}
       onDelete={onDelete}
+      // onUpdateChange={onUpdateChange}
+      onEdit={onEdit}
       error={error}
     ></OccupationListForm>
   );

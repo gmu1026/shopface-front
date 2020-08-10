@@ -9,7 +9,7 @@ import {
 import AuthTemplate from '../../components/common/AuthTemplate';
 import { withRouter } from 'react-router-dom';
 
-const RegisterForm = ({ history, match }) => {
+const RegisterContainer = ({ history, match }) => {
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const { register, user, authError, isRegister } = useSelector(({ auth }) => ({
@@ -88,4 +88,4 @@ const RegisterForm = ({ history, match }) => {
   );
 };
 
-export default withRouter(RegisterForm);
+export default withRouter(RegisterContainer);

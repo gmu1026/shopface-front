@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import Button from './Button';
-import SelectBox from './SelectBox';
+import BranchSelectBox from '../branch/BranchSelectForm';
 
 const SideBarHeader = ({ user, onLogout, branchs }) => {
   return (
@@ -12,7 +12,7 @@ const SideBarHeader = ({ user, onLogout, branchs }) => {
         </a>
         <div className="navbar-collapse collapse">
           <div className="ml-auto" style={{ width: '200px' }}>
-            <SelectBox branchs={branchs} />
+            <BranchSelectBox branchs={branchs} />
           </div>
           <ul className="navbar-nav ml-auto">
             <li className="nav-item dropdown">

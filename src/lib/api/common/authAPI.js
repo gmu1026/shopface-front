@@ -39,9 +39,6 @@ export const singUp = async ({ member }) => {
     .catch((e) => {
       throw new Error(e.code);
     });
-
-  /* console.log('error signing up:', error);
-    throw new Error(error.message); */
 };
 
 export const checkExpire = async () => {
@@ -59,4 +56,12 @@ export const checkExpire = async () => {
       return isExpired;
     });
   return isExpired;
+};
+
+export const checkAuthcode = () => {
+  //TODO
+  // 인증 요청 api 구현
+  const response = { status: 200 };
+  return response;
+  //return response;
 };
