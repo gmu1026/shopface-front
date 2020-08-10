@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Form } from '../../../node_modules/react-bootstrap/esm/index';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeSelect } from '../../modules/common/select';
+import { changeSelect } from '../../modules/branch/branchSelect';
 
 const SelectBox = ({ branchs }) => {
   const dispatch = useDispatch();
-  const { selectedBranch } = useSelector(({ select }) => ({
-    selectedBranch: select.selectedBranch,
+  const { selectedBranch } = useSelector(({ branchSelect }) => ({
+    selectedBranch: branchSelect.selectedBranch,
   }));
 
   const onChange = (e) => {
@@ -15,7 +15,6 @@ const SelectBox = ({ branchs }) => {
 
   useEffect(() => {
     if (branchs != null && branchs.length > 0 && selectedBranch === '') {
-      console.log(branchs[0].no);
       dispatch(changeSelect(branchs[0].no));
     }
   }, [branchs, selectedBranch, dispatch]);
