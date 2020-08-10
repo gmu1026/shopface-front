@@ -62,11 +62,6 @@ const OccupationListContainer = ({ history }) => {
     );
   };
 
-  // const onUpdateChange = (e, rowInfo) => {
-  //   const { no, key, value } = e.target;
-  //   dispatch(changeInputUpdate(no, key, value));
-  // };
-
   const onSubmit = (e) => {
     e.preventDefault();
 
@@ -130,7 +125,6 @@ const OccupationListContainer = ({ history }) => {
       onSubmit={onSubmit}
       onChange={onChange}
       onDelete={onDelete}
-      // onUpdateChange={onUpdateChange}
       onEdit={onEdit}
       error={error}
     ></OccupationListForm>
