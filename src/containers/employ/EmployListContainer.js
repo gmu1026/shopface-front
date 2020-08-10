@@ -29,7 +29,8 @@ const EmployListContainer = ({ history }) => {
     postError,
     user,
     name,
-  } = useSelector(({ employList, employPost, loading, auth }) => ({
+    selectedBranch,
+  } = useSelector(({ employList, employPost, loading, auth, select }) => ({
     employs: employList.employs,
     employError: employList.employError,
     loading: loading,
@@ -38,6 +39,7 @@ const EmployListContainer = ({ history }) => {
     postError: employPost.postError,
     user: auth.user,
     name: employList.name,
+    selectedBranch: select.selectedBranch,
   }));
 
   const onChange = (e) => {
@@ -80,7 +82,7 @@ const EmployListContainer = ({ history }) => {
         post: {
           name: data.name,
           state: 'B',
-          branchNo: 1,
+          branchNo: selectedBranch,
           roleNo: 3,
           departmentNo: 2,
         },
@@ -100,11 +102,11 @@ const EmployListContainer = ({ history }) => {
   }, [dispatch, user]);
 
   useEffect(() => {
-    if (postResult === 'Success') {
-      dispatch(initializeForm('post'));
-      history.push('/employ');
+    if (postResult === 200) {
+      dispatch(initializeForm());
+      dispatch(getEmployList({ selectedBranch }));
     }
-  }, [history, dispatch, postResult]);
+  }, [postResult, dispatch, selectedBranch]);
 
   useEffect(() => {
     if (postError !== null) {
@@ -119,9 +121,9 @@ const EmployListContainer = ({ history }) => {
           dispatch(logout());
         }
       });
-      dispatch(getEmployList());
+      dispatch(getEmployList({ selectedBranch }));
     }
-  }, [dispatch, user]);
+  }, [dispatch, selectedBranch, user]);
 
   return (
     <EmployListForm

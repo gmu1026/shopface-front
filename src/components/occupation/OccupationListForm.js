@@ -12,12 +12,13 @@ const ErrorMessage = styled.div`
   margin-left: 1rem;
 `;
 
-const OccupationTableBody = ({ occupation, onChange, onDelete }) => {
+const OccupationTableBody = ({ occupation, onChange, onDelete, onSubmit }) => {
   return (
     <>
       <tr role="row">
         <td>
-          <input type="text" value={occupation.name} />
+          {/* <input type="text" value={occupation.name} onChange={onChange} /> */}
+          {occupation.name}
         </td>
         <td>{occupation.color}</td>
         <td>

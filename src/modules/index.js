@@ -10,16 +10,13 @@ import employPost, { employPostSaga } from './employ/employPost';
 import employDetail, { employDetailSaga } from './employ/employDetail';
 import memberList, { memberSaga } from './member/memberList';
 import memberDetail, { memberDetailSaga } from './member/memberDetail';
-import occupationList, { occupationSaga } from './occupation/occupationList';
-import occupationPost, {
+import occupationList, {
+  occupationSaga,
   occupationPostSaga,
-} from './occupation/occupationPost';
-import occupationUpdate, {
   occupationUpdateSaga,
-} from './occupation/occupationUpdate';
-import occupationDelete, {
   occupationDeleteSaga,
-} from './occupation/occupationDelete';
+} from './occupation/occupationList';
+
 import recordList, { recordSaga } from './record/recordList';
 import select from './common/select';
 
@@ -28,16 +25,13 @@ const rootReducer = combineReducers({
   loading,
   branchList,
   branchPost,
+  branchDetail,
   occupationList,
-  occupationPost,
-  occupationUpdate,
-  occupationDelete,
   memberList,
   recordList,
   employList,
   employPost,
   employDetail,
-  branchDetail,
   memberDetail,
   select,
 });
