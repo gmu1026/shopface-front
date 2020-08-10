@@ -42,10 +42,7 @@ const AuthTemplate = ({ children }) => {
   return (
     <AuthTemplateBlock>
       <h3>Shopface</h3>
-      <WhiteBox>
-        <div className="logo-area"></div>
-        {children}
-      </WhiteBox>
+      <WhiteBox>{children}</WhiteBox>
     </AuthTemplateBlock>
   );
 };

@@ -45,7 +45,7 @@ const OccupationListContainer = ({ history }) => {
       occupationDelete,
       occupationList,
       loading,
-      select,
+      branchSelect,
     }) => ({
       occupations: occupationList.occupations,
       occupationError: occupationList.occupationError,
@@ -58,7 +58,7 @@ const OccupationListContainer = ({ history }) => {
       occupationUpdateResult: occupationUpdate.occupationUpdateResult,
       occupationUpdateError: occupationUpdate.occupationUpdateError,
       loading: loading,
-      selectedBranch: select.selectedBranch,
+      selectedBranch: branchSelect.selectedBranch,
     }),
   );
 
@@ -72,10 +72,15 @@ const OccupationListContainer = ({ history }) => {
     );
   };
 
+  const onUpdateChange = (e, rowInfo) => {
+    const { no, key, value } = e.target;
+    dispatch(changeInputUpdate(no, key, value));
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
 
-    const data = post;
+    const data = occupationPost;
     if ([data.name, data.color].includes('')) {
       setError('빈 칸을 모두 입력하세요');
       return;
@@ -99,9 +104,6 @@ const OccupationListContainer = ({ history }) => {
       setError('빈 칸을 모두 입력하세요');
       return;
     }
-
-    // const idx = occupations.map((occupation, index) => <li key={index} />);
-    // dispatch(occupationUpdate({ index, data }));
   };
 
   //  const onDelete = (id) => {
@@ -156,8 +158,9 @@ const OccupationListContainer = ({ history }) => {
       loading={loading}
       onSubmit={onSubmit}
       onChange={onChange}
+      onUpdateChange={onUpdateChange}
       onEdit={onEdit}
-      // onDelete={onDelete}
+      //onDelete={onDelete}
       error={error}
     ></OccupationListForm>
   );
