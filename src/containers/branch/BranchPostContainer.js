@@ -7,10 +7,12 @@ import {
   initializeForm,
 } from '../../modules/branch/branchPost';
 import { withRouter } from 'react-router-dom';
+import { checkExpire } from '../../lib/api/common/authAPI';
+import { logout } from '../../modules/common/auth';
 
 const BranchPostContainer = ({ history }) => {
   const [error, setError] = useState(null);
-  const [zoneCode, setZoneCode] = useState('');
+  const [zipCode, setZipCode] = useState('');
   const [address, setAddress] = useState('');
   const [show, setShow] = useState(false);
 
@@ -18,30 +20,30 @@ const BranchPostContainer = ({ history }) => {
   const openModal = () => setShow(true);
 
   const dispatch = useDispatch();
-  const { branchPost, postResult, postError } = useSelector(
-    ({ branchPost }) => ({
+  const { branchPost, postResult, postError, user } = useSelector(
+    ({ branchPost, auth }) => ({
       branchPost: branchPost.post,
       postResult: branchPost.postResult,
       postError: branchPost.postError,
+      user: auth.user,
     }),
   );
 
-   const onChange = (e) => {
-     const { name, value } = e.target;
-     dispatch(
-       changeInput({
-         key: name,
-         value,
-       }),
-     );
-   };
+  const onChange = (e) => {
+    const { name, value } = e.target;
+    dispatch(
+      changeInput({
+        key: name,
+        value,
+      }),
+    );
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
     const data = branchPost;
     if (
       [
-        data.id,
         data.name,
         data.phone,
         data.address,
@@ -52,18 +54,21 @@ const BranchPostContainer = ({ history }) => {
       setError('빈 칸을 모두 입력하세요');
       return;
     }
-    dispatch(postBranch({ post: data }));
+    setError(null);
+    //TODO memberId  값 수정
+    dispatch(
+      postBranch({
+        post: {
+          name: data.name,
+          phone: data.phone,
+          address: data.address,
+          detailAddress: data.detailAddress,
+          zipCode: data.zipCode,
+          memberId: user.name,
+        },
+      }),
+    );
   };
-
-  useEffect(() => {
-    if (postResult !== null) {
-      history.push('/branch');
-    }
-  }, [history, postResult]);
-
-  useEffect(() => {
-    dispatch(initializeForm('post'));
-  }, [dispatch]);
 
   const handleComplete = (data) => {
     let value = data.address;
@@ -71,11 +76,35 @@ const BranchPostContainer = ({ history }) => {
     dispatch(changeInput({ key: 'address', value }));
 
     value = data.zonecode;
-    setZoneCode(value);
-    dispatch(changeInput({ key: 'zoneCode', value }));
+    setZipCode(value);
+    dispatch(changeInput({ key: 'zipCode', value }));
 
     closeModal();
   };
+
+  useEffect(() => {
+    if (postResult === 200) {
+      dispatch(initializeForm('post'));
+      history.push('/branch');
+    }
+  }, [history, dispatch, postResult]);
+
+  useEffect(() => {
+    if (postError !== null) {
+      setError('등록에 실패 했습니다.');
+    }
+  }, [postError]);
+
+  useEffect(() => {
+    if (user !== null) {
+      checkExpire().then((isExpired) => {
+        if (isExpired) {
+          dispatch(logout());
+        }
+      });
+    }
+    dispatch(initializeForm('post'));
+  }, [dispatch, user]);
 
   return (
     <BranchPostForm
@@ -86,7 +115,7 @@ const BranchPostContainer = ({ history }) => {
       show={show}
       closeModal={closeModal}
       openModal={openModal}
-      zoneCode={zoneCode}
+      zipCode={zipCode}
       address={address}
     ></BranchPostForm>
   );

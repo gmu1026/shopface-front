@@ -18,7 +18,7 @@ export default function createRequestSaga(type, request) {
       console.log(response);
       yield put({
         type: SUCCESS,
-        payload: response.data,
+        payload: response,
       });
     } catch (e) {
       yield put({

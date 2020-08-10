@@ -3,7 +3,7 @@ import createRequestSaga, {
   createRequestActionTypes,
 } from '../../lib/createRequestSaga';
 import { takeLatest } from 'redux-saga/effects';
-//import * as branchAPI from '../../lib/api/branch/branchApI';
+import * as branchAPI from '../../lib/api/branch/branchAPI';
 
 const [
   BRANCH_LIST,
@@ -11,9 +11,11 @@ const [
   BRANCH_LIST_FAILURE,
 ] = createRequestActionTypes('branchList/BRANCH_LIST');
 
-export const getBranchList = createAction(BRANCH_LIST);
+export const getBranchList = createAction(BRANCH_LIST, ({ name }) => ({
+  name,
+}));
 
-const branchListSaga = createRequestSaga(BRANCH_LIST); //branchAPI.getBranchList
+const branchListSaga = createRequestSaga(BRANCH_LIST, branchAPI.getBranchList); //branchAPI.getBranchList
 
 export function* branchSaga() {
   yield takeLatest(BRANCH_LIST, branchListSaga);

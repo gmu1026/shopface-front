@@ -1,13 +1,32 @@
 import React from 'react';
 import Button from '../common/Button';
+import styled from 'styled-components';
+import { withRouter } from 'react-router-dom';
 // import spectrum from '../../spect';
 
-const OccupationTableBody = ({ occupation }) => {
+const ErrorMessage = styled.div`
+  color: red;
+  text-align: left;
+  font-size: 0.875rem;
+  margin-top: 1rem;
+  margin-left: 1rem;
+`;
+
+const OccupationTableBody = ({ occupation, onChange, onDelete, onSubmit }) => {
   return (
     <>
       <tr role="row">
-        <td>{occupation.name}</td>
+        <td>
+          {/* <input type="text" value={occupation.name} onChange={onChange} /> */}
+          {occupation.name}
+        </td>
         <td>{occupation.color}</td>
+        <td>
+          <Button className="btn btn-primary">수정</Button>
+          <Button className="btn btn-primary" onClick={onDelete}>
+            삭제
+          </Button>
+        </td>
       </tr>
     </>
   );
@@ -20,9 +39,12 @@ const OccupationListForm = ({
   onSubmit,
   onChange,
   error,
+  handleComplete,
+  name,
+  color,
 }) => {
   return (
-    <div className="content">
+    <>
       <div className="container-fluid p-0">
         <h1 className="h3 mb-3">업무 관리</h1>
         <div className="row">
@@ -30,38 +52,37 @@ const OccupationListForm = ({
             <div className="card">
               <div className="card-body">
                 <div className="col-sm-6">
-                  <form onSubmit={onsubmit}>
-                    <input
-                      type="hidden"
-                      id="occupationNo-input"
-                      name="branchNo"
-                      onChange={onChange}
-                    />
-                    업무 명 :
-                    <input
-                      type="text"
-                      className="form-control ml-2 mr-2"
-                      id="occupation-input"
-                      name="name"
-                      onChange={onChange}
-                    />
-                    색상:
-                    <input
-                      className="spectrum"
-                      type="color"
-                      id="occupation-color"
-                      name="color"
-                      onChange={onChange}
-                    />
-                    <div className="ml-4 mr-2">
-                      <Button
-                        type="button"
-                        className="btn btn-primary"
-                        id="post-button"
-                        name="postBtn"
-                      >
-                        등록
-                      </Button>
+                  <form onSubmit={onSubmit}>
+                    <div className="row">
+                      <div>
+                        <div className="row"></div>
+                        <div>
+                          업무명:
+                          <input
+                            type="text"
+                            className="form-control ml-2 mr-2"
+                            name="name"
+                            onChange={onChange}
+                          />
+                          <br />
+                        </div>
+                      </div>
+                      <div>
+                        색상:
+                        <input
+                          className="form-control ml-2 mr-2"
+                          type="color"
+                          id="color"
+                          name="color"
+                          onChange={onChange}
+                        />
+                      </div>
+                      <div className="ml-4 mr-2">
+                        <ErrorMessage>{error}</ErrorMessage>
+                        <Button className="btn btn-primary" name="postBtn">
+                          등록
+                        </Button>
+                      </div>
                     </div>
                   </form>
                 </div>
@@ -85,7 +106,7 @@ const OccupationListForm = ({
                           </tr>
                         </thead>
                         <tbody id="table-body">
-                          {!loading && occupations !== null ? (
+                          {occupations !== null && occupations.length > 0 ? (
                             occupations.map((occupation, index) => (
                               <OccupationTableBody
                                 key={index}
@@ -101,57 +122,6 @@ const OccupationListForm = ({
                           )}
                         </tbody>
                       </table>
-                      <div
-                        className="modal fade"
-                        id="color-modal-form"
-                        tabIndex="-1"
-                        role="dialog"
-                        aria-hidden="true"
-                      >
-                        <div
-                          className="modal-dialog modal-dialog-centered"
-                          role="document"
-                        >
-                          <div className="modal-content">
-                            <div className="modal-header">
-                              <h5 className="modal-title">색상 선택</h5>
-                              <Button
-                                type="button"
-                                className="close"
-                                data-dismiss="modal"
-                                aria-label="Close"
-                              >
-                                <span aria-hidden="true">&times;</span>
-                              </Button>
-                            </div>
-                            <div className="modal-body m-3">
-                              색상:
-                              <input
-                                type="text"
-                                id="modal-color"
-                                name="modalColor"
-                                onChange={onChange}
-                              />
-                            </div>
-                            <div className="modal-footer">
-                              <Button
-                                type="button"
-                                className="btn btn-primary"
-                                data-dismiss="modal"
-                              >
-                                취소
-                              </Button>
-                              <Button
-                                type="button"
-                                className="btn btn-primary"
-                                id="change-color-button"
-                              >
-                                선택
-                              </Button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -160,7 +130,7 @@ const OccupationListForm = ({
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
-export default OccupationListForm;
+export default withRouter(OccupationListForm);

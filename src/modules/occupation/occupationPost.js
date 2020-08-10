@@ -1,68 +1,73 @@
-import { createAction, handleActions } from 'redux-actions';
-import createRequestSaga, {
-  createRequestActionTypes,
-} from '../../lib/createRequestSaga';
-import * as occupationAPI from '../../lib/api/occupation/occupationAPI';
-import { takeLatest } from 'redux-saga/effects';
+// import { createAction, handleActions } from 'redux-actions';
+// import createRequestSaga, {
+//   createRequestActionTypes,
+// } from '../../lib/createRequestSaga';
+// import * as occupationAPI from '../../lib/api/occupation/occupationAPI';
+// import { takeLatest } from 'redux-saga/effects';
+// import produce from 'immer';
 
-const INITIALIZE_FORM = 'occupationPost/INITIALIZE_FORM';
-const CHANGE_INPUT = 'occupationPost/CHANGE_INPUT';
+// const INITIALIZE_FORM = 'occupationPost/INITIALIZE_FORM';
+// const CHANGE_INPUT = 'occupationPost/CHANGE_INPUT';
 
-const [
-  OCCUPATION_POST,
-  OCCUPATION_POST_SUCCESS,
-  OCCUPATION_POST_FAILURE,
-] = createRequestActionTypes('occupationPost/OCCUPATION_POST');
+// const [
+//   OCCUPATION_POST,
+//   OCCUPATION_POST_SUCCESS,
+//   OCCUPATION_POST_FAILURE,
+// ] = createRequestActionTypes('occupationPost/OCCUPATION_POST');
 
-export const changeInput = createAction(CHANGE_INPUT, ({ key, value }) => ({
-  key,
-  value,
-}));
+// export const changeInput = createAction(CHANGE_INPUT, ({ key, value }) => ({
+//   key,
+//   value,
+// }));
 
-export const postOccupation = createAction(OCCUPATION_POST, ({ data }) => ({
-  data,
-}));
+// export const postOccupation = createAction(OCCUPATION_POST, ({ post }) => ({
+//   post,
+// }));
 
-export const initializeForm = createAction(
-  INITIALIZE_FORM,
-  (initForm) => initForm,
-);
+// export const initializeForm = createAction(
+//   INITIALIZE_FORM,
+//   (initForm) => initForm,
+// );
 
-const initialState = {
-  name: '',
-  color: '',
-  occupationPostResult: null,
-  occupationPostError: null,
-};
+// const initialState = {
+//   post: {
+//     name: '',
+//     color: '#00B050',
+//   },
+//   occupationResult: null,
+//   occupationError: null,
+// };
 
-export const occupationpostSaga = createRequestSaga(
-  OCCUPATION_POST,
-  occupationAPI.postOccupation,
-);
-export function* occupationPostSaga() {
-  yield takeLatest(OCCUPATION_POST, occupationpostSaga);
-}
+// export const postSaga = createRequestSaga(
+//   OCCUPATION_POST,
+//   occupationAPI.postOccupation,
+// );
+// export function* occupationPostSaga() {
+//   yield takeLatest(OCCUPATION_POST, postSaga);
+// }
 
-const occupationPost = handleActions(
-  {
-    [CHANGE_INPUT]: (state, { payload: { key, value } }) => ({
-      ...state,
-      [key]: value,
-    }),
-    [INITIALIZE_FORM]: (state, { payload: initForm }) => ({
-      ...state,
-      [initForm]: initialState[initForm],
-    }),
-    [OCCUPATION_POST_SUCCESS]: (state, { payload: data }) => ({
-      ...state,
-      postResult: data,
-    }),
-    [OCCUPATION_POST_FAILURE]: (state, { payload: e }) => ({
-      ...state,
-      postError: e,
-    }),
-  },
-  initialState,
-);
+// const occupationPost = handleActions(
+//   {
+//     [CHANGE_INPUT]: (state, { payload: { key, value } }) =>
+//       produce(state, (draft) => {
+//         draft['post'][key] = value;
+//       }),
+//     [INITIALIZE_FORM]: (state) => ({
+//       ...state,
+//       post: initialState['post'],
+//       occupationResult: null,
+//     }),
+//     [OCCUPATION_POST_SUCCESS]: (state, { payload: { status } }) => ({
+//       ...state,
+//       occupationResult: status,
+//       occupationError: null,
+//     }),
+//     [OCCUPATION_POST_FAILURE]: (state, { payload: e }) => ({
+//       ...state,
+//       occupationError: e,
+//     }),
+//   },
+//   initialState,
+// );
 
-export default occupationPost;
+// export default occupationPost;

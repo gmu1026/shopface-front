@@ -9,15 +9,18 @@ import { takeLatest } from 'redux-saga/effects';
 const CHANGE_INPUT = 'auth/CHANGE_INPUT';
 const INITIALIZE_FORM = 'auth/INITIALIZE_FORM';
 const TEMP_SET_USER = 'auth/TEMP_SET_USER';
-const LOGOUT_SUCCESS = 'auth/LOGOUT_SUCCESS';
-const LOGOUT_FAILURE = 'auth/LOGOUT_FAILURE';
 
 const [LOGIN, LOGIN_SUCCESS, LOGIN_FAILURE] = createRequestActionTypes(
   'auth/LOGIN',
 );
-const [REGISTER, REGISTER_SUCCESS, REGISTER_FAILURE] = createRequestActionTypes(
-  'auth/REGISTER',
+const [LOGOUT, LOGOUT_SUCCESS, LOGOUT_FAILURE] = createRequestActionTypes(
+  'auth/LOGOUT',
 );
+const [
+  REGISTER_MEMBER,
+  REGISTER_MEMBER_SUCCESS,
+  REGISTER_MEMBER_FAILURE,
+] = createRequestActionTypes('auth/REGISTER_MEMBER');
 
 export const changeInput = createAction(
   CHANGE_INPUT,
@@ -35,24 +38,23 @@ export const tempSetUser = createAction(TEMP_SET_USER, (user) => ({
   user,
 }));
 
-export const logoutSuccess = createAction(LOGOUT_SUCCESS);
-export const logoutFailure = createAction(LOGOUT_FAILURE);
-
 export const login = createAction(LOGIN, ({ id, password }) => ({
   id,
   password,
 }));
-export const register = createAction(REGISTER, ({ id, password }) => ({
-  id,
-  password,
+export const logout = createAction(LOGOUT);
+export const registerMember = createAction(REGISTER_MEMBER, ({ member }) => ({
+  member,
 }));
 
 const loginSaga = createRequestSaga(LOGIN, authAPI.login);
-const registerSaga = createRequestSaga(REGISTER, authAPI.singUp);
+const logoutSaga = createRequestSaga(LOGOUT, authAPI.logout);
+const registerSaga = createRequestSaga(REGISTER_MEMBER, authAPI.singUp);
 
 export function* authSaga() {
   yield takeLatest(LOGIN, loginSaga);
-  yield takeLatest(REGISTER, registerSaga);
+  yield takeLatest(LOGOUT, logoutSaga);
+  yield takeLatest(REGISTER_MEMBER, registerSaga);
 }
 
 const initialState = {
@@ -67,6 +69,7 @@ const initialState = {
     phone: '',
     email: '',
   },
+  isRegister: null,
   user: null,
   authError: null,
 };
@@ -80,6 +83,7 @@ const auth = handleActions(
     [INITIALIZE_FORM]: (state, { payload: initForm }) => ({
       ...state,
       [initForm]: initialState[initForm],
+      authError: null,
     }),
     [TEMP_SET_USER]: (state, { payload: { user } }) => ({
       ...state,
@@ -90,25 +94,27 @@ const auth = handleActions(
       user,
       authError: null,
     }),
-    [LOGIN_FAILURE]: (state, { payload: error }) => ({
+    [LOGIN_FAILURE]: (state, { payload: { message } }) => ({
       ...state,
-      authError: error,
+      authError: message,
     }),
     [LOGOUT_SUCCESS]: (state) => ({
       ...state,
       user: null,
       authError: null,
     }),
-    [LOGOUT_FAILURE]: (state, { payload: error }) => ({
+    [LOGOUT_FAILURE]: (state, { payload: e }) => ({
       ...state,
-      authError: error,
+      authError: e,
     }),
-    [REGISTER_SUCCESS]: (state, { payload: { user } }) => ({
+    [REGISTER_MEMBER_SUCCESS]: (state, { payload: { status } }) => ({
       ...state,
+      isRegister: status,
       authError: null,
     }),
-    [REGISTER_FAILURE]: (state, { payload: error }) => ({
+    [REGISTER_MEMBER_FAILURE]: (state, { payload: error }) => ({
       ...state,
+      isRegister: null,
       authError: error,
     }),
   },
