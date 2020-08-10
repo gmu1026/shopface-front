@@ -1,12 +1,22 @@
-import React from 'react';
-import EmployListContainer from '../../containers/employ/EmployListContainer';
-import { Route, withRouter } from 'react-router-dom';
-import EmployDetailContainer from '../../containers/employ/EmployDetailContainer';
+import React, { Suspense, lazy } from 'react';
+import { Route, withRouter, Switch } from 'react-router-dom';
+
+const EmployDetailContainer = lazy(() =>
+  import('../../containers/employ/EmployDetailContainer'),
+);
+const EmployListContainer = lazy(() =>
+  import('../../containers/employ/EmployListContainer'),
+);
+
 const EmployPage = ({ match }) => {
   return (
     <div>
-      <Route path={match.url} component={EmployListContainer} exact />
-      <Route path={`${match.url}/:no`} component={EmployDetailContainer} />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Switch>
+          <Route path={match.url} component={EmployListContainer} exact />
+          <Route path={`${match.url}/:no`} component={EmployDetailContainer} />
+        </Switch>
+      </Suspense>
     </div>
   );
 };
