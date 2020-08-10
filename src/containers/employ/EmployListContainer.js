@@ -30,17 +30,19 @@ const EmployListContainer = ({ history }) => {
     user,
     name,
     selectedBranch,
-  } = useSelector(({ employList, employPost, loading, auth, select }) => ({
-    employs: employList.employs,
-    employError: employList.employError,
-    loading: loading,
-    employPost: employPost.post,
-    postResult: employPost.postResult,
-    postError: employPost.postError,
-    user: auth.user,
-    name: employList.name,
-    selectedBranch: select.selectedBranch,
-  }));
+  } = useSelector(
+    ({ employList, employPost, loading, auth, branchSelect }) => ({
+      employs: employList.employs,
+      employError: employList.employError,
+      loading: loading,
+      employPost: employPost.post,
+      postResult: employPost.postResult,
+      postError: employPost.postError,
+      user: auth.user,
+      name: employList.name,
+      selectedBranch: branchSelect.selectedBranch,
+    }),
+  );
 
   const onChange = (e) => {
     const { name, value } = e.target;
