@@ -6,7 +6,7 @@ import { getTimetableList } from '../../modules/timetable/timetableList';
 import { checkExpire } from '../../lib/api/common/authAPI';
 import { logout } from '../../modules/common/auth';
 import TimeTableModalForm from '../../components/timetable/TimeTableModalForm';
-import { getOccupationList } from '../../modules/occupation/occupationList';
+import { getOccupationList } from '../../modules/occupation/occupation';
 const TimetableListContainer = () => {
   const [modalType, setModalType] = useState('');
   const [show, setShow] = useState(false);

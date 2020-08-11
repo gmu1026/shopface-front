@@ -16,7 +16,7 @@ const OccupationTableBody = ({
   occupation,
   onChange,
   onDelete,
-  onUpdateSubmit,
+  onEdit,
   updateChange,
   index,
 }) => {
@@ -36,7 +36,7 @@ const OccupationTableBody = ({
         <td>
           <Button
             className="btn btn-primary"
-            onClick={onUpdateSubmit}
+            onClick={onEdit}
             value={occupation.no}
           >
             수정
@@ -61,7 +61,7 @@ const OccupationListForm = ({
   onSubmit,
   onChange,
   onDelete,
-  onUpdateSubmit,
+  onEdit,
   error,
   updateChange,
   handleComplete,
@@ -128,7 +128,7 @@ const OccupationListForm = ({
                                 occupation={occupation}
                                 onDelete={onDelete}
                                 onChange={onChange}
-                                onUpdateSubmit={onUpdateSubmit}
+                                onEdit={onEdit}
                                 updateChange={updateChange}
                               ></OccupationTableBody>
                             ))

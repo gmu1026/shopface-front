@@ -6,34 +6,34 @@ import { takeLatest } from 'redux-saga/effects';
 import * as occupationAPI from '../../lib/api/occupation/occupationAPI';
 import produce from 'immer';
 
-const INITIALIZE_FORM = 'occupationList/INITIALIZE_FORM'; //post 시 초기
-const INITIALIZE_RESULT = 'occupationList/INITIALIZE_RESULT'; //update시 초기
-const CHANGE_INPUT = 'occupationList/CHANGE_INPUT';
-const UPDATE_CHANGE = 'occupationList/UPDATE_CHANGE';
+const INITIALIZE_FORM = 'occupation/INITIALIZE_FORM'; //post 시 초기
+const INITIALIZE_RESULT = 'occupation/INITIALIZE_RESULT'; //update시 초기
+const CHANGE_INPUT = 'occupation/CHANGE_INPUT';
+const UPDATE_CHANGE = 'occupation/UPDATE_CHANGE';
 
 const [
   OCCUPATION_LIST,
   OCCUPATION_LIST_SUCCESS,
   OCCUPATION_LIST_FAILURE,
-] = createRequestActionTypes('occupationList/occupation_LIST');
+] = createRequestActionTypes('occupation/occupation_LIST');
 
 const [
   OCCUPATION_POST,
   OCCUPATION_POST_SUCCESS,
   OCCUPATION_POST_FAILURE,
-] = createRequestActionTypes('occupationList/OCCUPATION_POST');
+] = createRequestActionTypes('occupation/OCCUPATION_POST');
 
 const [
   OCCUPATION_UPDATE,
   OCCUPATION_UPDATE_SUCCESS,
   OCCUPATION_UPDATE_FAILURE,
-] = createRequestActionTypes('occupationList/OCCUPATION_UPDATE');
+] = createRequestActionTypes('occupation/OCCUPATION_UPDATE');
 
 const [
   OCCUPATION_DELETE,
   OCCUPATION_DELETE_SUCCESS,
   OCCUPATION_DELETE_FAILURE,
-] = createRequestActionTypes('occupationList/OCCUPATION_DELETE');
+] = createRequestActionTypes('occupation/OCCUPATION_DELETE');
 
 export const getOccupationList = createAction(
   OCCUPATION_LIST,
@@ -79,7 +79,6 @@ const initialState = {
     name: '',
     color: '#00B050',
   },
-  updateOccupations: null,
 };
 
 export const postSaga = createRequestSaga(
@@ -121,7 +120,7 @@ export function* occupationDeleteSaga() {
   yield takeLatest(OCCUPATION_DELETE, deleteOccupationSaga);
 }
 
-const occupationList = handleActions(
+const occupation = handleActions(
   {
     [OCCUPATION_LIST_SUCCESS]: (state, { payload: { data } }) => ({
       ...state,
@@ -184,4 +183,4 @@ const occupationList = handleActions(
   initialState,
 );
 
-export default occupationList;
+export default occupation;

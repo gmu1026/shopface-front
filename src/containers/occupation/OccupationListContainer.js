@@ -11,14 +11,13 @@ import {
   postOccupation,
   updateOccupation,
   deleteOccupation,
-} from '../../modules/occupation/occupationList';
+} from '../../modules/occupation/occupation';
 import { checkExpire } from '../../lib/api/common/authAPI';
 import { logout } from '../../modules/common/auth';
 import createRequestSaga from '../../lib/createRequestSaga';
 
 const OccupationListContainer = ({ history }) => {
   const [error, setError] = useState(null);
-  const [name, setName] = useState('');
   const dispatch = useDispatch();
   const {
     occupations,
@@ -28,7 +27,6 @@ const OccupationListContainer = ({ history }) => {
     user,
     occupationPost,
     occupationUpdate,
-    occupationDelete,
     selectedBranch,
   } = useSelector(({ occupationList, auth, loading, branchSelect }) => ({
     occupations: occupationList.occupations,
@@ -87,7 +85,7 @@ const OccupationListContainer = ({ history }) => {
     );
   };
 
-  const onUpdateSubmit = (e) => {
+  const onEdit = (e) => {
     e.preventDefault();
     const no = parseInt(e.target.value);
     const modifiedOcupation = occupations.filter(
@@ -123,7 +121,7 @@ const OccupationListContainer = ({ history }) => {
 
   useEffect(() => {
     if (occupationResult === 200) {
-      alert(' 수정되었습니다');
+      alert('변경되었습니다');
       dispatch(initializeForm());
       dispatch(getOccupationList({ selectedBranch }));
     }
@@ -141,7 +139,7 @@ const OccupationListContainer = ({ history }) => {
       occupationError={occupationError}
       loading={loading}
       onSubmit={onSubmit}
-      onUpdateSubmit={onUpdateSubmit}
+      onEdit={onEdit}
       onChange={onChange}
       updateChange={onUpdateChange}
       onDelete={onDelete}

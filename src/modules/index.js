@@ -16,7 +16,7 @@ import occupationList, {
   occupationPostSaga,
   occupationUpdateSaga,
   occupationDeleteSaga,
-} from './occupation/occupationList';
+} from './occupation/occupation';
 import memberList, { memberSaga } from './member/memberList';
 import occupationSelect from './occupation/occupationSelect';
 import recordList, { recordSaga } from './record/recordList';
