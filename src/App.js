@@ -1,25 +1,25 @@
 import Drawer from '@material-ui/core/Drawer';
 import { makeStyles } from '@material-ui/core/styles';
-import React, { useEffect } from 'react';
+import React, { Suspense, useEffect, lazy } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Route, withRouter } from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
 import SidebarHeader from '../src/components/common/SidebarHeader';
 import SideBarMenu from '../src/components/common/SidebarMenu';
 import client from './lib/api/client';
 import { checkExpire } from './lib/api/common/authAPI';
-import { logout } from './modules/common/auth';
-import BranchPage from './pages/branch/BranchPage';
-import LoginPage from './pages/common/LoginPage';
-import RegisterPage from './pages/common/RegisterPage';
-import EmployPage from './pages/employ/EmployPage';
-import IndexPage from './pages/IndexPage';
-import MemberPage from './pages/member/MemberPage';
-import OccupationPage from './pages/occupation/OccupationPage';
-import RecordPage from './pages/record/RecordPage';
-import SchedulePage from './pages/schedule/SchedulePage';
-import TimetablePage from './pages/timetable/TimetablePage';
 import { getBranchList } from './modules/branch/branchList';
-import AuthCodePage from './pages/common/AuthCodePage';
+import { logout } from './modules/common/auth';
+import IndexPage from './pages/IndexPage';
+
+const LoginPage = lazy(() => import('./pages/common/LoginPage'));
+const AuthCodePage = lazy(() => import('./pages/common/AuthCodePage'));
+const BranchPage = lazy(() => import('./pages/branch/BranchPage'));
+const RegisterPage = lazy(() => import('./pages/common/RegisterPage'));
+const EmployPage = lazy(() => import('./pages/employ/EmployPage'));
+const MemberPage = lazy(() => import('./pages/member/MemberPage'));
+const OccupationPage = lazy(() => import('./pages/occupation/OccupationPage'));
+const RecordPage = lazy(() => import('./pages/record/RecordPage'));
+const SchedulePage = lazy(() => import('./pages/schedule/SchedulePage'));
 
 const App = ({ history, match }) => {
   const dispatch = useDispatch();
@@ -92,14 +92,16 @@ const App = ({ history, match }) => {
     window.location.pathname === '/authcode'
   ) {
     return (
-      <>
-        <Route path="/login" component={LoginPage} />
-        <Route
-          path={['/register', '/register/employ', '/register/check']}
-          component={RegisterPage}
-        />
-        <Route path="/authcode" component={AuthCodePage} />
-      </>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Switch>
+          <Route path="/login" component={LoginPage} />
+          <Route
+            path={['/register', '/register/employ', '/register/check']}
+            component={RegisterPage}
+          />
+          <Route path="/authcode" component={AuthCodePage} />
+        </Switch>
+      </Suspense>
     );
   } else {
     return (
@@ -114,17 +116,23 @@ const App = ({ history, match }) => {
             </Drawer>
           </div>
 
-          <div className="col p-0" style={{ marginLeft: '18.5rem' }}>
+          <div className="col p-0" style={{ marginLeft: '18rem' }}>
             <SidebarHeader onLogout={onLogout} branchs={branchs} />
+
             <div className="content">
-              <Route path="/member" component={MemberPage} />
-              <Route path="/timetable" component={TimetablePage} />
-              <Route path="/" component={IndexPage} exact />
-              <Route path="/employ" component={EmployPage} />
-              <Route path="/occupation" component={OccupationPage} />
-              <Route path="/record" component={RecordPage} />
-              <Route path="/schedule" component={SchedulePage} />
-              <Route path="/branch" component={BranchPage} />
+              <Suspense fallback={<div>Loading...</div>}>
+                <Switch>
+                  <Route path="/member" component={MemberPage} />
+                  <Route path="/timetable" component={IndexPage} />
+                  {/* timetable Component */}
+                  <Route path="/" component={IndexPage} exact />
+                  <Route path="/employ" component={EmployPage} />
+                  <Route path="/occupation" component={OccupationPage} />
+                  <Route path="/record" component={RecordPage} />
+                  <Route path="/schedule" component={SchedulePage} />
+                  <Route path="/branch" component={BranchPage} />
+                </Switch>
+              </Suspense>
             </div>
           </div>
         </div>

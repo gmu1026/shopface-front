@@ -113,7 +113,7 @@ const EmployListForm = ({
                             employ={filterEmploy}
                           ></EmployTableBody>
                         ))
-                      ) : employs !== null && employs !== [] ? (
+                      ) : employs !== null && employs.length > 0 ? (
                         employs.map((employ, index) => (
                           <EmployTableBody
                             key={index}

@@ -42,9 +42,7 @@ const OccupationListContainer = ({ history }) => {
     updateOccupation: occupation.updateOccupation,
     updateError: occupation.updateError,
     updateResult: occupation.updateResult,
-    user: auth.user,
-    loading: loading,
-    selectedBranch: branchSelect.selectedBranch,
+    selectedBranch,
   }));
 
   const onChange = (e) => {

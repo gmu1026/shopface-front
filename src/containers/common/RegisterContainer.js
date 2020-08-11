@@ -20,6 +20,7 @@ const RegisterContainer = ({ history, match }) => {
   }));
 
   const onChange = (e) => {
+    setError(null);
     const { name, value } = e.target;
     dispatch(
       changeInput({
@@ -33,19 +34,11 @@ const RegisterContainer = ({ history, match }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     let member = Object.assign({}, register);
-    if (
-      [
-        member.id,
-        member.password,
-        member.name,
-        member.phone,
-        member.email,
-      ].includes('')
-    ) {
+    if ([member.id, member.password, member.name, member.phone].includes('')) {
       setError('빈칸을 모두 입력해주세요');
       return;
     }
-    if (match.url === '/register') {
+    if (window.location.pathname === '/register') {
       member.type = 'B';
     } else {
       member.type = 'E';

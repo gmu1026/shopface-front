@@ -85,15 +85,9 @@ const AuthForm = ({ type, onChange, onSubmit, error }) => {
               placeholder="전화번호"
               onChange={onChange}
             />
-            <StyledInput
-              type="text"
-              name="email"
-              placeholder="이메일"
-              onChange={onChange}
-            />
           </>
         )}
-        {/*  <ErrorMessage>{error}</ErrorMessage> */}
+        <ErrorMessage>{error}</ErrorMessage>
         <Footer>
           {type === 'login' && (
             <div>

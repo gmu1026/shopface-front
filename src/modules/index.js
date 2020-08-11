@@ -15,6 +15,7 @@ import occupation, { occupationSaga } from './occupation/occupation';
 import memberList, { memberSaga } from './member/memberList';
 import occupationSelect from './occupation/occupationSelect';
 import recordList, { recordSaga } from './record/recordList';
+import timetableList, { timetableSaga } from './timetable/timetableList';
 
 const rootReducer = combineReducers({
   auth,
@@ -32,6 +33,7 @@ const rootReducer = combineReducers({
   memberDetail,
   branchSelect,
   occupationSelect,
+  timetableList,
 });
 
 export function* rootSaga() {
@@ -48,6 +50,7 @@ export function* rootSaga() {
     employPostSaga(),
     employDetailSaga(),
     memberDetailSaga(),
+    timetableSaga(),
   ]);
 }
 

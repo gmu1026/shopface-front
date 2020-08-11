@@ -67,7 +67,7 @@ const initialState = {
     password: '',
     name: '',
     phone: '',
-    email: '',
+    email: 'x@x.x',
   },
   isRegister: null,
   user: null,
@@ -112,10 +112,10 @@ const auth = handleActions(
       isRegister: status,
       authError: null,
     }),
-    [REGISTER_MEMBER_FAILURE]: (state, { payload: error }) => ({
+    [REGISTER_MEMBER_FAILURE]: (state, { payload: { message } }) => ({
       ...state,
       isRegister: null,
-      authError: error,
+      authError: message,
     }),
   },
   initialState,

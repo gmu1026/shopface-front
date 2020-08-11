@@ -7,7 +7,6 @@ const TimeTableListForm = ({
   loading,
   handleDateSelect,
   handleEventClick,
-  handleEvents,
   events,
 }) => {
   return (
@@ -34,12 +33,10 @@ const TimeTableListForm = ({
                     selectable={true}
                     selectMirror={true}
                     dayMaxEvents={true}
-                    //weekends={this.state.weekendsVisible}
-                    //initialEvents={INITIAL_EVENTS} // alternatively, use the `events` setting to fetch from a feed
                     select={handleDateSelect}
                     //eventContent={renderEventContent} // custom render function
                     eventClick={handleEventClick}
-                    eventsSet={handleEvents} // called after events are initialized/added/changed/removed
+                    //eventsSet={handleEvents} // called after events are initialized/added/changed/removed
                     /* you can update a remote database when these fire:
                         eventAdd={function(){}}
                         eventChange={function(){}}

@@ -39,7 +39,7 @@ const EmployListContainer = ({ history }) => {
       postResult: employPost.postResult,
       postError: employPost.postError,
       user: auth.user,
-      name: employList.name,
+      name: employPost.post.name,
       selectedBranch: branchSelect.selectedBranch,
     }),
   );

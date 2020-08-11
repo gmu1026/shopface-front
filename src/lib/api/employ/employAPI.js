@@ -1,7 +1,7 @@
 import client from '../client';
 
-export const getEmployList = async () => {
-  const response = await client.get(`/branch/1/employ`);
+export const getEmployList = async ({ selectedBranch }) => {
+  const response = await client.get(`/branch/${selectedBranch}/employ`);
   return response;
 };
 
