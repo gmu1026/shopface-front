@@ -56,7 +56,7 @@ const EmployListForm = ({
                   <div className="col-sm-12 col-md-6">
                     <div className="row">
                       <div className="form-inline col-5"></div>
-                      <div className="form-inline col ml-6">
+                      <div className="form-inline col ml-5">
                         이름:
                         <input
                           type="text"
