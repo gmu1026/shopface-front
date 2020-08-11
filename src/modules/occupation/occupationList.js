@@ -7,8 +7,9 @@ import * as occupationAPI from '../../lib/api/occupation/occupationAPI';
 import produce from 'immer';
 
 const INITIALIZE_FORM = 'occupationList/INITIALIZE_FORM'; //post 시 초기
-const CHANGE_INPUT = 'occupationList/CHANGE_INPUT';
 const INITIALIZE_RESULT = 'occupationList/INITIALIZE_RESULT'; //update시 초기
+const CHANGE_INPUT = 'occupationList/CHANGE_INPUT';
+const UPDATE_CHANGE = 'occupationList/UPDATE_CHANGE';
 
 const [
   OCCUPATION_LIST,
@@ -48,11 +49,6 @@ export function* occupationSaga() {
   yield takeLatest(OCCUPATION_LIST, occupationListSaga);
 }
 
-export const changeInput = createAction(CHANGE_INPUT, ({ key, value }) => ({
-  key,
-  value,
-}));
-
 export const postOccupation = createAction(OCCUPATION_POST, ({ post }) => ({
   post,
 }));
@@ -62,8 +58,19 @@ export const initializeForm = createAction(
   (initForm) => initForm,
 );
 
+export const changeInput = createAction(CHANGE_INPUT, ({ key, value }) => ({
+  key,
+  value,
+}));
+
+export const updateChange = createAction(UPDATE_CHANGE, ({ key, value }) => ({
+  key,
+  value,
+}));
 const initialState = {
   occupations: null,
+  occupationResult: null,
+  occupationError: null,
   post: {
     name: '',
     color: '#00B050',
@@ -71,10 +78,7 @@ const initialState = {
 
   updateOccupations: {
     name: '',
-    color: '#00B050',
   },
-  occupationResult: null,
-  occupationError: null,
 };
 
 export const postSaga = createRequestSaga(
@@ -131,6 +135,11 @@ const occupationList = handleActions(
     [CHANGE_INPUT]: (state, { payload: { key, value } }) =>
       produce(state, (draft) => {
         draft['post'][key] = value;
+      }),
+
+    [UPDATE_CHANGE]: (state, { payload: { key, value } }) =>
+      produce(state, (draft) => {
+        draft['updateOccupations'][key] = value;
       }),
     [INITIALIZE_FORM]: (state) => ({
       ...state,

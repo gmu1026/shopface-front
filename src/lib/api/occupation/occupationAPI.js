@@ -16,7 +16,6 @@ export const updateOccupation = async ({ no, data }) => {
 };
 
 export const deleteOccupation = async ({ no }) => {
-  // const response = await client.delete(`/occupation/${no}`);
-  const response = await client.delete(`/occupation/13`);
+  const response = await client.delete(`/occupation/${no}`);
   return response;
 };

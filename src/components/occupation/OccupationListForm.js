@@ -12,18 +12,37 @@ const ErrorMessage = styled.div`
   margin-left: 1rem;
 `;
 
-const OccupationTableBody = ({ occupation, onChange, onDelete, onSubmit }) => {
+const OccupationTableBody = ({
+  occupation,
+  onChange,
+  onDelete,
+  onEdit,
+  updateChange,
+  // onUpdateSubmit,
+}) => {
   return (
     <>
       <tr role="row">
         <td>
-          {/* <input type="text" value={occupation.name} onChange={onChange} /> */}
-          {occupation.name}
+          {/* <form onSubmit={onUpdateSubmit}> */}
+          <input
+            type="text"
+            name="occupation.name"
+            value={occupation.name}
+            onChange={updateChange}
+          />
+          {/* </form> */}
         </td>
         <td>{occupation.color}</td>
         <td>
-          <Button className="btn btn-primary">수정</Button>
-          <Button className="btn btn-primary" onClick={onDelete}>
+          <Button className="btn btn-primary" onClick={onEdit}>
+            수정
+          </Button>
+          <Button
+            className="btn btn-primary"
+            onClick={onDelete}
+            value={occupation.no}
+          >
             삭제
           </Button>
         </td>
@@ -37,8 +56,12 @@ const OccupationListForm = ({
   occupationError,
   loading,
   onSubmit,
+  // onUpdateSubmit,
   onChange,
+  onDelete,
+  onEdit,
   error,
+  updateChange,
   handleComplete,
   name,
   color,
@@ -111,6 +134,11 @@ const OccupationListForm = ({
                               <OccupationTableBody
                                 key={index}
                                 occupation={occupation}
+                                onDelete={onDelete}
+                                onChange={onChange}
+                                onEdit={onEdit}
+                                updateChange={updateChange}
+                                // onSubmit={onUpdateSubmit}
                               ></OccupationTableBody>
                             ))
                           ) : (

@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import OccupationListForm from '../../components/occupation/OccupationListForm';
 import {
   changeInput,
+  updateChange,
   initializeForm,
   initializeResult,
   getOccupationList,
@@ -17,7 +18,7 @@ import createRequestSaga from '../../lib/createRequestSaga';
 
 const OccupationListContainer = ({ history }) => {
   const [error, setError] = useState(null);
-
+  const [name, setName] = useState('');
   const dispatch = useDispatch();
   const {
     occupations,
@@ -45,6 +46,7 @@ const OccupationListContainer = ({ history }) => {
       occupationPost: occupationList.post,
       occupationUpdate: occupationList.occupationUpdate,
       deleteOccupation: occupationList.deleteOccupation,
+      updateOccupation: occupationList.updateOccupation,
       occupationDelete: occupationList.occupationDelete,
       user: auth.user,
       loading: loading,
@@ -62,10 +64,15 @@ const OccupationListContainer = ({ history }) => {
     );
   };
 
-  // const onUpdateChange = (e, rowInfo) => {
-  //   const { no, key, value } = e.target;
-  //   dispatch(changeInputUpdate(no, key, value));
-  // };
+  const onUpdateChange = (e) => {
+    const { name, value } = e.target;
+    dispatch(
+      updateChange({
+        key: name,
+        value,
+      }),
+    );
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -87,21 +94,25 @@ const OccupationListContainer = ({ history }) => {
     );
   };
 
-  const onDelete = () => {
-    const occupation = occupations.map((occupation, index) => (
-      <li key={index}>{occupation.name}</li>
-    ));
-    console.log(occupation.name);
-    dispatch(deleteOccupation());
-  };
-
-  const onEdit = (e) => {
+  const onUpdateSubmit = (e) => {
     e.preventDefault();
-    const data = occupationUpdate;
-    if ([data.name, data.color].includes('')) {
+
+    let data = occupationUpdate;
+    if ([data.name].includes('')) {
       setError('빈 칸을 모두 입력하세요');
       return;
     }
+
+    const formData = new FormData();
+    formData.append('name', data.name);
+
+    const no = e.target.value;
+    dispatch(updateOccupation({ no, data }));
+  };
+
+  const onDelete = (e) => {
+    const no = e.target.value;
+    dispatch(deleteOccupation({ no }));
   };
 
   useEffect(() => {
@@ -128,12 +139,12 @@ const OccupationListContainer = ({ history }) => {
       occupationError={occupationError}
       loading={loading}
       onSubmit={onSubmit}
+      onUpdateSubmit={onUpdateSubmit}
       onChange={onChange}
+      updateChange={onUpdateChange}
       onDelete={onDelete}
-      // onUpdateChange={onUpdateChange}
-      onEdit={onEdit}
       error={error}
-    ></OccupationListForm>
+    />
   );
 };
 
