@@ -8,11 +8,12 @@ import { withRouter } from 'react-router-dom';
 const AuthCodeContainer = ({ history }) => {
   const [error, setError] = useState('');
   const dispatch = useDispatch();
-  const { authCode, authCodeResult, authCodeError } = useSelector(
-    ({ authCode }) => ({
+  const { authCode, authCodeResult, authCodeError, user } = useSelector(
+    ({ authCode, auth }) => ({
       authCode: authCode.authCode,
       authCodeError: authCode.authCodeError,
       authCodeResult: authCode.authCodeResult,
+      user: auth.user,
     }),
   );
 
@@ -31,15 +32,26 @@ const AuthCodeContainer = ({ history }) => {
 
       return;
     }
-
     dispatch(checkAuthCode({ authCode }));
   };
 
   useEffect(() => {
     if (authCodeResult === 200) {
-      history.push('/register/check');
+      history.push('/register/employ');
     }
   });
+
+  useEffect(() => {
+    if (user !== null) {
+      history.push('/');
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (authCodeError != null) {
+      setError(authCodeError);
+    }
+  }, [authCodeError]);
 
   return (
     <>

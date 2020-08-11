@@ -6,7 +6,6 @@ import {
   changeInput,
   updateChange,
   initializeForm,
-  initializeResult,
   getOccupationList,
   postOccupation,
   updateOccupation,
@@ -14,7 +13,6 @@ import {
 } from '../../modules/occupation/occupation';
 import { checkExpire } from '../../lib/api/common/authAPI';
 import { logout } from '../../modules/common/auth';
-import createRequestSaga from '../../lib/createRequestSaga';
 
 const OccupationListContainer = ({ history }) => {
   const [error, setError] = useState(null);
@@ -26,17 +24,12 @@ const OccupationListContainer = ({ history }) => {
     loading,
     user,
     occupationPost,
-    occupationUpdate,
     selectedBranch,
   } = useSelector(({ occupationList, auth, loading, branchSelect }) => ({
     occupations: occupationList.occupations,
     occupationError: occupationList.occupationError,
     occupationResult: occupationList.occupationResult,
     occupationPost: occupationList.post,
-    occupationUpdate: occupationList.occupationUpdate,
-    deleteOccupation: occupationList.deleteOccupation,
-    updateOccupation: occupationList.updateOccupation,
-    occupationDelete: occupationList.occupationDelete,
     user: auth.user,
     loading: loading,
     selectedBranch: branchSelect.selectedBranch,

@@ -9,8 +9,6 @@ export const login = async ({ id, password }) => {
 
     return { user: { name, jwt } };
   } catch (error) {
-    console.log(error.message);
-
     throw new Error(error.message);
   }
 };
@@ -28,9 +26,11 @@ export const logout = async () => {
 };
 
 export const singUp = async ({ member }) => {
+  //member, certicode
   const response = await Auth.signUp({
     username: member.id,
     password: member.password,
+    phone: member.phone,
   })
     .then(() => {
       const response = client.post('/member', member);
@@ -39,6 +39,7 @@ export const singUp = async ({ member }) => {
     .catch((e) => {
       throw new Error(e.code);
     });
+  return response;
 };
 
 export const checkExpire = async () => {
