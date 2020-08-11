@@ -1,6 +1,6 @@
 import { createAction, handleActions } from 'redux-actions';
 
-const CHANGE_SELECT = 'select/CHANGE_SELECT';
+const CHANGE_SELECT = 'occupationSelect/CHANGE_SELECT';
 
 export const changeSelect = createAction(CHANGE_SELECT);
 

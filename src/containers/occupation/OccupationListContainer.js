@@ -30,29 +30,19 @@ const OccupationListContainer = ({ history }) => {
     occupationUpdate,
     occupationDelete,
     selectedBranch,
-  } = useSelector(
-    ({
-      occupationPost,
-      occupationUpdate,
-      occupationDelete,
-      occupationList,
-      auth,
-      loading,
-      branchSelect,
-    }) => ({
-      occupations: occupationList.occupations,
-      occupationError: occupationList.occupationError,
-      occupationResult: occupationList.occupationResult,
-      occupationPost: occupationList.post,
-      occupationUpdate: occupationList.occupationUpdate,
-      deleteOccupation: occupationList.deleteOccupation,
-      updateOccupation: occupationList.updateOccupation,
-      occupationDelete: occupationList.occupationDelete,
-      user: auth.user,
-      loading: loading,
-      selectedBranch: branchSelect.selectedBranch,
-    }),
-  );
+  } = useSelector(({ occupationList, auth, loading, branchSelect }) => ({
+    occupations: occupationList.occupations,
+    occupationError: occupationList.occupationError,
+    occupationResult: occupationList.occupationResult,
+    occupationPost: occupationList.post,
+    occupationUpdate: occupationList.occupationUpdate,
+    deleteOccupation: occupationList.deleteOccupation,
+    updateOccupation: occupationList.updateOccupation,
+    occupationDelete: occupationList.occupationDelete,
+    user: auth.user,
+    loading: loading,
+    selectedBranch: branchSelect.selectedBranch,
+  }));
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -65,9 +55,12 @@ const OccupationListContainer = ({ history }) => {
   };
 
   const onUpdateChange = (e) => {
+    const index = e.target.getAttribute('index');
     const { name, value } = e.target;
+
     dispatch(
       updateChange({
+        index,
         key: name,
         value,
       }),
@@ -96,18 +89,18 @@ const OccupationListContainer = ({ history }) => {
 
   const onUpdateSubmit = (e) => {
     e.preventDefault();
+    const no = parseInt(e.target.value);
+    const modifiedOcupation = occupations.filter(
+      (occupation) => occupation.no === no,
+    );
 
-    let data = occupationUpdate;
+    const data = modifiedOcupation[0];
     if ([data.name].includes('')) {
       setError('빈 칸을 모두 입력하세요');
       return;
     }
 
-    const formData = new FormData();
-    formData.append('name', data.name);
-
-    const no = e.target.value;
-    dispatch(updateOccupation({ no, data }));
+    dispatch(updateOccupation({ no, occupation: data }));
   };
 
   const onDelete = (e) => {
@@ -122,16 +115,25 @@ const OccupationListContainer = ({ history }) => {
           dispatch(logout());
         }
       });
-      dispatch(getOccupationList({ selectedBranch }));
+      if (selectedBranch !== null && selectedBranch !== '') {
+        dispatch(getOccupationList({ selectedBranch }));
+      }
     }
   }, [dispatch, selectedBranch, user]);
 
   useEffect(() => {
     if (occupationResult === 200) {
+      alert(' 수정되었습니다');
       dispatch(initializeForm());
       dispatch(getOccupationList({ selectedBranch }));
     }
   }, [occupationResult, dispatch, selectedBranch]);
+
+  useEffect(() => {
+    if (occupationError !== null) {
+      alert(occupationError);
+    }
+  }, [occupationError]);
 
   return (
     <OccupationListForm

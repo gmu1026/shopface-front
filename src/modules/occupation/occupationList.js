@@ -63,10 +63,14 @@ export const changeInput = createAction(CHANGE_INPUT, ({ key, value }) => ({
   value,
 }));
 
-export const updateChange = createAction(UPDATE_CHANGE, ({ key, value }) => ({
-  key,
-  value,
-}));
+export const updateChange = createAction(
+  UPDATE_CHANGE,
+  ({ index, key, value }) => ({
+    index,
+    key,
+    value,
+  }),
+);
 const initialState = {
   occupations: null,
   occupationResult: null,
@@ -75,10 +79,7 @@ const initialState = {
     name: '',
     color: '#00B050',
   },
-
-  updateOccupations: {
-    name: '',
-  },
+  updateOccupations: null,
 };
 
 export const postSaga = createRequestSaga(
@@ -92,9 +93,9 @@ export function* occupationPostSaga() {
 export const initializeResult = createAction(INITIALIZE_RESULT);
 export const updateOccupation = createAction(
   OCCUPATION_UPDATE,
-  ({ no, data }) => ({
+  ({ no, occupation }) => ({
     no,
-    data,
+    occupation,
   }),
 );
 
@@ -137,9 +138,9 @@ const occupationList = handleActions(
         draft['post'][key] = value;
       }),
 
-    [UPDATE_CHANGE]: (state, { payload: { key, value } }) =>
+    [UPDATE_CHANGE]: (state, { payload: { index, key, value } }) =>
       produce(state, (draft) => {
-        draft['updateOccupations'][key] = value;
+        draft['occupations'][index][key] = value;
       }),
     [INITIALIZE_FORM]: (state) => ({
       ...state,
@@ -175,9 +176,9 @@ const occupationList = handleActions(
       occupationResult: status,
       occupationError: null,
     }),
-    [OCCUPATION_UPDATE_FAILURE]: (state, { payload: { e } }) => ({
+    [OCCUPATION_UPDATE_FAILURE]: (state, { payload: { message } }) => ({
       ...state,
-      occupationError: e,
+      occupationError: message,
     }),
   },
   initialState,
