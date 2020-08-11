@@ -45,10 +45,6 @@ const occupationListSaga = createRequestSaga(
   occupationAPI.getOccupationList,
 );
 
-export function* occupationSaga() {
-  yield takeLatest(OCCUPATION_LIST, occupationListSaga);
-}
-
 export const postOccupation = createAction(OCCUPATION_POST, ({ post }) => ({
   post,
 }));
@@ -71,25 +67,12 @@ export const updateChange = createAction(
     value,
   }),
 );
-const initialState = {
-  occupations: null,
-  occupationResult: null,
-  occupationError: null,
-  post: {
-    name: '',
-    color: '#00B050',
-  },
-};
 
 export const postSaga = createRequestSaga(
   OCCUPATION_POST,
   occupationAPI.postOccupation,
 );
-export function* occupationPostSaga() {
-  yield takeLatest(OCCUPATION_POST, postSaga);
-}
 
-export const initializeResult = createAction(INITIALIZE_RESULT);
 export const updateOccupation = createAction(
   OCCUPATION_UPDATE,
   ({ no, occupation }) => ({
@@ -103,10 +86,6 @@ export const occupationupdateSaga = createRequestSaga(
   occupationAPI.updateOccupation,
 );
 
-export function* occupationUpdateSaga() {
-  yield takeLatest(OCCUPATION_UPDATE, occupationupdateSaga);
-}
-
 export const deleteOccupation = createAction(OCCUPATION_DELETE, ({ no }) => ({
   no,
 }));
@@ -116,11 +95,30 @@ export const deleteOccupationSaga = createRequestSaga(
   occupationAPI.deleteOccupation,
 );
 
-export function* occupationDeleteSaga() {
+export function* occupationSaga() {
+  yield takeLatest(OCCUPATION_LIST, occupationListSaga);
+  yield takeLatest(OCCUPATION_POST, postSaga);
+  yield takeLatest(OCCUPATION_UPDATE, occupationupdateSaga);
   yield takeLatest(OCCUPATION_DELETE, deleteOccupationSaga);
 }
 
-const occupation = handleActions(
+const initialState = {
+  occupations: null,
+  occupationResult: null,
+  occupationError: null,
+  postResult: null,
+  postError: null,
+  updateResult: null,
+  updateError: null,
+  deleteResult: null,
+  deleteError: null,
+  post: {
+    name: '',
+    color: '#00B050',
+  },
+};
+
+export const occupation = handleActions(
   {
     [OCCUPATION_LIST_SUCCESS]: (state, { payload: { data } }) => ({
       ...state,
@@ -144,40 +142,36 @@ const occupation = handleActions(
     [INITIALIZE_FORM]: (state) => ({
       ...state,
       post: initialState['post'],
-      occupationResult: null,
+      postResult: null,
     }),
-    [OCCUPATION_POST_SUCCESS]: (state, { payload: { status } }) => ({
+    [OCCUPATION_POST_SUCCESS]: (state, { payload: { e } }) => ({
       ...state,
-      occupationResult: status,
-      occupationError: null,
+      postResult: e,
+      postError: null,
     }),
     [OCCUPATION_POST_FAILURE]: (state, { payload: e }) => ({
       ...state,
-      occupationError: e,
+      postError: e,
     }),
 
-    [OCCUPATION_DELETE_SUCCESS]: (state, { payload: { status } }) => ({
+    [OCCUPATION_DELETE_SUCCESS]: (state, { payload: { e } }) => ({
       ...state,
-      occupationResult: status,
-      occupationError: null,
+      deleteResult: e,
+      deleteError: null,
     }),
     [OCCUPATION_DELETE_FAILURE]: (state, { payload: { e } }) => ({
       ...state,
-      occupationError: e,
+      deleteError: e,
     }),
 
-    [INITIALIZE_RESULT]: (state) => ({
-      ...state,
-      occupationResult: null,
-    }),
     [OCCUPATION_UPDATE_SUCCESS]: (state, { payload: { status } }) => ({
       ...state,
-      occupationResult: status,
-      occupationError: null,
+      updateResult: status,
+      updateError: null,
     }),
     [OCCUPATION_UPDATE_FAILURE]: (state, { payload: { message } }) => ({
       ...state,
-      occupationError: message,
+      updateError: message,
     }),
   },
   initialState,

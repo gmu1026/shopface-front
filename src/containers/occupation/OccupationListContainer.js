@@ -6,7 +6,6 @@ import {
   changeInput,
   updateChange,
   initializeForm,
-  initializeResult,
   getOccupationList,
   postOccupation,
   updateOccupation,
@@ -14,35 +13,42 @@ import {
 } from '../../modules/occupation/occupation';
 import { checkExpire } from '../../lib/api/common/authAPI';
 import { logout } from '../../modules/common/auth';
-import createRequestSaga from '../../lib/createRequestSaga';
 
 const OccupationListContainer = ({ history }) => {
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const {
     occupations,
-    occupationResult,
     occupationError,
+    occupationPost,
+    postError,
+    postResult,
+    updateError,
+    updateResult,
+    deleteError,
+    deleteResult,
     loading,
     user,
-    occupationPost,
-    occupationUpdate,
     selectedBranch,
-  } = useSelector(({ occupationList, auth, loading, branchSelect }) => ({
-    occupations: occupationList.occupations,
-    occupationError: occupationList.occupationError,
-    occupationResult: occupationList.occupationResult,
-    occupationPost: occupationList.post,
-    occupationUpdate: occupationList.occupationUpdate,
-    deleteOccupation: occupationList.deleteOccupation,
-    updateOccupation: occupationList.updateOccupation,
-    occupationDelete: occupationList.occupationDelete,
+  } = useSelector(({ occupation, auth, loading, branchSelect }) => ({
+    occupations: occupation.occupations,
+    occupationError: occupation.occupationError,
+    occupationPost: occupation.post,
+    postError: occupation.postError,
+    postResult: occupation.postResult,
+    deleteOccupation: occupation.deleteOccupation,
+    deleteError: occupation.deleteError,
+    deleteResult: occupation.deleteResult,
+    updateOccupation: occupation.updateOccupation,
+    updateError: occupation.updateError,
+    updateResult: occupation.updateResult,
     user: auth.user,
     loading: loading,
     selectedBranch: branchSelect.selectedBranch,
   }));
 
   const onChange = (e) => {
+    console.log(e.target);
     const { name, value } = e.target;
     dispatch(
       changeInput({
@@ -120,18 +126,32 @@ const OccupationListContainer = ({ history }) => {
   }, [dispatch, selectedBranch, user]);
 
   useEffect(() => {
-    if (occupationResult === 200) {
-      alert('변경되었습니다');
+    if (postResult === 200) {
+      alert('등록되었습니다');
       dispatch(initializeForm());
       dispatch(getOccupationList({ selectedBranch }));
     }
-  }, [occupationResult, dispatch, selectedBranch]);
+  }, [postResult, dispatch, selectedBranch]);
 
   useEffect(() => {
-    if (occupationError !== null) {
-      alert(occupationError);
+    if (updateResult === 200) {
+      alert('수정되었습니다');
+      dispatch(initializeForm());
+      dispatch(getOccupationList({ selectedBranch }));
     }
-  }, [occupationError]);
+  }, [updateResult, dispatch, selectedBranch]);
+
+  useEffect(
+    (e) => {
+      if (deleteResult === 200) {
+        console.log(e);
+        alert('삭제되었습니다');
+        dispatch(initializeForm());
+        dispatch(getOccupationList({ selectedBranch }));
+      }
+    },
+    [deleteResult, dispatch, selectedBranch],
+  );
 
   return (
     <OccupationListForm

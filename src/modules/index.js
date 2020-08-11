@@ -11,12 +11,7 @@ import employDetail, { employDetailSaga } from './employ/employDetail';
 import employList, { employSaga } from './employ/employList';
 import employPost, { employPostSaga } from './employ/employPost';
 import memberDetail, { memberDetailSaga } from './member/memberDetail';
-import occupationList, {
-  occupationSaga,
-  occupationPostSaga,
-  occupationUpdateSaga,
-  occupationDeleteSaga,
-} from './occupation/occupation';
+import occupation, { occupationSaga } from './occupation/occupation';
 import memberList, { memberSaga } from './member/memberList';
 import occupationSelect from './occupation/occupationSelect';
 import recordList, { recordSaga } from './record/recordList';
@@ -28,7 +23,7 @@ const rootReducer = combineReducers({
   branchList,
   branchPost,
   branchDetail,
-  occupationList,
+  occupation,
   memberList,
   recordList,
   employList,
@@ -47,9 +42,6 @@ export function* rootSaga() {
     branchPostSaga(),
     branchDetailSaga(),
     occupationSaga(),
-    occupationPostSaga(),
-    occupationUpdateSaga(),
-    occupationDeleteSaga(),
     memberSaga(),
     recordSaga(),
     employSaga(),

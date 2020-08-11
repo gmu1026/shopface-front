@@ -21,12 +21,12 @@ const TimetableListContainer = () => {
     user,
     occupations,
     selectedBranch,
-  } = useSelector(({ loading, auth, occupationList, branchSelect }) => ({
+  } = useSelector(({ loading, auth, occupation, branchSelect }) => ({
     //timetables: timetableList.timetables,
     //timetableError: timetableList.timetableError,
     loading: loading,
     user: auth.user,
-    occupations: occupationList.occupations,
+    occupations: occupation.occupations,
     selectedBranch: branchSelect.selectedBranch,
   }));
 
