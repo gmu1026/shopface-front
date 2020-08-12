@@ -5,7 +5,7 @@ import branchList, { branchSaga } from './branch/branchList';
 import branchPost, { branchPostSaga } from './branch/branchPost';
 import branchSelect from './branch/branchSelect';
 import auth, { authSaga } from './common/auth';
-import authCode, { authCodeSaga } from './common/authCode';
+import certCode, { certCodeSaga } from './common/certCode';
 import loading from './common/loading';
 import employDetail, { employDetailSaga } from './employ/employDetail';
 import employList, { employSaga } from './employ/employList';
@@ -19,7 +19,7 @@ import timetableList, { timetableSaga } from './timetable/timetableList';
 
 const rootReducer = combineReducers({
   auth,
-  authCode,
+  certCode,
   loading,
   branchList,
   branchPost,
@@ -39,7 +39,7 @@ const rootReducer = combineReducers({
 export function* rootSaga() {
   yield all([
     authSaga(),
-    authCodeSaga(),
+    certCodeSaga(),
     branchSaga(),
     branchPostSaga(),
     branchDetailSaga(),

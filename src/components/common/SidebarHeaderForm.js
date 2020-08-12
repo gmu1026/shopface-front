@@ -2,8 +2,33 @@
 import React from 'react';
 import Button from './Button';
 import BranchSelectBox from '../branch/BranchSelectForm';
+import Modal from '../../../node_modules/react-bootstrap/esm/Modal';
+import { Form } from '../../../node_modules/react-bootstrap/esm/index';
 
-const SideBarHeader = ({ user, onLogout, branchs }) => {
+const AuthCodeModal = ({ show, closeModal }) => {
+  return (
+    <Modal show={show} onHide={closeModal}>
+      <Modal.Header closeButton>
+        <Modal.Title>인증 코드</Modal.Title>
+      </Modal.Header>
+      <Modal.Body></Modal.Body>
+      <Modal.Footer>
+        <Button onClick={''}>시간표 등록</Button>
+      </Modal.Footer>
+    </Modal>
+  );
+};
+
+const SideBarHeaderForm = ({
+  user,
+  branchs,
+  show,
+  openModal,
+  closeModal,
+  onLogout,
+  onChange,
+  onCheckCertCode,
+}) => {
   return (
     <>
       <nav className="navbar navbar-expand navbar-light bg-white">
@@ -48,21 +73,51 @@ const SideBarHeader = ({ user, onLogout, branchs }) => {
                 </div>
               </div>
             </li>
-            <li style={{ marginTop: '0.5rem' }}>
-              {/*  {user !== null && <h4>{user.name}</h4>} */}
-            </li>
             <li>
-              <div>
-                {user !== null ? (
-                  <div>
-                    <Button onClick={onLogout}>로그아웃</Button>
-                  </div>
-                ) : (
-                  <div>
-                    <Button to="/login">로그인</Button>
-                  </div>
-                )}
+              <div className="row">
+                <div>
+                  {user !== null ? (
+                    <div>
+                      <Button onClick={onLogout}>로그아웃</Button>
+                    </div>
+                  ) : (
+                    <div>
+                      <Button to="/login">로그인</Button>
+                    </div>
+                  )}
+                </div>
+                <div>
+                  {user !== null ? (
+                    user.type !== undefined && user.type === 'E' ? (
+                      <div style={{ marginRight: '1rem' }}>
+                        <Button onClick={openModal}>지점 추가</Button>
+                      </div>
+                    ) : (
+                      <div></div>
+                    )
+                  ) : (
+                    <div></div>
+                  )}
+                </div>
               </div>
+              <Modal show={show} onHide={closeModal}>
+                <Modal.Header closeButton>
+                  <Modal.Title>인증 코드</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <Form.Group>
+                    <label>인증 코드</label>
+                    <Form.Control
+                      type="text"
+                      placeholder="ex) Qedxd"
+                      onChange={onChange}
+                    />
+                  </Form.Group>
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button onClick={onCheckCertCode}>인증</Button>
+                </Modal.Footer>
+              </Modal>
             </li>
             {/*  <li className="nav-item dropdown">
               <a
@@ -128,4 +183,4 @@ const SideBarHeader = ({ user, onLogout, branchs }) => {
   );
 };
 
-export default SideBarHeader;
+export default SideBarHeaderForm;

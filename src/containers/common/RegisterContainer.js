@@ -6,19 +6,20 @@ import {
   initializeForm,
   registerMember,
 } from '../../modules/common/auth';
+import { initialize } from '../../modules/common/certCode';
 import AuthTemplate from '../../components/common/AuthTemplate';
 import { withRouter } from 'react-router-dom';
 
 const RegisterContainer = ({ history, match }) => {
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
-  const { register, user, authError, registerResult, authCode } = useSelector(
-    ({ auth, authCode }) => ({
+  const { register, user, authError, registerResult, certCode } = useSelector(
+    ({ auth, certCode }) => ({
       register: auth.register,
       user: auth.user,
       authError: auth.authError,
       registerResult: auth.registerResult,
-      authCode: authCode.authCode,
+      certCode: certCode.certCode,
     }),
   );
 
@@ -75,6 +76,7 @@ const RegisterContainer = ({ history, match }) => {
 
   useEffect(() => {
     if (registerResult === 'OK') {
+      initialize();
       history.push('/login');
     }
   }, [history, registerResult]);

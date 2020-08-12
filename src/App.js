@@ -3,13 +3,14 @@ import { makeStyles } from '@material-ui/core/styles';
 import React, { Suspense, useEffect, lazy } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, Switch, withRouter } from 'react-router-dom';
-import SidebarHeader from '../src/components/common/SidebarHeader';
+import SidebarHeader from './components/common/SidebarHeaderForm';
 import SideBarMenu from '../src/components/common/SidebarMenu';
 import client from './lib/api/client';
 import { checkExpire } from './lib/api/common/authAPI';
 import { getBranchList } from './modules/branch/branchList';
 import { logout } from './modules/common/auth';
 import IndexPage from './pages/IndexPage';
+import SidebarHeaderContainer from './containers/common/SidebarHeaderContainer';
 
 const LoginPage = lazy(() => import('./pages/common/LoginPage'));
 const AuthCodePage = lazy(() => import('./pages/common/AuthCodePage'));
@@ -117,7 +118,11 @@ const App = ({ history, match }) => {
           </div>
 
           <div className="col p-0" style={{ marginLeft: '18rem' }}>
-            <SidebarHeader onLogout={onLogout} branchs={branchs} />
+            <SidebarHeaderContainer
+              onLogout={onLogout}
+              branchs={branchs}
+              user={user}
+            />
 
             <div className="content">
               <Suspense fallback={<div>Loading...</div>}>

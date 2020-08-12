@@ -54,7 +54,7 @@ const AuthCodeForm = ({ type, onChange, onSubmit, error }) => {
       <form onSubmit={onSubmit}>
         <StyledInput
           type="text"
-          name="authCode"
+          name="certCode"
           placeholder="인증 코드"
           onChange={onChange}
         />

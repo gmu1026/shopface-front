@@ -42,23 +42,24 @@ export const signUp = async ({ member, certCode }) => {
       phone_number: `+82${member.phone}`,
     },
   })
-    .then(() => {
-      const response = client.post('/member', member).then(() => {
-        if (member.type === 'E') {
-          return client.patch('/employ', {
-            memberId: member.id,
-            certCode: certCode,
-          });
-        }
-      });
+    .then(async () => {
+      const response = await client
+        .post('/member', member)
+        .then(async (resolve) => {
+          if (member.type === 'E') {
+            return await client.patch('/employ', {
+              memberId: member.id,
+              certCode: certCode,
+            });
+          }
+          return resolve;
+        });
 
       return response;
     })
     .catch((e) => {
       throw new Error(e.code);
     });
-
-  console.log(response);
 
   return response;
 };
@@ -80,10 +81,10 @@ export const checkExpire = async () => {
   return isExpired;
 };
 
-export const checkAuthcode = () => {
-  //TODO
-  // 인증 요청 api 구현
-  const response = { status: 200 };
+export const checkCertCode = async ({ memberId, certCode }) => {
+  const response = await client.patch('/employ', {
+    memberId,
+    certCode,
+  });
   return response;
-  //return response;
 };
