@@ -69,11 +69,6 @@ const LoginForm = ({ history, match }) => {
   useEffect(() => {
     if (user !== null) {
       history.push('/');
-      try {
-        localStorage.setItem('user', JSON.stringify(user));
-      } catch (e) {
-        console.log('local storage에 저장 되지 않았습니다.');
-      }
     }
   }, [history, user]);
 

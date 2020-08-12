@@ -45,7 +45,7 @@ const AuthCodeContainer = ({ history }) => {
     if (user !== null) {
       history.push('/');
     }
-  }, [user]);
+  }, [user, history]);
 
   useEffect(() => {
     if (authCodeError != null) {

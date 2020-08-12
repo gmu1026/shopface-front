@@ -6,13 +6,16 @@ export const login = async ({ id, password }) => {
     const user = await Auth.signIn(id, password);
     const name = user.signInUserSession.idToken.payload.email;
     const jwt = user.signInUserSession.idToken.jwtToken;
-    /* 
-      1. member get API 요청 
-      2. response에 있는 type 가지고 오기
-      3. user에 type 포함 
-    */
 
-    return { user: { name, jwt } };
+    const response = await client.get(`/member/${name}`);
+    const type = response.data.data.type;
+
+    localStorage.setItem(
+      'user',
+      JSON.stringify({ user: name, jwt: jwt, type: type }),
+    );
+
+    return { data: { user: { name, jwt, type } } };
   } catch (error) {
     throw new Error(error.message);
   }
@@ -30,20 +33,33 @@ export const logout = async () => {
   }
 };
 
-export const singUp = async ({ member }) => {
-  //member, certicode
+export const signUp = async ({ member, certCode }) => {
   const response = await Auth.signUp({
     username: member.id,
     password: member.password,
-    phone: member.phone,
+    attributes: {
+      name: member.name,
+      phone_number: `+82${member.phone}`,
+    },
   })
     .then(() => {
-      const response = client.post('/member', member);
+      const response = client.post('/member', member).then(() => {
+        if (member.type === 'E') {
+          return client.patch('/employ', {
+            memberId: member.id,
+            certCode: certCode,
+          });
+        }
+      });
+
       return response;
     })
     .catch((e) => {
       throw new Error(e.code);
     });
+
+  console.log(response);
+
   return response;
 };
 

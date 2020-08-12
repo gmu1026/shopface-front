@@ -1,4 +1,4 @@
-import React, { lazy } from 'react';
+import React from 'react';
 import { Route } from 'react-router-dom';
 import RegisterContainer from '../../containers/common/RegisterContainer';
 
