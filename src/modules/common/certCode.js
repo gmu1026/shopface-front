@@ -52,7 +52,7 @@ export function* certCodeSaga() {
 }
 
 const initialState = {
-  certCode: '',
+  certCode: null,
   certCodeResult: null,
   certCodeError: null,
 };
