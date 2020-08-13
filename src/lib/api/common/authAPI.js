@@ -9,11 +9,10 @@ export const login = async ({ id, password }) => {
 
     const response = await client.get(`/member/${name}`);
     const type = response.data.data.type;
-    const data = { user: { name, jwt, type } };
 
-    localStorage.setItem('user', JSON.stringify(data));
+    localStorage.setItem('user', JSON.stringify({ name, jwt, type }));
 
-    return { data: data };
+    return { data: { user: { name, jwt, type } } };
   } catch (error) {
     throw new Error(error.message);
   }
@@ -43,7 +42,14 @@ export const signUp = async ({ member, certCode }) => {
   })
     .then(async () => {
       const response = await client
-        .post('/member', member)
+        .post('/member', {
+          id: member.id,
+          password: member.password,
+          name: member.name,
+          phone: member.phone,
+          email: member.email,
+          certCode: certCode,
+        })
         .then(async (resolve) => {
           if (certCode !== null && certCode !== '') {
             return await client.patch('/employ', {
@@ -89,6 +95,7 @@ export const patchEmployByCertCode = async ({ memberId, certCode }) => {
 };
 
 export const checkCertCode = async ({ certCode }) => {
-  const response = await client.post(`/employ/check?certcode=${certCode}`);
+  console.log(certCode);
+  const response = await client.get(`/employ/check?certcode=${certCode}`);
   return response;
 };

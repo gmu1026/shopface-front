@@ -69,18 +69,18 @@ const certCode = handleActions(
       certCodeResult: null,
       certCodeError: null,
     }),
-    [CHECK_CERTCODE_SUCCESS]: (state, { payload: { code } }) => ({
+    [CHECK_CERTCODE_SUCCESS]: (state, { payload: { data } }) => ({
       ...state,
-      certCodeResult: code,
+      certCodeResult: data,
       certCodeError: null,
     }),
     [CHECK_CERTCODE_FAILURE]: (state, { payload: { message } }) => ({
       ...state,
       certCodeError: message,
     }),
-    [PATCH_EMPLOY_BY_CERTCODE_SUCCESS]: (state, { payload: { code } }) => ({
+    [PATCH_EMPLOY_BY_CERTCODE_SUCCESS]: (state, { payload: { data } }) => ({
       ...state,
-      certCodeResult: code,
+      certCodeResult: data,
       certCodeError: null,
     }),
     [PATCH_EMPLOY_BY_CERTCODE_FAILURE]: (state, { payload: { message } }) => ({

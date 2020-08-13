@@ -101,7 +101,8 @@ const EmployListContainer = ({ history }) => {
   }, [dispatch, user]);
 
   useEffect(() => {
-    if (postResult === 200) {
+    if (postResult === 'OK') {
+      alert('근무자에게 초대 메시지를 전송하였습니다.');
       dispatch(initializeForm());
       dispatch(getEmployList({ selectedBranch }));
     }

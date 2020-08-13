@@ -106,7 +106,7 @@ const BranchDetailContainer = ({ match, history }) => {
   }, [dispatch, match.params.no, user]);
 
   useEffect(() => {
-    if (branchResult === 200) {
+    if (branchResult === 'OK') {
       dispatch(initializeResult());
       history.push('/branch');
     }

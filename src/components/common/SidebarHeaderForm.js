@@ -4,16 +4,26 @@ import Button from './Button';
 import BranchSelectBox from '../branch/BranchSelectForm';
 import Modal from '../../../node_modules/react-bootstrap/esm/Modal';
 import { Form } from '../../../node_modules/react-bootstrap/esm/index';
+import styled from 'styled-components';
+
+const ErrorMessage = styled.div`
+  color: red;
+  text-align: center;
+  font-size: 0.875rem;
+  margin-top: 1rem;
+  margin-left: 1rem;
+`;
 
 const SideBarHeaderForm = ({
   user,
   branchs,
   show,
+  error,
   openModal,
   closeModal,
   onLogout,
   onChange,
-  onCheckCertCode,
+  onPatchEmployByCertCode,
 }) => {
   return (
     <>
@@ -100,8 +110,9 @@ const SideBarHeaderForm = ({
                     />
                   </Form.Group>
                 </Modal.Body>
+                <ErrorMessage>{error}</ErrorMessage>
                 <Modal.Footer>
-                  <Button onClick={onCheckCertCode}>인증</Button>
+                  <Button onClick={onPatchEmployByCertCode}>인증</Button>
                 </Modal.Footer>
               </Modal>
             </li>

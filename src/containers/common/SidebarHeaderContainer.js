@@ -16,6 +16,7 @@ const SidebarHeaderContainer = ({ onLogout, branchs, user }) => {
       certCodeResult: certCode.certCodeResult,
     }),
   );
+  const [error, setError] = useState(null);
 
   const [show, setShow] = useState(false);
 
@@ -25,20 +26,33 @@ const SidebarHeaderContainer = ({ onLogout, branchs, user }) => {
   const onChange = (e) => {
     const certCode = e.target.value;
     dispatch(changeInput({ certCode }));
+
+    setError('');
   };
 
-  const onCheckCertCode = () => {
-    const memberId = user.user;
-    dispatch(patchEmployByCertCode({ memberId, certCode }));
+  const onPatchEmployByCertCode = () => {
+    const { name } = user;
+    dispatch(patchEmployByCertCode({ memberId: name, certCode }));
   };
 
   useEffect(() => {
-    if (certCodeResult) {
+    if (certCodeResult === true) {
       closeModal();
       alert('지점등록에 성공했습니다.');
       dispatch(initialize());
+
+      return;
+    }
+    if (certCodeResult === false) {
+      setError('잘못된 인증번호 입니다.');
     }
   }, [certCodeResult, dispatch]);
+
+  useEffect(() => {
+    if (certCodeError !== null) {
+      setError(certCodeError);
+    }
+  }, [certCodeError]);
 
   return (
     <div>
@@ -50,7 +64,8 @@ const SidebarHeaderContainer = ({ onLogout, branchs, user }) => {
         openModal={openModal}
         onLogout={onLogout}
         onChange={onChange}
-        onCheckCertCode={onCheckCertCode}
+        onPatchEmployByCertCode={onPatchEmployByCertCode}
+        error={error}
       />
     </div>
   );

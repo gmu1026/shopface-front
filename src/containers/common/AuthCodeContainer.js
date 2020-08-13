@@ -28,7 +28,7 @@ const AuthCodeContainer = ({ history }) => {
     e.preventDefault();
 
     if (certCode === '') {
-      setError('빈칸을 모두 입력해주세요');
+      setError('인증코드를 입력해주세요');
 
       return;
     }
@@ -36,8 +36,13 @@ const AuthCodeContainer = ({ history }) => {
   };
 
   useEffect(() => {
-    if (certCodeResult) {
+    if (certCodeResult === true) {
       history.push('/register');
+
+      return;
+    }
+    if (certCodeResult === false) {
+      setError('잘못된 인증코드입니다.');
     }
   });
 
