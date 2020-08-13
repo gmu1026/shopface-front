@@ -89,9 +89,9 @@ export const branchDetail = handleActions(
       ...state,
       branchError: message,
     }),
-    [BRANCH_UPDATE_SUCCESS]: (state, { payload: { status } }) => ({
+    [BRANCH_UPDATE_SUCCESS]: (state, { payload: { code } }) => ({
       ...state,
-      branchResult: status,
+      branchResult: code,
       branchError: null,
     }),
     [BRANCH_UPDATE_FAILURE]: (state, { payload: { message } }) => ({
@@ -99,9 +99,9 @@ export const branchDetail = handleActions(
       branchResult: null,
       branchError: message,
     }),
-    [BRANCH_DELETE_SUCCESS]: (state, { payload: { status } }) => ({
+    [BRANCH_DELETE_SUCCESS]: (state, { payload: { code } }) => ({
       ...state,
-      branchResult: status,
+      branchResult: code,
       branchError: null,
     }),
     [BRANCH_DELETE_FAILURE]: (state, { payload: { message } }) => ({

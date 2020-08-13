@@ -2,8 +2,29 @@
 import React from 'react';
 import Button from './Button';
 import BranchSelectBox from '../branch/BranchSelectForm';
+import Modal from '../../../node_modules/react-bootstrap/esm/Modal';
+import { Form } from '../../../node_modules/react-bootstrap/esm/index';
+import styled from 'styled-components';
 
-const SideBarHeader = ({ user, onLogout, branchs }) => {
+const ErrorMessage = styled.div`
+  color: red;
+  text-align: center;
+  font-size: 0.875rem;
+  margin-top: 1rem;
+  margin-left: 1rem;
+`;
+
+const SideBarHeaderForm = ({
+  user,
+  branchs,
+  show,
+  error,
+  openModal,
+  closeModal,
+  onLogout,
+  onChange,
+  onPatchEmployByCertCode,
+}) => {
   return (
     <>
       <nav className="navbar navbar-expand navbar-light bg-white">
@@ -48,21 +69,52 @@ const SideBarHeader = ({ user, onLogout, branchs }) => {
                 </div>
               </div>
             </li>
-            <li style={{ marginTop: '0.5rem' }}>
-              {/*  {user !== null && <h4>{user.name}</h4>} */}
-            </li>
             <li>
-              <div>
-                {user !== null ? (
-                  <div>
-                    <Button onClick={onLogout}>로그아웃</Button>
-                  </div>
-                ) : (
-                  <div>
-                    <Button to="/login">로그인</Button>
-                  </div>
-                )}
+              <div className="row">
+                <div>
+                  {user !== null ? (
+                    <div>
+                      <Button onClick={onLogout}>로그아웃</Button>
+                    </div>
+                  ) : (
+                    <div>
+                      <Button to="/login">로그인</Button>
+                    </div>
+                  )}
+                </div>
+                <div>
+                  {user !== null ? (
+                    user.type !== undefined && user.type === 'E' ? (
+                      <div style={{ marginRight: '1rem' }}>
+                        <Button onClick={openModal}>지점 추가</Button>
+                      </div>
+                    ) : (
+                      <div></div>
+                    )
+                  ) : (
+                    <div></div>
+                  )}
+                </div>
               </div>
+              <Modal show={show} onHide={closeModal}>
+                <Modal.Header closeButton>
+                  <Modal.Title>인증 코드</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <Form.Group>
+                    <label>인증 코드</label>
+                    <Form.Control
+                      type="text"
+                      placeholder="ex) Qedxd"
+                      onChange={onChange}
+                    />
+                  </Form.Group>
+                </Modal.Body>
+                <ErrorMessage>{error}</ErrorMessage>
+                <Modal.Footer>
+                  <Button onClick={onPatchEmployByCertCode}>인증</Button>
+                </Modal.Footer>
+              </Modal>
             </li>
             {/*  <li className="nav-item dropdown">
               <a
@@ -128,4 +180,4 @@ const SideBarHeader = ({ user, onLogout, branchs }) => {
   );
 };
 
-export default SideBarHeader;
+export default SideBarHeaderForm;

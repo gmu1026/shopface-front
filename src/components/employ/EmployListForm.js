@@ -15,9 +15,9 @@ const EmployTableBody = ({ employ, match, show, openModal, closeModal }) => {
         <td>{employ.email}</td>
         <td>{employ.salary}</td>
         <td>
-          {employ.state === 'B'
+          {employ.state === 'I'
             ? '초대'
-            : employ.state === 'C'
+            : employ.state === 'E'
             ? '합류'
             : '비활성화'}
         </td>

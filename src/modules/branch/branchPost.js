@@ -56,9 +56,9 @@ export const branchPost = handleActions(
       post: initialState['post'],
       postResult: null,
     }),
-    [BRANCH_POST_SUCCESS]: (state, { payload: { status } }) => ({
+    [BRANCH_POST_SUCCESS]: (state, { payload: { code } }) => ({
       ...state,
-      postResult: status,
+      postResult: code,
       postError: null,
     }),
     [BRANCH_POST_FAILURE]: (state, { payload: e }) => ({

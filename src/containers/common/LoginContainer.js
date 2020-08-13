@@ -4,20 +4,15 @@ import AuthForm from '../../components/common/AuthForm';
 import { changeInput, login } from '../../modules/common/auth';
 import AuthTemplate from '../../components/common/AuthTemplate';
 import { withRouter } from 'react-router-dom';
-import { initializeForm } from '../../modules/common/authCode';
 
 const LoginForm = ({ history, match }) => {
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
-  const { form, user, authError, authCode, authCodeResult } = useSelector(
-    ({ auth, authCode }) => ({
-      form: auth.login,
-      user: auth.user,
-      authError: auth.authError,
-      authCode: authCode.authCode,
-      authCodeResult: authCode.authCodeResult,
-    }),
-  );
+  const { form, user, authError } = useSelector(({ auth }) => ({
+    form: auth.login,
+    user: auth.user,
+    authError: auth.authError,
+  }));
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -39,18 +34,7 @@ const LoginForm = ({ history, match }) => {
       return;
     }
     dispatch(login({ id, password }));
-    if (authCodeResult === 200) {
-      dispatch(initializeForm());
-      // 인증 성공
-      //dispatch(회원이랑 지점 매핑)
-      // 성공 하면 폼 초기화
-    }
   };
-
-  useEffect(() => {
-    dispatch(initializeForm('login'));
-    setError(null);
-  }, [dispatch]);
 
   useEffect(() => {
     if (authError !== null) {
@@ -69,11 +53,6 @@ const LoginForm = ({ history, match }) => {
   useEffect(() => {
     if (user !== null) {
       history.push('/');
-      try {
-        localStorage.setItem('user', JSON.stringify(user));
-      } catch (e) {
-        console.log('local storage에 저장 되지 않았습니다.');
-      }
     }
   }, [history, user]);
 

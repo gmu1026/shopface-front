@@ -9,7 +9,7 @@ import IconExpandLess from '@material-ui/icons/ExpandLess';
 import IconExpandMore from '@material-ui/icons/ExpandMore';
 import { Link } from 'react-router-dom';
 
-const SidebarMenu = () => {
+const SidebarMenu = ({ user }) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -19,19 +19,23 @@ const SidebarMenu = () => {
 
   return (
     <List className={classes.appMenu} disablePadding>
-      <ListItem button onClick={handleClick}>
-        <ListItemText primary="회원 관리"></ListItemText>
-        {open ? <IconExpandLess /> : <IconExpandMore />}
-      </ListItem>
-      <Collapse in={open} timeout="auto" unmountOnExit>
-        <Divider />
-        <List component="div" disablePadding>
-          <ListItem button className={classes.menuItem}>
-            <ListItemText inset primary="" />
-            <Link to="/member">회원 목록 </Link>
-          </ListItem>
-        </List>
-      </Collapse>
+      {user !== null && user.type === 'A' && (
+          <>
+            <ListItem button onClick={handleClick}>
+              <ListItemText primary="회원 관리"></ListItemText>
+              {open ? <IconExpandLess /> : <IconExpandMore />}
+            </ListItem>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+              <Divider />
+              <List component="div" disablePadding>
+                <ListItem button className={classes.menuItem}>
+                  <ListItemText inset primary="" />
+                  <Link to="/member">회원 목록 </Link>
+                </ListItem>
+              </List>
+            </Collapse>
+          </>
+        )}
       <ListItem button onClick={handleClick}>
         <ListItemText primary="시간표 관리"></ListItemText>
         {open ? <IconExpandLess /> : <IconExpandMore />}

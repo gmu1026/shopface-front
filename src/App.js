@@ -1,10 +1,10 @@
 import Drawer from '@material-ui/core/Drawer';
 import { makeStyles } from '@material-ui/core/styles';
-import React, { Suspense, useEffect, lazy } from 'react';
+import React, { lazy, Suspense, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, Switch, withRouter } from 'react-router-dom';
-import SidebarHeader from '../src/components/common/SidebarHeader';
 import SideBarMenu from '../src/components/common/SidebarMenu';
+import SidebarHeaderContainer from './containers/common/SidebarHeaderContainer';
 import client from './lib/api/client';
 import { checkExpire } from './lib/api/common/authAPI';
 import { getBranchList } from './modules/branch/branchList';
@@ -12,7 +12,7 @@ import { logout } from './modules/common/auth';
 import IndexPage from './pages/IndexPage';
 
 const LoginPage = lazy(() => import('./pages/common/LoginPage'));
-const AuthCodePage = lazy(() => import('./pages/common/AuthCodePage'));
+const CertCodePage = lazy(() => import('./pages/common/CertCodePage'));
 const BranchPage = lazy(() => import('./pages/branch/BranchPage'));
 const RegisterPage = lazy(() => import('./pages/common/RegisterPage'));
 const EmployPage = lazy(() => import('./pages/employ/EmployPage'));
@@ -33,12 +33,11 @@ const App = ({ history, match }) => {
   const useStyles = makeStyles((theme) => ({
     root: {
       display: 'flex',
-      width: '15.5rem',
+      width: '15rem',
     },
     drawerPaper: {
       position: 'fixed',
-      // whiteSpace: 'nowrap',
-      width: '17rem',
+      width: '16rem',
       paddingTop: theme.spacing(4),
       paddingBottom: theme.spacing(4),
       paddingLeft: '1.5rem',
@@ -71,37 +70,30 @@ const App = ({ history, match }) => {
           dispatch(logout());
         }
       });
-
       const { name } = user;
       dispatch(getBranchList({ name }));
     } else {
       if (
-        window.location.pathname === '/register/employ' ||
-        window.location.pathname === '/register/check' ||
-        window.location.pathname === '/authcode'
+        window.location.pathname === '/certcode' ||
+        window.location.pathname === '/register'
       ) {
         return;
       }
       history.push('/login');
     }
-  }, [history, user]);
+  }, [history, dispatch, user]);
 
   if (
     window.location.pathname === '/login' ||
     window.location.pathname === '/register' ||
-    window.location.pathname === '/register/employ' ||
-    window.location.pathname === '/register/check' ||
-    window.location.pathname === '/authcode'
+    window.location.pathname === '/certcode'
   ) {
     return (
       <Suspense fallback={<div>Loading...</div>}>
         <Switch>
           <Route path="/login" component={LoginPage} />
-          <Route
-            path={['/register', '/register/employ', '/register/check']}
-            component={RegisterPage}
-          />
-          <Route path="/authcode" component={AuthCodePage} />
+          <Route path="/register" component={RegisterPage} />
+          <Route path="/certcode" component={CertCodePage} />
         </Switch>
       </Suspense>
     );
@@ -114,12 +106,16 @@ const App = ({ history, match }) => {
               variant="permanent"
               classes={{ paper: classes.drawerPaper }}
             >
-              <SideBarMenu />
+              <SideBarMenu user={user} />
             </Drawer>
           </div>
 
-          <div className="col p-0" style={{ marginLeft: '18rem' }}>
-            <SidebarHeader onLogout={onLogout} branchs={branchs} />
+          <div className="col p-0" style={{ marginLeft: '17rem' }}>
+            <SidebarHeaderContainer
+              onLogout={onLogout}
+              branchs={branchs}
+              user={user}
+            />
 
             <div className="content">
               <Suspense fallback={<div>Loading...</div>}>

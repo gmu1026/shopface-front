@@ -71,10 +71,7 @@ const EmployListContainer = ({ history }) => {
     closeModal();
     e.preventDefault();
     const data = employPost;
-    if (
-      // [data.nameNo, data.branchNo, data.roleNo, data.departmentNo].includes('')
-      [data.name].includes('')
-    ) {
+    if ([data.name, data.email].includes('')) {
       setError('빈 칸을 모두 입력하세요');
       return;
     }
@@ -83,10 +80,10 @@ const EmployListContainer = ({ history }) => {
       postEmploy({
         post: {
           name: data.name,
-          state: 'B',
+          email: data.email,
           branchNo: selectedBranch,
-          roleNo: 3,
-          departmentNo: 2,
+          //roleNo: 3,
+          //departmentNo: 2,
         },
       }),
     );
@@ -104,7 +101,8 @@ const EmployListContainer = ({ history }) => {
   }, [dispatch, user]);
 
   useEffect(() => {
-    if (postResult === 200) {
+    if (postResult === 'OK') {
+      alert('근무자에게 초대 메시지를 전송하였습니다.');
       dispatch(initializeForm());
       dispatch(getEmployList({ selectedBranch }));
     }

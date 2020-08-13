@@ -2,24 +2,24 @@ import React, { useState, useEffect } from 'react';
 import AuthCodeForm from '../../components/common/AuthCordForm';
 import AuthTemplate from '../../components/common/AuthTemplate';
 import { useSelector, useDispatch } from 'react-redux';
-import { checkAuthCode, changeInput } from '../../modules/common/authCode';
+import { checkCertCode, changeInput } from '../../modules/common/certCode';
 import { withRouter } from 'react-router-dom';
 
 const AuthCodeContainer = ({ history }) => {
   const [error, setError] = useState('');
   const dispatch = useDispatch();
-  const { authCode, authCodeResult, authCodeError, user } = useSelector(
-    ({ authCode, auth }) => ({
-      authCode: authCode.authCode,
-      authCodeError: authCode.authCodeError,
-      authCodeResult: authCode.authCodeResult,
+  const { certCode, certCodeResult, certCodeError, user } = useSelector(
+    ({ certCode, auth }) => ({
+      certCode: certCode.certCode,
+      certCodeError: certCode.certCodeError,
+      certCodeResult: certCode.certCodeResult,
       user: auth.user,
     }),
   );
 
   const onChange = (e) => {
-    const authCode = e.target.value;
-    dispatch(changeInput({ authCode }));
+    const certCode = e.target.value;
+    dispatch(changeInput({ certCode }));
 
     setError('');
   };
@@ -27,17 +27,22 @@ const AuthCodeContainer = ({ history }) => {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    if (authCode === '') {
-      setError('빈칸을 모두 입력해주세요');
+    if (certCode === '') {
+      setError('인증코드를 입력해주세요');
 
       return;
     }
-    dispatch(checkAuthCode({ authCode }));
+    dispatch(checkCertCode({ certCode }));
   };
 
   useEffect(() => {
-    if (authCodeResult === 200) {
-      history.push('/register/employ');
+    if (certCodeResult === true) {
+      history.push('/register');
+
+      return;
+    }
+    if (certCodeResult === false) {
+      setError('잘못된 인증코드입니다.');
     }
   });
 
@@ -45,13 +50,13 @@ const AuthCodeContainer = ({ history }) => {
     if (user !== null) {
       history.push('/');
     }
-  }, [user]);
+  }, [user, history]);
 
   useEffect(() => {
-    if (authCodeError != null) {
-      setError(authCodeError);
+    if (certCodeError != null) {
+      setError(certCodeError);
     }
-  }, [authCodeError]);
+  }, [certCodeError]);
 
   return (
     <>
