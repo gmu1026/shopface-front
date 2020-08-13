@@ -128,8 +128,7 @@ const MemberDetailForm = ({
                         type="text"
                         className="form-control"
                         name="zipCode"
-                        onChange={onChange}
-                        // readOnly
+                        readOnly
                         value={member.zipCode}
                       />
                       <br />
@@ -141,10 +140,9 @@ const MemberDetailForm = ({
                         type="text"
                         className="form-control"
                         name="address"
-                        // readOnly
+                        readOnly
                         value={member.address}
                         // value={member.address !== null ? member.address : ''}
-                        onChange={onChange}
                       />
                       <br />
                     </div>

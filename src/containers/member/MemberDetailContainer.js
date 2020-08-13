@@ -14,11 +14,12 @@ import { logout } from '../../modules/common/auth';
 
 const MemberDetailContainer = ({ match, history }) => {
   const [error, setError] = useState(null);
-  const [show, setShow] = useState(false);
   const [zoneCode, setZoneCode] = useState('');
   const [address, setAddress] = useState('');
+
+  const [show, setShow] = useState(false);
   const closeModal = () => setShow(false);
-  const openModal = () => setShow(false);
+  const openModal = () => setShow(true);
 
   const handleComplete = (data) => {
     let value = data.address;
