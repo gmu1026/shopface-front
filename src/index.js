@@ -14,6 +14,7 @@ import client from './lib/api/client';
 import './lib/styles/scss/_app.scss';
 import rootReducer, { rootSaga } from './modules';
 import * as serviceWorker from './serviceWorker';
+//import { tempSetUser } from './modules/common/auth';
 
 const sagaMiddleWare = createSagaMiddleware();
 const store = createStore(

@@ -1,16 +1,15 @@
 import Drawer from '@material-ui/core/Drawer';
 import { makeStyles } from '@material-ui/core/styles';
-import React, { Suspense, useEffect, lazy } from 'react';
+import React, { lazy, Suspense, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, Switch, withRouter } from 'react-router-dom';
-import SidebarHeader from './components/common/SidebarHeaderForm';
 import SideBarMenu from '../src/components/common/SidebarMenu';
+import SidebarHeaderContainer from './containers/common/SidebarHeaderContainer';
 import client from './lib/api/client';
 import { checkExpire } from './lib/api/common/authAPI';
 import { getBranchList } from './modules/branch/branchList';
 import { logout } from './modules/common/auth';
 import IndexPage from './pages/IndexPage';
-import SidebarHeaderContainer from './containers/common/SidebarHeaderContainer';
 
 const LoginPage = lazy(() => import('./pages/common/LoginPage'));
 const AuthCodePage = lazy(() => import('./pages/common/AuthCodePage'));
@@ -36,7 +35,6 @@ const App = ({ history, match }) => {
     },
     drawerPaper: {
       position: 'fixed',
-      // whiteSpace: 'nowrap',
       width: '17rem',
       paddingTop: theme.spacing(4),
       paddingBottom: theme.spacing(4),
@@ -70,37 +68,30 @@ const App = ({ history, match }) => {
           dispatch(logout());
         }
       });
-
       const { name } = user;
       dispatch(getBranchList({ name }));
     } else {
       if (
-        window.location.pathname === '/register/employ' ||
-        window.location.pathname === '/register/check' ||
-        window.location.pathname === '/authcode'
+        window.location.pathname === '/certcode' ||
+        window.location.pathname === '/register'
       ) {
         return;
       }
       history.push('/login');
     }
-  }, [history, user]);
+  }, [history, dispatch, user]);
 
   if (
     window.location.pathname === '/login' ||
     window.location.pathname === '/register' ||
-    window.location.pathname === '/register/employ' ||
-    window.location.pathname === '/register/check' ||
     window.location.pathname === '/authcode'
   ) {
     return (
       <Suspense fallback={<div>Loading...</div>}>
         <Switch>
           <Route path="/login" component={LoginPage} />
-          <Route
-            path={['/register', '/register/employ', '/register/check']}
-            component={RegisterPage}
-          />
-          <Route path="/authcode" component={AuthCodePage} />
+          <Route path="/register" component={RegisterPage} />
+          <Route path="/certcode" component={AuthCodePage} />
         </Switch>
       </Suspense>
     );

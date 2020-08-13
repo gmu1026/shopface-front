@@ -87,6 +87,7 @@ const auth = handleActions(
     [INITIALIZE_FORM]: (state, { payload: initForm }) => ({
       ...state,
       [initForm]: initialState[initForm],
+      registerResult: null,
       authError: null,
     }),
     [TEMP_SET_USER]: (state, { payload: { user } }) => ({

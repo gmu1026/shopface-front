@@ -59,8 +59,7 @@ const RegisterContainer = ({ history, match }) => {
     } else {
       member.type = 'E';
     }
-    // 하드 코딩 값 수정
-    dispatch(registerMember({ member, certCode: 'MRD7Od' }));
+    dispatch(registerMember({ member, certCode }));
   };
 
   useEffect(() => {
@@ -76,7 +75,8 @@ const RegisterContainer = ({ history, match }) => {
 
   useEffect(() => {
     if (registerResult === 'OK') {
-      initialize();
+      dispatch(initialize());
+      dispatch(initializeForm());
       history.push('/login');
     }
   }, [history, registerResult]);

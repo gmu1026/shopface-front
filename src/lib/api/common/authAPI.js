@@ -9,13 +9,11 @@ export const login = async ({ id, password }) => {
 
     const response = await client.get(`/member/${name}`);
     const type = response.data.data.type;
+    const data = { user: { name, jwt, type } };
 
-    localStorage.setItem(
-      'user',
-      JSON.stringify({ user: name, jwt: jwt, type: type }),
-    );
+    localStorage.setItem('user', JSON.stringify(data));
 
-    return { data: { user: { name, jwt, type } } };
+    return { data: data };
   } catch (error) {
     throw new Error(error.message);
   }
@@ -34,6 +32,7 @@ export const logout = async () => {
 };
 
 export const signUp = async ({ member, certCode }) => {
+  console.log(certCode);
   const response = await Auth.signUp({
     username: member.id,
     password: member.password,
@@ -46,7 +45,7 @@ export const signUp = async ({ member, certCode }) => {
       const response = await client
         .post('/member', member)
         .then(async (resolve) => {
-          if (member.type === 'E') {
+          if (certCode !== null && certCode !== '') {
             return await client.patch('/employ', {
               memberId: member.id,
               certCode: certCode,
@@ -81,10 +80,15 @@ export const checkExpire = async () => {
   return isExpired;
 };
 
-export const checkCertCode = async ({ memberId, certCode }) => {
+export const patchEmployByCertCode = async ({ memberId, certCode }) => {
   const response = await client.patch('/employ', {
     memberId,
     certCode,
   });
+  return response;
+};
+
+export const checkCertCode = async ({ certCode }) => {
+  const response = await client.post(`/employ/check?certcode=${certCode}`);
   return response;
 };

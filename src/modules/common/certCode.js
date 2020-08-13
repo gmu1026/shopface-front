@@ -12,7 +12,13 @@ const [
   CHECK_CERTCODE,
   CHECK_CERTCODE_SUCCESS,
   CHECK_CERTCODE_FAILURE,
-] = createRequestActionTypes('certCode/CHECK_certCode');
+] = createRequestActionTypes('certCode/CHECK_CERTCODE');
+
+const [
+  PATCH_EMPLOY_BY_CERTCODE,
+  PATCH_EMPLOY_BY_CERTCODE_SUCCESS,
+  PATCH_EMPLOY_BY_CERTCODE_FAILURE,
+] = createRequestActionTypes('certCode/PATCH_EMPLOY_BY_CERTCODE');
 
 export const changeInput = createAction(CHANGE_INPUT, ({ certCode }) => ({
   certCode,
@@ -20,8 +26,11 @@ export const changeInput = createAction(CHANGE_INPUT, ({ certCode }) => ({
 
 export const initialize = createAction(INITIALIZE_FORM);
 
-export const checkCertCode = createAction(
-  CHECK_CERTCODE,
+export const checkCertCode = createAction(CHECK_CERTCODE, ({ certCode }) => ({
+  certCode,
+}));
+export const patchEmployByCertCode = createAction(
+  PATCH_EMPLOY_BY_CERTCODE,
   ({ memberId, certCode }) => ({
     memberId,
     certCode,
@@ -32,9 +41,14 @@ const checkCertCodeSaga = createRequestSaga(
   CHECK_CERTCODE,
   authAPI.checkCertCode,
 );
+const patchEmployByCertCodeSaga = createRequestSaga(
+  PATCH_EMPLOY_BY_CERTCODE,
+  authAPI.patchEmployByCertCode,
+);
 
 export function* certCodeSaga() {
   yield takeLatest(CHECK_CERTCODE, checkCertCodeSaga);
+  yield takeLatest(PATCH_EMPLOY_BY_CERTCODE, patchEmployByCertCodeSaga);
 }
 
 const initialState = {
@@ -55,13 +69,21 @@ const certCode = handleActions(
       certCodeResult: null,
       certCodeError: null,
     }),
-
     [CHECK_CERTCODE_SUCCESS]: (state, { payload: { code } }) => ({
       ...state,
       certCodeResult: code,
       certCodeError: null,
     }),
     [CHECK_CERTCODE_FAILURE]: (state, { payload: { message } }) => ({
+      ...state,
+      certCodeError: message,
+    }),
+    [PATCH_EMPLOY_BY_CERTCODE_SUCCESS]: (state, { payload: { code } }) => ({
+      ...state,
+      certCodeResult: code,
+      certCodeError: null,
+    }),
+    [PATCH_EMPLOY_BY_CERTCODE_FAILURE]: (state, { payload: { message } }) => ({
       ...state,
       certCodeError: message,
     }),

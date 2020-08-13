@@ -5,20 +5,6 @@ import BranchSelectBox from '../branch/BranchSelectForm';
 import Modal from '../../../node_modules/react-bootstrap/esm/Modal';
 import { Form } from '../../../node_modules/react-bootstrap/esm/index';
 
-const AuthCodeModal = ({ show, closeModal }) => {
-  return (
-    <Modal show={show} onHide={closeModal}>
-      <Modal.Header closeButton>
-        <Modal.Title>인증 코드</Modal.Title>
-      </Modal.Header>
-      <Modal.Body></Modal.Body>
-      <Modal.Footer>
-        <Button onClick={''}>시간표 등록</Button>
-      </Modal.Footer>
-    </Modal>
-  );
-};
-
 const SideBarHeaderForm = ({
   user,
   branchs,

@@ -10,16 +10,16 @@ const AuthCodeContainer = ({ history }) => {
   const dispatch = useDispatch();
   const { certCode, certCodeResult, certCodeError, user } = useSelector(
     ({ certCode, auth }) => ({
-      certCode: certCode.authCode,
-      authCodeError: certCode.authCodeError,
-      certCodeResult: certCode.authCodeResult,
+      certCode: certCode.certCode,
+      certCodeError: certCode.certCodeError,
+      certCodeResult: certCode.certCodeResult,
       user: auth.user,
     }),
   );
 
   const onChange = (e) => {
-    const authCode = e.target.value;
-    dispatch(changeInput({ authCode }));
+    const certCode = e.target.value;
+    dispatch(changeInput({ certCode }));
 
     setError('');
   };
@@ -36,8 +36,8 @@ const AuthCodeContainer = ({ history }) => {
   };
 
   useEffect(() => {
-    if (certCodeResult === 200) {
-      history.push('/register/employ');
+    if (certCodeResult) {
+      history.push('/register');
     }
   });
 
