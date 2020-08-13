@@ -7,7 +7,6 @@ import * as occupationAPI from '../../lib/api/occupation/occupationAPI';
 import produce from 'immer';
 
 const INITIALIZE_FORM = 'occupation/INITIALIZE_FORM'; //post 시 초기
-const INITIALIZE_RESULT = 'occupation/INITIALIZE_RESULT'; //update시 초기
 const CHANGE_INPUT = 'occupation/CHANGE_INPUT';
 const UPDATE_CHANGE = 'occupation/UPDATE_CHANGE';
 
@@ -144,9 +143,9 @@ export const occupation = handleActions(
       post: initialState['post'],
       postResult: null,
     }),
-    [OCCUPATION_POST_SUCCESS]: (state, { payload: { e } }) => ({
+    [OCCUPATION_POST_SUCCESS]: (state, { payload: { code } }) => ({
       ...state,
-      postResult: e,
+      postResult: code,
       postError: null,
     }),
     [OCCUPATION_POST_FAILURE]: (state, { payload: e }) => ({
@@ -154,9 +153,9 @@ export const occupation = handleActions(
       postError: e,
     }),
 
-    [OCCUPATION_DELETE_SUCCESS]: (state, { payload: { e } }) => ({
+    [OCCUPATION_DELETE_SUCCESS]: (state, { payload: { code } }) => ({
       ...state,
-      deleteResult: e,
+      deleteResult: code,
       deleteError: null,
     }),
     [OCCUPATION_DELETE_FAILURE]: (state, { payload: { e } }) => ({
@@ -164,9 +163,9 @@ export const occupation = handleActions(
       deleteError: e,
     }),
 
-    [OCCUPATION_UPDATE_SUCCESS]: (state, { payload: { status } }) => ({
+    [OCCUPATION_UPDATE_SUCCESS]: (state, { payload: { code } }) => ({
       ...state,
-      updateResult: status,
+      updateResult: code,
       updateError: null,
     }),
     [OCCUPATION_UPDATE_FAILURE]: (state, { payload: { message } }) => ({
