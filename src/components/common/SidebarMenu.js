@@ -90,6 +90,10 @@ const SidebarMenu = () => {
             <ListItemText inset primary="" />
             <Link to="/employ">근무자 관리</Link>
           </ListItem>
+          <ListItem button className={classes.menuItem}>
+            <ListItemText inset primary="" />
+            <Link to="/member/id">내 정보 관리</Link>
+          </ListItem>
         </List>
       </Collapse>
     </List>

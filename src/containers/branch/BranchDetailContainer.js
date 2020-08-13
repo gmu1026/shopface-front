@@ -20,7 +20,7 @@ const BranchDetailContainer = ({ match, history }) => {
   const [imgFile, setImgFile] = useState(null);
 
   const closeModal = () => setShow(false);
-  const openModal = () => setShow(true);
+  const openModal = () => setShow(false);
 
   const dispatch = useDispatch();
 
@@ -106,7 +106,7 @@ const BranchDetailContainer = ({ match, history }) => {
   }, [dispatch, match.params.no, user]);
 
   useEffect(() => {
-    if (branchResult === 200) {
+    if (branchResult === 'OK') {
       dispatch(initializeResult());
       history.push('/branch');
     }

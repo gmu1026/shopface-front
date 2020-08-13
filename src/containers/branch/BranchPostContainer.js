@@ -83,7 +83,7 @@ const BranchPostContainer = ({ history }) => {
   };
 
   useEffect(() => {
-    if (postResult === 200) {
+    if (postResult === 'OK') {
       dispatch(initializeForm('post'));
       history.push('/branch');
     }

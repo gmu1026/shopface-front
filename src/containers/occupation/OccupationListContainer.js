@@ -42,11 +42,10 @@ const OccupationListContainer = ({ history }) => {
     updateOccupation: occupation.updateOccupation,
     updateError: occupation.updateError,
     updateResult: occupation.updateResult,
-    selectedBranch,
+    selectedBranch: branchSelect.selectedBranch,
   }));
 
   const onChange = (e) => {
-    console.log(e.target);
     const { name, value } = e.target;
     dispatch(
       changeInput({
@@ -124,7 +123,7 @@ const OccupationListContainer = ({ history }) => {
   }, [dispatch, selectedBranch, user]);
 
   useEffect(() => {
-    if (postResult === 200) {
+    if (postResult === 'OK') {
       alert('등록되었습니다');
       dispatch(initializeForm());
       dispatch(getOccupationList({ selectedBranch }));
@@ -132,7 +131,7 @@ const OccupationListContainer = ({ history }) => {
   }, [postResult, dispatch, selectedBranch]);
 
   useEffect(() => {
-    if (updateResult === 200) {
+    if (updateResult === 'OK') {
       alert('수정되었습니다');
       dispatch(initializeForm());
       dispatch(getOccupationList({ selectedBranch }));
@@ -141,8 +140,7 @@ const OccupationListContainer = ({ history }) => {
 
   useEffect(
     (e) => {
-      if (deleteResult === 200) {
-        console.log(e);
+      if (deleteResult === 'OK') {
         alert('삭제되었습니다');
         dispatch(initializeForm());
         dispatch(getOccupationList({ selectedBranch }));

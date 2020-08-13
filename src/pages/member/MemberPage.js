@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, withRouter, Switch } from 'react-router-dom';
 const MemberDetailContainer = lazy(() =>
   import('../../containers/member/MemberDetailContainer'),
 );
@@ -20,4 +20,4 @@ const MemberPage = ({ match }) => {
   );
 };
 
-export default MemberPage;
+export default withRouter(MemberPage);

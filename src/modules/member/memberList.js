@@ -10,7 +10,7 @@ const [
   MEMBER_LIST_SUCCESS,
   MEMBER_LIST_FAILURE,
 ] = createRequestActionTypes('memberList/MEMBER_LIST');
-const CHANGE_INPUT = 'member/CHANGE_INPUT';
+const CHANGE_INPUT = 'memberList/CHANGE_INPUT';
 
 export const getMemberList = createAction(MEMBER_LIST);
 export const changeInput = createAction(CHANGE_INPUT, (value) => value);
