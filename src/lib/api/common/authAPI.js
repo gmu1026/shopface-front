@@ -6,6 +6,11 @@ export const login = async ({ id, password }) => {
     const user = await Auth.signIn(id, password);
     const name = user.signInUserSession.idToken.payload.email;
     const jwt = user.signInUserSession.idToken.jwtToken;
+    /* 
+      1. member get API 요청 
+      2. response에 있는 type 가지고 오기
+      3. user에 type 포함 
+    */
 
     return { user: { name, jwt } };
   } catch (error) {
