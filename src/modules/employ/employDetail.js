@@ -88,9 +88,9 @@ export const employDetail = handleActions(
       ...state,
       employError: message,
     }),
-    [EMPLOY_UPDATE_SUCCESS]: (state, { payload: { status } }) => ({
+    [EMPLOY_UPDATE_SUCCESS]: (state, { payload: { code } }) => ({
       ...state,
-      employResult: status,
+      employResult: code,
       employError: null,
     }),
     [EMPLOY_UPDATE_FAILURE]: (state, { payload: { message } }) => ({
@@ -98,9 +98,9 @@ export const employDetail = handleActions(
       employResult: null,
       employError: message,
     }),
-    [EMPLOY_DELETE_SUCCESS]: (state, { payload: { status } }) => ({
+    [EMPLOY_DELETE_SUCCESS]: (state, { payload: { code } }) => ({
       ...state,
-      employResult: status,
+      employResult: code,
       employError: null,
     }),
     [EMPLOY_DELETE_FAILURE]: (state, { payload: { message } }) => ({
