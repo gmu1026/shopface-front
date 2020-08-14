@@ -54,11 +54,6 @@ const RegisterContainer = ({ history, match }) => {
       setError('빈칸을 모두 입력해주세요');
       return;
     }
-    if (window.location.pathname === '/register') {
-      member.type = 'B';
-    } else {
-      member.type = 'E';
-    }
     dispatch(registerMember({ member, certCode }));
   };
 

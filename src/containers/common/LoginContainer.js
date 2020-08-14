@@ -4,6 +4,7 @@ import AuthForm from '../../components/common/AuthForm';
 import { changeInput, login } from '../../modules/common/auth';
 import AuthTemplate from '../../components/common/AuthTemplate';
 import { withRouter } from 'react-router-dom';
+import { initialize } from '../../modules/common/certCode';
 
 const LoginForm = ({ history, match }) => {
   const [error, setError] = useState(null);
@@ -54,6 +55,7 @@ const LoginForm = ({ history, match }) => {
     if (user !== null) {
       history.push('/');
     }
+    dispatch(initialize());
   }, [history, user]);
 
   return (

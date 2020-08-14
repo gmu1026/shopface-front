@@ -11,7 +11,7 @@ const SidebarHeaderContainer = ({ onLogout, branchs, user }) => {
   const dispatch = useDispatch();
   const { certCode, certCodeResult, certCodeError } = useSelector(
     ({ certCode }) => ({
-      certCode: certCode.authCode,
+      certCode: certCode.certCode,
       certCodeError: certCode.certCodeError,
       certCodeResult: certCode.certCodeResult,
     }),
