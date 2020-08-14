@@ -1,5 +1,5 @@
 import moment from 'moment';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Scheduler, {
   DATE_FORMAT,
   SchedulerData,
@@ -7,30 +7,36 @@ import Scheduler, {
 } from 'react-big-scheduler';
 import 'react-big-scheduler/lib/css/style.css';
 import { withRouter } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { checkExpire, logout } from '../../lib/api/common/authAPI';
+import { getScheduleList } from '../../modules/schedule/scheduleList';
 
 const ScheduleListContainer = () => {
+  const { schedules, scheduleError, loading, user } = useSelector(
+    ({ scheduleList, loading, auth }) => ({
+      schedules: scheduleList.schedules,
+      scheduleError: scheduleList.scheduleError,
+      loading: loading,
+      user: auth.user,
+    }),
+  );
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (user !== null) {
+      checkExpire().then((isExpired) => {
+        if (isExpired) {
+          dispatch(logout());
+        }
+      });
+      dispatch(getScheduleList());
+    }
+  }, [dispatch, user]);
+
   let schedulerData = new SchedulerData(
     new moment().format(DATE_FORMAT),
     ViewTypes.Week,
   );
-  //set locale moment to the schedulerData, if your locale isn't English. By default, Scheduler comes with English(en, United States).
-  moment.locale('zh-cn');
-  schedulerData.setLocaleMoment(moment);
-  let resources = [
-    {
-      id: 'r1',
-      name: 'Resource1',
-    },
-    {
-      id: 'r2',
-      name: 'Resource2',
-    },
-    {
-      id: 'r3',
-      name: 'Resource3',
-    },
-  ];
-  schedulerData.setResources(resources);
 
   let events = [
     {

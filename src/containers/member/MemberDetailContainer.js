@@ -14,18 +14,19 @@ import { logout } from '../../modules/common/auth';
 
 const MemberDetailContainer = ({ match, history }) => {
   const [error, setError] = useState(null);
-  const [show, setShow] = useState(false);
   const [zoneCode, setZoneCode] = useState('');
   const [address, setAddress] = useState('');
+
+  const [show, setShow] = useState(false);
   const closeModal = () => setShow(false);
-  const openModal = () => setShow(false);
+  const openModal = () => setShow(true);
 
   const handleComplete = (data) => {
     let value = data.address;
     setAddress(value);
     dispatch(changeInput({ key: 'address', value }));
 
-    value = data.zonecode;
+    value = data.zoneCode;
     setZoneCode(value);
     dispatch(changeInput({ key: 'zoneCode', value }));
 
@@ -53,18 +54,20 @@ const MemberDetailContainer = ({ match, history }) => {
   };
 
   const onSubmit = (e) => {
-    const data = member;
+    e.preventDefault();
+    let data = member;
     if (
       [
         data.name,
-        // data.password,
-        data.phone,
+        data.password,
         data.email,
-        data.bankName,
-        data.accountNum,
-        // data.zipCode,
-        // data.address,
+        data.email,
+        data.zoneCode,
+        data.address,
         data.detailAddress,
+        // data.accountNum,
+        // data.bankName,
+        // data.phone,
       ].includes('')
     ) {
       setError('빈 칸을 모두 입력하세요');
@@ -75,7 +78,6 @@ const MemberDetailContainer = ({ match, history }) => {
   };
 
   const onDelete = (e) => {
-    console.log(memberResult);
     const id = match.params.id;
     dispatch(memberDelete({ id }));
   };
@@ -94,19 +96,11 @@ const MemberDetailContainer = ({ match, history }) => {
 
   useEffect(() => {
     if (memberResult === 'OK') {
+      alert('변경되었습니다');
       dispatch(initializeResult());
       history.push('/member');
     }
   }, [memberResult, history, dispatch]);
-
-  useEffect(() => {
-    const id = match.params.id;
-    if (memberResult === 'OK') {
-      alert('변경되었습니다');
-      dispatch(initializeResult());
-      dispatch(getMemberDetail({ id }));
-    }
-  }, [memberResult, dispatch, match.params.id]);
 
   return (
     <div>

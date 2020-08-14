@@ -41,13 +41,12 @@ const MemberDetailForm = ({
                       />
                     </div>
                     <div className="form-group col-md-4">
-                      <label> 비밀번호 :</label>
+                      비밀번호 :
                       <input
                         type="password"
                         className="form-control"
                         name="password"
                         onChange={onChange}
-                        value={member.password}
                       />
                       {/* <button
                       type="button"
@@ -55,7 +54,7 @@ const MemberDetailForm = ({
                       className="btn btn-outline-primary"
                     >
                       비밀번호 수정
-                    </button> */}
+                    </button>  */}
                     </div>
                     {/* <div className="form-group col-md-4">
                     전화번호 :
@@ -128,8 +127,7 @@ const MemberDetailForm = ({
                         type="text"
                         className="form-control"
                         name="zipCode"
-                        onChange={onChange}
-                        // readOnly
+                        readOnly
                         value={member.zipCode}
                       />
                       <br />
@@ -141,10 +139,9 @@ const MemberDetailForm = ({
                         type="text"
                         className="form-control"
                         name="address"
-                        // readOnly
+                        readOnly
                         value={member.address}
                         // value={member.address !== null ? member.address : ''}
-                        onChange={onChange}
                       />
                       <br />
                     </div>
@@ -155,13 +152,13 @@ const MemberDetailForm = ({
                         type="text"
                         className="form-control"
                         name="detailAddress"
+                        onChange={onChange}
                         value={member.detailAddress}
                         // value={
                         //   member.detailAddress !== null
                         //     ? member.detailAddress
                         //     : ''
                         // }
-                        onChange={onChange}
                       />
                       <br />
                     </div>

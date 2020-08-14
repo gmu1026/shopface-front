@@ -7,9 +7,7 @@ const EmployTableBody = ({ employ, match, show, openModal, closeModal }) => {
     <>
       <tr role="row">
         <td>
-          {' '}
-          {employ.name}
-          {/* <Link to={`${match.url}/${employ.no}`}> {employ.name}</Link> */}
+          <Link to={`${match.url}/${employ.no}`}> {employ.name}</Link>
         </td>
         <td>{employ.phone}</td>
         <td>{employ.email}</td>
@@ -38,6 +36,7 @@ const EmployListForm = ({
   onSubmit,
   openModal,
   filterEmploys,
+  match,
 }) => {
   return (
     <div className="container-fluid p-0">
@@ -121,6 +120,8 @@ const EmployListForm = ({
                             show={show}
                             closeModal={closeModal}
                             openModal={openModal}
+                            match={match}
+                            employ={employ}
                           ></EmployTableBody>
                         ))
                       ) : (

@@ -11,7 +11,7 @@ export const getMember = async ({ id }) => {
 
 export const postMember = ({ data }) => {
   const response = client.post('/member', { data });
-  console.log(response);
+  return response;
 };
 
 export const putMember = async ({ id, data }) => {

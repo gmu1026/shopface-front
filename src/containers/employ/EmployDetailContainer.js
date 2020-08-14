@@ -35,7 +35,7 @@ const EmployDetailContainer = ({ match, history }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    const data = employs;
+    let data = employs;
     console.log(employs);
     if ([data.name, data.salary].includes('')) {
       setError('빈 칸을 모두 입력하세요');
@@ -45,13 +45,8 @@ const EmployDetailContainer = ({ match, history }) => {
     dispatch(employUpdate({ no, data }));
   };
 
-  const onDelete = () => {
-    const no = match.params.no;
-    dispatch(employDelete({ no }));
-  };
-
   useEffect(() => {
-    if (employResult === 'Success') {
+    if (employResult === 'OK') {
       dispatch(initializeResult());
       history.push('/employ');
     }
@@ -64,28 +59,20 @@ const EmployDetailContainer = ({ match, history }) => {
           dispatch(logout());
         }
       });
-      const url = match.url;
-      const no = url.substring(url.lastIndexOf('/') + 1);
-
+      // const url = match.url;
+      // const no = url.substring(url.lastIndexOf('/') + 1);
+      const no = match.params.no;
       dispatch(getEmployhDetail({ no }));
     }
-  }, [dispatch, match.url, user]);
-
-  useEffect(() => {
-    // 성공 시 /employ로 이동 하는 함수
-    if ('employResult' === 'Success') {
-      //dispatch(initializeResult());
-      history.push('/employ');
-    }
-  }, [history, dispatch]);
+  }, [dispatch, match.params.no, user]);
 
   return (
     <div>
       <EmployDetailForm
         onSubmit={onSubmit}
         onChange={onChange}
-        onDelete={onDelete}
         error={error}
+        employs={employs}
       ></EmployDetailForm>
     </div>
   );
