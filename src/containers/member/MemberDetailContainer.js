@@ -13,9 +13,11 @@ import { withRouter } from 'react-router-dom';
 import { logout } from '../../modules/common/auth';
 
 const MemberDetailContainer = ({ match, history }) => {
+  const [id, setId] = useState(match.params.id);
   const [error, setError] = useState(null);
   const [zoneCode, setZoneCode] = useState('');
   const [address, setAddress] = useState('');
+  const [disabled, setDisabled] = useState(false);
 
   const [show, setShow] = useState(false);
   const closeModal = () => setShow(false);
@@ -26,9 +28,9 @@ const MemberDetailContainer = ({ match, history }) => {
     setAddress(value);
     dispatch(changeInput({ key: 'address', value }));
 
-    value = data.zoneCode;
+    value = data.zonecode;
     setZoneCode(value);
-    dispatch(changeInput({ key: 'zoneCode', value }));
+    dispatch(changeInput({ key: 'zipCode', value }));
 
     closeModal();
   };
@@ -65,20 +67,19 @@ const MemberDetailContainer = ({ match, history }) => {
         data.zoneCode,
         data.address,
         data.detailAddress,
-        // data.accountNum,
-        // data.bankName,
-        // data.phone,
+        data.accountNum,
+        data.bankName,
+        data.phone,
       ].includes('')
     ) {
       setError('빈 칸을 모두 입력하세요');
       return;
     }
-    const id = match.params.id;
+
     dispatch(memberUpdate({ id, data }));
   };
 
   const onDelete = (e) => {
-    const id = match.params.id;
     dispatch(memberDelete({ id }));
   };
 
@@ -89,15 +90,27 @@ const MemberDetailContainer = ({ match, history }) => {
           dispatch(logout());
         }
       });
-      const id = match.params.id;
+
       dispatch(getMemberDetail({ id }));
     }
-  }, [dispatch, match.params.id, user]);
+  }, [dispatch, user]);
+
+  useEffect(() => {
+    if (user !== null) {
+      if (id != null && id !== user.name) {
+        setDisabled(true);
+      }
+    }
+  }, [member, id, user.name]);
 
   useEffect(() => {
     if (memberResult === 'OK') {
       alert('변경되었습니다');
       dispatch(initializeResult());
+
+      if (id === user.name) {
+        return;
+      }
       history.push('/member');
     }
   }, [memberResult, history, dispatch]);
@@ -116,6 +129,7 @@ const MemberDetailContainer = ({ match, history }) => {
         show={show}
         zoneCode={zoneCode}
         address={address}
+        disabled={disabled}
       ></MemberDetailForm>
     </div>
   );

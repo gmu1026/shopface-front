@@ -13,11 +13,10 @@ const MemberDetailForm = ({
   closeModal,
   openModal,
   show,
-  zoneCode,
-  address,
+  disabled,
 }) => {
   if (member === null) {
-    return <div>test</div>;
+    return <div></div>;
   } else {
     return (
       <>
@@ -37,10 +36,11 @@ const MemberDetailForm = ({
                         name="name"
                         onChange={onChange}
                         value={member.name}
-                        readOnly
+                        disabled={disabled}
                       />
                     </div>
-                    <div className="form-group col-md-4">
+                    <br />
+                    {/*     <div className="form-group col-md-4">
                       비밀번호 :
                       <input
                         type="password"
@@ -48,25 +48,27 @@ const MemberDetailForm = ({
                         name="password"
                         onChange={onChange}
                       />
-                      {/* <button
+                      <button
                       type="button"
                       id="password_edit_button"
                       className="btn btn-outline-primary"
                     >
                       비밀번호 수정
-                    </button>  */}
+                    </button> 
+                    </div> */}
+
+                    <div className="form-group col-md-4">
+                      전화번호 :
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="phone"
+                        onChange={onChange}
+                        value={member.phone}
+                        disabled={disabled}
+                      />
+                      <br />
                     </div>
-                    {/* <div className="form-group col-md-4">
-                    전화번호 :
-                    <input
-                      type="text"
-                      className="form-control"
-                      name="phone"
-                      onChange={onChange}
-                      value={member.phone}
-                    />
-                    <br />
-                  </div> */}
                     <div className="form-group col-md-4">
                       이메일 :
                       <input
@@ -75,46 +77,51 @@ const MemberDetailForm = ({
                         name="email"
                         value={member.email}
                         onChange={onChange}
+                        disabled={disabled}
                       />
                       <br />
                     </div>
-                    {/* 
-                  <div className="form-group col-md-4">
-                    은행 명 :
-                    <input
-                      type="text"
-                      className="form-control"
-                      name="bankName"
-                      value={member.bankName} //{member.bankName !== null ? member.bankName : ''}
-                      onChange={onChange}
-                    />
-                    <br />
-                  </div>
 
-                  <div className="form-group col-md-4">
-                    계좌번호 :
-                    <input
-                      type="text"
-                      className="form-control"
-                      name="accountNum"
-                      value={member.accountNum}
-                      // value={
-                      //   member.accountNum !== null ? member.accountNum : ''
-                      // }
-                      onChange={onChange}
-                    />
-                    <br />
-                  </div> */}
+                    <div className="form-group col-md-4">
+                      은행 명 :
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="bankName"
+                        value={member.bankName !== null ? member.bankName : ''}
+                        onChange={onChange}
+                        disabled={disabled}
+                      />
+                      <br />
+                    </div>
+
+                    <div className="form-group col-md-4">
+                      계좌번호 :
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="accountNum"
+                        value={
+                          member.accountNum !== null ? member.accountNum : ''
+                        }
+                        onChange={onChange}
+                        disabled={disabled}
+                      />
+                      <br />
+                    </div>
 
                     <div className="form-group col-md-4">
                       <label>우편 번호 :</label>
-                      <Button
-                        type="button"
-                        className="btn btn-outline-primary"
-                        onClick={openModal}
-                      >
-                        우편번호 찾기
-                      </Button>
+                      {!disabled && (
+                        <Button
+                          type="button"
+                          className="btn btn-outline-primary"
+                          onClick={openModal}
+                        >
+                          우편번호 찾기
+                        </Button>
+                      )}
+
                       <Modal show={show} onHide={closeModal}>
                         <Modal.Header closeButton>
                           <Modal.Title>우편 번호 찾기</Modal.Title>
@@ -127,8 +134,9 @@ const MemberDetailForm = ({
                         type="text"
                         className="form-control"
                         name="zipCode"
-                        readOnly
-                        value={member.zipCode}
+                        value={member.zipCode !== null ? member.zipCode : ''}
+                        disabled={disabled}
+                        onChange={() => {}}
                       />
                       <br />
                       <div className="text-center-mt-3"></div>
@@ -139,9 +147,9 @@ const MemberDetailForm = ({
                         type="text"
                         className="form-control"
                         name="address"
-                        readOnly
-                        value={member.address}
-                        // value={member.address !== null ? member.address : ''}
+                        value={member.address !== null ? member.address : ''}
+                        disabled={disabled}
+                        onChange={() => {}}
                       />
                       <br />
                     </div>
@@ -153,33 +161,39 @@ const MemberDetailForm = ({
                         className="form-control"
                         name="detailAddress"
                         onChange={onChange}
-                        value={member.detailAddress}
-                        // value={
-                        //   member.detailAddress !== null
-                        //     ? member.detailAddress
-                        //     : ''
-                        // }
+                        value={
+                          member.detailAddress !== null
+                            ? member.detailAddress
+                            : ''
+                        }
+                        disabled={disabled}
                       />
                       <br />
                     </div>
                     <div className="form-group" style={{ color: 'red' }}>
                       {error}
                     </div>
-                    <Button className="btn btn-outline-primary">수정</Button>
-                    <Button
-                      type="button"
-                      onClick={onDelete}
-                      className="btn btn-outline-primary"
-                    >
-                      삭제
-                    </Button>
-                    <Button
-                      type="button"
-                      to="/member"
-                      className="btn btn-outline-primary"
-                    >
-                      목록
-                    </Button>
+                    {!disabled && (
+                      <Button className="btn btn-outline-primary">수정</Button>
+                    )}
+                    {disabled && (
+                      <>
+                        <Button
+                          type="button"
+                          onClick={onDelete}
+                          className="btn btn-outline-primary"
+                        >
+                          삭제
+                        </Button>
+                        <Button
+                          type="button"
+                          to="/member"
+                          className="btn btn-outline-primary"
+                        >
+                          목록
+                        </Button>
+                      </>
+                    )}
                   </form>
                 </div>
               </div>

@@ -40,7 +40,7 @@ const BranchDetailContainer = ({ match, history }) => {
 
     value = data.zonecode;
     setZoneCode(value);
-    dispatch(changeInput({ key: 'zoneCode', value }));
+    dispatch(changeInput({ key: 'zipCode', value }));
 
     closeModal();
   };

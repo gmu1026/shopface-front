@@ -19,7 +19,7 @@ const SidebarMenu = ({ user }) => {
 
   return (
     <List className={classes.appMenu} disablePadding>
-      {user !== null && user.type === 'A' && (
+      {user !== null && user.type === 'B' && (
         <>
           <ListItem button onClick={handleClick}>
             <ListItemText primary="회원 관리"></ListItemText>
@@ -76,7 +76,7 @@ const SidebarMenu = ({ user }) => {
         </List>
       </Collapse>
       <ListItem button onClick={handleClick}>
-        <ListItemText primary="회원 관리"></ListItemText>
+        <ListItemText primary="사업장 관리"></ListItemText>
         {open ? <IconExpandLess /> : <IconExpandMore />}
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
@@ -86,18 +86,32 @@ const SidebarMenu = ({ user }) => {
             <ListItemText inset primary="" />
             <Link to="/branch">사업장 관리 </Link>
           </ListItem>
+
           <ListItem button className={classes.menuItem}>
             <ListItemText inset primary="" />
-            <Link to="/occupation">업무 관리 </Link>
+            <Link to="/employ">직원 관리</Link>
           </ListItem>
+        </List>
+      </Collapse>
+      <ListItem button onClick={handleClick}>
+        <ListItemText primary="설정"></ListItemText>
+        {open ? <IconExpandLess /> : <IconExpandMore />}
+      </ListItem>
+      <Collapse in={open} timeout="auto" unmountOnExit>
+        <Divider />
+        <List component="div" disablePadding>
           <ListItem button className={classes.menuItem}>
             <ListItemText inset primary="" />
-            <Link to="/employ">근무자 관리</Link>
+            <Link to={user != null ? `/member/${user.name}` : '/login'}>
+              나의 정보 관리
+            </Link>
           </ListItem>
-          <ListItem button className={classes.menuItem}>
-            <ListItemText inset primary="" />
-            <Link to="/member/id">내 정보 관리</Link>
-          </ListItem>
+          {user != null && user.type === 'B' && (
+            <ListItem button className={classes.menuItem}>
+              <ListItemText inset primary="" />
+              <Link to="/occupation">업무 관리 </Link>
+            </ListItem>
+          )}
         </List>
       </Collapse>
     </List>
