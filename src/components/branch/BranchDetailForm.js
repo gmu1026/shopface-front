@@ -108,7 +108,7 @@ const BranchDetailForm = ({
                       <br />
                       <input
                         type="file"
-                        accept="image/jpg,impge/png,image/jpeg,image/gif"
+                        accept="image/jpg, impge/png, image/jpeg, image/gif"
                         name="licenseImage"
                         onChange={onChange}
                       />

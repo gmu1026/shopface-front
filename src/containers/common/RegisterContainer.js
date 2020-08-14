@@ -45,6 +45,8 @@ const RegisterContainer = ({ history, match }) => {
         value,
       }),
     );
+
+    setError('');
   };
 
   const onSubmit = (e) => {
