@@ -11,9 +11,10 @@ import {
   initializeForm,
 } from '../../modules/employ/employPost';
 
-const EmployListContainer = ({ history }) => {
+const EmployListContainer = ({ history, match }) => {
   const [show, setShow] = useState(false);
   const [filterEmploys, setFilterEmploys] = useState(null);
+  const [employFilt, setEmployFilt] = useState(null);
   const [error, setError] = useState(null);
 
   const closeModal = () => setShow(false);
@@ -82,8 +83,6 @@ const EmployListContainer = ({ history }) => {
           name: data.name,
           email: data.email,
           branchNo: selectedBranch,
-          //roleNo: 3,
-          //departmentNo: 2,
         },
       }),
     );
@@ -125,9 +124,15 @@ const EmployListContainer = ({ history }) => {
     }
   }, [dispatch, selectedBranch, user]);
 
+  useEffect(() => {
+    const employsFilter = employs.filter((employ) => employ.state !== 'D');
+    setEmployFilt(employsFilter);
+  }, [dispatch, employs, selectedBranch]);
+
   return (
     <EmployListForm
       employs={employs}
+      employFilt={employFilt}
       employError={employError}
       loading={loading}
       onChange={onChange}

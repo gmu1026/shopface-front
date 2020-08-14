@@ -22,10 +22,16 @@ const [
 ] = createRequestActionTypes('employDetail/EMPLOY_UPDATE');
 
 const [
-  EMPLOY_DELETE,
-  EMPLOY_DELETE_SUCCESS,
-  EMPLOY_DELETE_FAILURE,
-] = createRequestActionTypes('employDetail/EMPLOY_DELETE');
+  EMPLOY_DISABLE,
+  EMPLOY_DISABLE_SUCCESS,
+  EMPLOY_DISABLE_FAILURE,
+] = createRequestActionTypes('employDetail/EMPLOY_DISABLE');
+
+const [
+  EMPLOY_INVITE,
+  EMPLOY_INVITE_SUCCESS,
+  EMPLOY_INVITE_FAILURE,
+] = createRequestActionTypes('employDetail/EMPLOY_INVITE');
 
 export const changeInput = createAction(CHANGE_INPUT, ({ key, value }) => ({
   key,
@@ -40,7 +46,10 @@ export const employUpdate = createAction(EMPLOY_UPDATE, ({ no, data }) => ({
   no,
   data,
 }));
-export const employDelete = createAction(EMPLOY_DELETE, ({ no }) => ({
+export const employDisable = createAction(EMPLOY_DISABLE, ({ no }) => ({
+  no,
+}));
+export const employInvite = createAction(EMPLOY_INVITE, ({ no }) => ({
   no,
 }));
 
@@ -52,15 +61,20 @@ export const employUpdateSaga = createRequestSaga(
   EMPLOY_UPDATE,
   employAPI.updateEmploy,
 );
-export const employhDeleteSaga = createRequestSaga(
-  EMPLOY_DELETE,
-  employAPI.deleteEmploy,
+export const employhDisableSaga = createRequestSaga(
+  EMPLOY_DISABLE,
+  employAPI.disableEmploy,
+);
+export const employInviteSaga = createRequestSaga(
+  EMPLOY_INVITE,
+  employAPI.inviteEmploy,
 );
 
 export function* employDetailSaga() {
   yield takeLatest(EMPLOY_DETAIL, getEmploySaga);
   yield takeLatest(EMPLOY_UPDATE, employUpdateSaga);
-  yield takeLatest(EMPLOY_DELETE, employhDeleteSaga);
+  yield takeLatest(EMPLOY_DISABLE, employhDisableSaga);
+  yield takeLatest(EMPLOY_INVITE, employInviteSaga);
 }
 
 const initialState = {
@@ -98,12 +112,23 @@ export const employDetail = handleActions(
       employResult: null,
       employError: message,
     }),
-    [EMPLOY_DELETE_SUCCESS]: (state, { payload: { code } }) => ({
+    [EMPLOY_DISABLE_SUCCESS]: (state, { payload: { code } }) => ({
       ...state,
       employResult: code,
       employError: null,
     }),
-    [EMPLOY_DELETE_FAILURE]: (state, { payload: { message } }) => ({
+    [EMPLOY_DISABLE_FAILURE]: (state, { payload: { message } }) => ({
+      ...state,
+      employResult: null,
+      employError: message,
+    }),
+
+    [EMPLOY_INVITE_SUCCESS]: (state, { payload: { code } }) => ({
+      ...state,
+      employResult: code,
+      employError: null,
+    }),
+    [EMPLOY_INVITE_FAILURE]: (state, { payload: { message } }) => ({
       ...state,
       employResult: null,
       employError: message,

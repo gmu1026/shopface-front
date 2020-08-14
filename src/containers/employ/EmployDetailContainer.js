@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   changeInput,
   employUpdate,
-  employDelete,
+  employDisable,
+  employInvite,
   getEmployhDetail,
   initializeResult,
 } from '../../modules/employ/employDetail';
@@ -33,11 +34,20 @@ const EmployDetailContainer = ({ match, history }) => {
     );
   };
 
+  const onInvite = () => {
+    const no = match.params.no;
+    dispatch(employInvite({ no }));
+  };
+
+  const onDisabled = () => {
+    const no = match.params.no;
+    dispatch(employDisable({ no }));
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
     let data = employs;
-    console.log(employs);
-    if ([data.name, data.salary].includes('')) {
+    if ([data.salary].includes('')) {
       setError('빈 칸을 모두 입력하세요');
       return;
     }
@@ -47,6 +57,7 @@ const EmployDetailContainer = ({ match, history }) => {
 
   useEffect(() => {
     if (employResult === 'OK') {
+      alert('수정되었습니다');
       dispatch(initializeResult());
       history.push('/employ');
     }
@@ -59,8 +70,6 @@ const EmployDetailContainer = ({ match, history }) => {
           dispatch(logout());
         }
       });
-      // const url = match.url;
-      // const no = url.substring(url.lastIndexOf('/') + 1);
       const no = match.params.no;
       dispatch(getEmployhDetail({ no }));
     }
@@ -73,6 +82,8 @@ const EmployDetailContainer = ({ match, history }) => {
         onChange={onChange}
         error={error}
         employs={employs}
+        onDisabled={onDisabled}
+        onInvite={onInvite}
       ></EmployDetailForm>
     </div>
   );

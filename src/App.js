@@ -22,6 +22,9 @@ const RecordPage = lazy(() => import('./pages/record/RecordPage'));
 const SchedulePage = lazy(() =>
   import('./components/schedule/ScheduleListForm'),
 );
+const DashboardPage = lazy(() =>
+  import('./components/dashboard/DashboardForm'),
+);
 
 const App = ({ history, match }) => {
   const dispatch = useDispatch();
@@ -129,6 +132,7 @@ const App = ({ history, match }) => {
                   <Route path="/record" component={RecordPage} />
                   <Route path="/schedule" component={SchedulePage} />
                   <Route path="/branch" component={BranchPage} />
+                  <Route path="/dashboard" component={DashboardPage} />
                 </Switch>
               </Suspense>
             </div>
