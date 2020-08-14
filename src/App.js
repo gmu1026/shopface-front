@@ -19,9 +19,7 @@ const EmployPage = lazy(() => import('./pages/employ/EmployPage'));
 const MemberPage = lazy(() => import('./pages/member/MemberPage'));
 const OccupationPage = lazy(() => import('./pages/occupation/OccupationPage'));
 const RecordPage = lazy(() => import('./pages/record/RecordPage'));
-const SchedulePage = lazy(() =>
-  import('./components/schedule/ScheduleListForm'),
-);
+const SchedulePage = lazy(() => import('./pages/schedule/SchedulePage'));
 
 const App = ({ history, match }) => {
   const dispatch = useDispatch();

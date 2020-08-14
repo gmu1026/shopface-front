@@ -24,6 +24,8 @@ const LoginForm = ({ history, match }) => {
         value,
       }),
     );
+
+    setError('');
   };
 
   const onSubmit = (e) => {

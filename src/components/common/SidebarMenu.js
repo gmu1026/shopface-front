@@ -20,22 +20,22 @@ const SidebarMenu = ({ user }) => {
   return (
     <List className={classes.appMenu} disablePadding>
       {user !== null && user.type === 'A' && (
-          <>
-            <ListItem button onClick={handleClick}>
-              <ListItemText primary="회원 관리"></ListItemText>
-              {open ? <IconExpandLess /> : <IconExpandMore />}
-            </ListItem>
-            <Collapse in={open} timeout="auto" unmountOnExit>
-              <Divider />
-              <List component="div" disablePadding>
-                <ListItem button className={classes.menuItem}>
-                  <ListItemText inset primary="" />
-                  <Link to="/member">회원 목록 </Link>
-                </ListItem>
-              </List>
-            </Collapse>
-          </>
-        )}
+        <>
+          <ListItem button onClick={handleClick}>
+            <ListItemText primary="회원 관리"></ListItemText>
+            {open ? <IconExpandLess /> : <IconExpandMore />}
+          </ListItem>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <Divider />
+            <List component="div" disablePadding>
+              <ListItem button className={classes.menuItem}>
+                <ListItemText inset primary="" />
+                <Link to="/member">회원 목록 </Link>
+              </ListItem>
+            </List>
+          </Collapse>
+        </>
+      )}
       <ListItem button onClick={handleClick}>
         <ListItemText primary="시간표 관리"></ListItemText>
         {open ? <IconExpandLess /> : <IconExpandMore />}
