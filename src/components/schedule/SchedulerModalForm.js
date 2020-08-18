@@ -16,19 +16,22 @@ const ErrorMessage = styled.div`
   margin-left: 1rem;
 `;
 
-const TimeTableModalForm = ({
+const SchedulerModalForm = ({
   show,
   closeModal,
   modalType,
   occupations,
   employs,
-  onSelectChange,
+  onChange,
   onTimeChange,
-  onTimetablePost,
+  onSchedulePost,
   error,
 }) => {
   const { RangePicker } = TimePicker;
-
+  let filterEmploys = null;
+  if (employs !== null && employs !== []) {
+    filterEmploys = employs.filter((employ) => employ.state === 'E');
+  }
   return (
     <>
       <Modal show={show} onHide={closeModal}>
@@ -48,23 +51,17 @@ const TimeTableModalForm = ({
                   as="select"
                   name="employNo"
                   className=" col-sm-5"
-                  onChange={onSelectChange}
+                  onChange={onChange}
                   //value={modalType === 'update' ? '최민영' : ''}
                 >
                   <option>근무자를 선택하세요</option>
-                  {/* 추후 조건 추가 */}
-                  {employs !== null &&
-                  employs.length > 0 &&
-                  employs.filter((employ) => employ.state === 'B').length >
-                    0 ? (
-                    employs.map((employ, index) => (
+                  {filterEmploys !== null &&
+                    filterEmploys !== [] &&
+                    filterEmploys.map((employ, index) => (
                       <option key={index} value={employ.no}>
                         {employ.name}
                       </option>
-                    ))
-                  ) : (
-                    <option>근무자를 등록해주세요</option>
-                  )}
+                    ))}
                 </Form.Control>
               </div>
             </div>
@@ -88,11 +85,11 @@ const TimeTableModalForm = ({
                   <Form.Control
                     as="select"
                     name="occupationNo"
-                    className=" col-sm-4"
-                    onChange={onSelectChange}
+                    className=" col-sm-5"
+                    onChange={onChange}
                     //value={modalType === 'post' ? occupations[0].name : ''}
                   >
-                    <option>업무를 선택하세요</option> {/* 추후 조건 추가 */}
+                    <option>업무를 선택하세요</option>
                     {occupations != null && occupations.length > 0 ? (
                       occupations.map((occupation, index) => (
                         <option key={index} value={occupation.no}>
@@ -109,7 +106,8 @@ const TimeTableModalForm = ({
                     name="color"
                     placeholder="업무"
                     className=" col-sm-4 ml-3"
-                    value={modalType === 'update' ? occupations[0].color : ''}
+                    onChange={onChange}
+                    //value={modalType === 'update' ? occupations[0].color : ''}
                     readOnly
                   />
                 </div>
@@ -120,7 +118,7 @@ const TimeTableModalForm = ({
         <ErrorMessage>{error}</ErrorMessage>
         <Modal.Footer>
           {modalType === 'post' ? (
-            <Button onClick={onTimetablePost}>시간표 등록</Button>
+            <Button onClick={onSchedulePost}>시간표 등록</Button>
           ) : (
             <>
               <Button>수정</Button>
@@ -133,4 +131,4 @@ const TimeTableModalForm = ({
   );
 };
 
-export default TimeTableModalForm;
+export default SchedulerModalForm;
