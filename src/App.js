@@ -127,13 +127,12 @@ const App = ({ history, match }) => {
                   <Route path="/member" component={MemberPage} />
                   <Route path="/timetable" component={IndexPage} />
                   {/* timetable Component */}
-                  <Route path="/" component={IndexPage} exact />
+                  <Route path="/" component={DashboardPage} exact />
                   <Route path="/employ" component={EmployPage} />
                   <Route path="/occupation" component={OccupationPage} />
                   <Route path="/record" component={RecordPage} />
                   <Route path="/schedule" component={SchedulePage} />
                   <Route path="/branch" component={BranchPage} />
-                  <Route path="/dashboard" component={DashboardPage} />
                 </Switch>
               </Suspense>
             </div>

@@ -55,7 +55,7 @@ const LoginForm = ({ history, match }) => {
 
   useEffect(() => {
     if (user !== null) {
-      history.push('/dashboard');
+      history.push('/');
     }
     dispatch(initialize());
   }, [history, user]);
