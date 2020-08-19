@@ -3,7 +3,6 @@ import ScheduleListContainer from '../../containers/schedule/ScheduleListContain
 const SchedulePage = () => {
   return (
     <div>
-      <h1> 스케줄</h1>
       <ScheduleListContainer />
     </div>
   );

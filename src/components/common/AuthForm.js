@@ -91,8 +91,7 @@ const AuthForm = ({ type, onChange, onSubmit, error }) => {
         <Footer>
           {type === 'login' && (
             <div>
-              <Link to="/">아이디 찾기</Link> {/*TODO 추후 링크 path 변경 */}
-              <Link to="/">비밀번호 찾기</Link>
+              <Link to="/">비밀번호 재발급</Link>
             </div>
           )}
         </Footer>

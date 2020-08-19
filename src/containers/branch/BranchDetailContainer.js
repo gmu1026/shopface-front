@@ -40,7 +40,7 @@ const BranchDetailContainer = ({ match, history }) => {
 
     value = data.zonecode;
     setZoneCode(value);
-    dispatch(changeInput({ key: 'zoneCode', value }));
+    dispatch(changeInput({ key: 'zipCode', value }));
 
     closeModal();
   };
@@ -82,7 +82,10 @@ const BranchDetailContainer = ({ match, history }) => {
     formData.append('address', data.address);
     formData.append('detailAddress', data.detailAddress);
     formData.append('zipCode', data.zipCode);
-    formData.append('businessLicenseImage', imgFile);
+
+    if (imgFile !== null) {
+      formData.append('businessLicenseImage', imgFile);
+    }
 
     const no = match.params.no;
     dispatch(branchUpdate({ no, data: formData }));

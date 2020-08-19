@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from '../common/Button';
 import { Link, withRouter } from 'react-router-dom';
-import Modal from '../../../node_modules/react-bootstrap/esm/Modal';
+import { Modal } from 'rsuite';
 const EmployTableBody = ({ match, employ }) => {
   return (
     <>
@@ -153,6 +153,7 @@ const EmployListForm = ({
                       <Modal.Header closeButton>
                         <Modal.Title>근무자 초대하기</Modal.Title>
                       </Modal.Header>
+                      <hr />
                       <Modal.Body>
                         <input type="hidden" />
                         이름
@@ -175,6 +176,7 @@ const EmployListForm = ({
                           onChange={onChange}
                         />
                       </Modal.Body>
+                      <hr />
                       <Modal.Footer>
                         <Button
                           type="button"
