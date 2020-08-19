@@ -40,8 +40,8 @@ const SidebarMenu = ({ user }) => {
             title="스케줄 관리"
             icon={<Icon icon="calendar" />}
           >
-            <Dropdown.Item eventKey="3-1" href="/schedule">
-              전체 스케줄 관리
+            <Dropdown.Item eventKey="3-1">
+              <Link to="/schedule">전체 스케줄 관리</Link>
             </Dropdown.Item>
             <Dropdown.Item eventKey="3-2">나의 스케줄 관리</Dropdown.Item>
           </Dropdown>

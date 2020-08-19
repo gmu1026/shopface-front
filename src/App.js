@@ -7,7 +7,8 @@ import client from './lib/api/client';
 import { checkExpire } from './lib/api/common/authAPI';
 import { getBranchList } from './modules/branch/branchList';
 import { logout } from './modules/common/auth';
-import DashboardPage from './components/dashboard/BusinessDashboardForm';
+import dashboard from './modules/dashboard/dashboard';
+//import DashboardPage from './components/dashboard/BusinessDashboardForm'
 
 const LoginPage = lazy(() => import('./pages/common/LoginPage'));
 const CertCodePage = lazy(() => import('./pages/common/CertCodePage'));
@@ -17,8 +18,12 @@ const EmployPage = lazy(() => import('./pages/employ/EmployPage'));
 const MemberPage = lazy(() => import('./pages/member/MemberPage'));
 const OccupationPage = lazy(() => import('./pages/occupation/OccupationPage'));
 const RecordPage = lazy(() => import('./pages/record/RecordPage'));
+
 const SchedulePage = lazy(() =>
-  import('./components/schedule/ScheduleListForm'),
+  import('./containers/schedule/ScheduleListContainer'),
+);
+const DashboardPage = lazy(() =>
+  import('./components/dashboard/BusinessDashboardForm'),
 );
 
 const App = ({ history, match }) => {
