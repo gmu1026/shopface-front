@@ -19,6 +19,15 @@ const EmployTableBody = ({ match, employ }) => {
             ? '합류'
             : '비활성화'}
         </td>
+        {/* <td>
+          {employ.state === 'D' ? (
+            <Button className="btn btn-primary mr-1 ml-1" onClick={onInvite}>
+              다시 초대하기
+            </Button>
+          ) : (
+            ''
+          )}
+        </td> */}
       </tr>
     </>
   );
@@ -38,6 +47,7 @@ const EmployListForm = ({
   filterEmploys,
   match,
   employFilt,
+  onInvite,
 }) => {
   return (
     <div className="container-fluid p-0">

@@ -124,10 +124,10 @@ const EmployListContainer = ({ history, match }) => {
     }
   }, [dispatch, selectedBranch, user]);
 
-  useEffect(() => {
-    const employsFilter = employs.filter((employ) => employ.state !== 'D');
-    setEmployFilt(employsFilter);
-  }, [dispatch, employs, selectedBranch]);
+  // useEffect(() => {
+  //   const employsFilter = employs.filter((employ) => employ.state !== 'D');
+  //   setEmployFilt(employsFilter);
+  // }, [dispatch, employs, selectedBranch]);
 
   return (
     <EmployListForm

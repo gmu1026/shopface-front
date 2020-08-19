@@ -16,7 +16,10 @@ import memberList, { memberSaga } from './member/memberList';
 import occupationSelect from './occupation/occupationSelect';
 import recordList, { recordSaga } from './record/recordList';
 import timetableList, { timetableSaga } from './timetable/timetableList';
-
+import dashboard, {
+  businessDashboardSaga,
+  employDashboardSaga,
+} from './dashboard/dashboard';
 const rootReducer = combineReducers({
   auth,
   certCode,
@@ -34,6 +37,7 @@ const rootReducer = combineReducers({
   branchSelect,
   occupationSelect,
   timetableList,
+  dashboard,
 });
 
 export function* rootSaga() {
@@ -51,6 +55,8 @@ export function* rootSaga() {
     employDetailSaga(),
     memberDetailSaga(),
     timetableSaga(),
+    businessDashboardSaga(),
+    employDashboardSaga(),
   ]);
 }
 

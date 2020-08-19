@@ -13,7 +13,7 @@ const MemberDetailForm = ({
   closeModal,
   openModal,
   show,
-  zoneCode,
+  zipCode,
   address,
 }) => {
   if (member === null) {

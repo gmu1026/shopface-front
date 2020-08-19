@@ -2,7 +2,6 @@ import React from 'react';
 import Button from '../common/Button';
 
 const EmployDetailForm = ({
-  employ,
   employs,
   onSubmit,
   onChange,
@@ -111,12 +110,16 @@ const EmployDetailForm = ({
                             취소
                           </Button>
 
-                          <Button
-                            className="btn btn-primary mr-1 ml-1"
-                            onClick={onInvite}
-                          >
-                            다시 초대하기
-                          </Button>
+                          {employs.state === 'D' ? (
+                            <Button
+                              className="btn btn-primary mr-1 ml-1"
+                              onClick={onInvite}
+                            >
+                              다시 초대하기
+                            </Button>
+                          ) : (
+                            ''
+                          )}
                         </div>
                       </div>
                     </form>

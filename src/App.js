@@ -24,10 +24,8 @@ const SchedulePage = lazy(() =>
   import('./components/schedule/ScheduleListForm'),
 );
 const DashboardPage = lazy(() =>
-  import('./components/dashboard/DashboardForm'),
+  import('./components/dashboard/BusinessDashboardForm'),
 );
-
-// const SchedulePage = lazy(() => import('./pages/schedule/SchedulePage'));
 
 const App = ({ history, match }) => {
   const dispatch = useDispatch();
