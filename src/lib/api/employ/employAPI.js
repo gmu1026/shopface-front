@@ -20,7 +20,12 @@ export const updateEmploy = async ({ no, data }) => {
   return response;
 };
 
-export const deleteEmploy = async ({ no }) => {
-  const response = await client.delete(`employ/${no}`);
+export const disableEmploy = async ({ no }) => {
+  const response = await client.patch(`employ/${no}`);
+  return response;
+};
+
+export const inviteEmploy = async ({ no }) => {
+  const response = await client.put(`/employ/${no}/invite`);
   return response;
 };

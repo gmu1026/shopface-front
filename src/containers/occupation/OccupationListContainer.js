@@ -132,22 +132,19 @@ const OccupationListContainer = ({ history }) => {
 
   useEffect(() => {
     if (updateResult === 'OK') {
-      alert('수정되었습니다');
+      // alert('수정되었습니다');
       dispatch(initializeForm());
       dispatch(getOccupationList({ selectedBranch }));
     }
   }, [updateResult, dispatch, selectedBranch]);
 
-  useEffect(
-    (e) => {
-      if (deleteResult === 'OK') {
-        alert('삭제되었습니다');
-        dispatch(initializeForm());
-        dispatch(getOccupationList({ selectedBranch }));
-      }
-    },
-    [deleteResult, dispatch, selectedBranch],
-  );
+  useEffect(() => {
+    if (deleteResult === 'OK') {
+      // alert('삭제되었습니다');
+      dispatch(initializeForm());
+      dispatch(getOccupationList({ selectedBranch }));
+    }
+  }, [deleteResult, dispatch, selectedBranch]);
 
   return (
     <OccupationListForm
