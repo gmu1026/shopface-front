@@ -11,11 +11,11 @@ export const getSchedule = async ({ no }) => {
 };
 
 export const postSchedule = async ({ data }) => {
-  const response = await client.post('/schedule/', data);
+  const response = await client.post('/schedule', data);
   return response;
 };
 
 export const updateSchedule = async () => {
-  const response = await client.put('/schedule/');
+  const response = await client.put('/schedule');
   return response;
 };

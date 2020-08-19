@@ -8,14 +8,16 @@ import { withRouter } from 'react-router-dom';
 import ScheduleListForm from '../../components/schedule/ScheduleListForm';
 import SchedulerModalForm from '../../components/schedule/SchedulerModalForm';
 import { useSelector, useDispatch } from 'react-redux';
-import { checkExpire, logout } from '../../lib/api/common/authAPI';
+import { checkExpire } from '../../lib/api/common/authAPI';
 import {
   getScheduleList,
   changeInput,
   initializeForm,
+  postSchedule,
 } from '../../modules/schedule/scheduleList';
 import { getOccupationList } from '../../modules/occupation/occupation';
 import { getEmployList } from '../../modules/employ/employList';
+import { logout } from '../../modules/common/auth';
 
 const ScheduleListContainer = ({ history }) => {
   moment.locale('en');
@@ -52,7 +54,8 @@ const ScheduleListContainer = ({ history }) => {
   const [schedulerData, setSchedulerData] = useState(
     new SchedulerData(new moment().format(DATE_FORMAT), ViewTypes.Week),
   );
-  const [targetTime, settargetTime] = useState(null);
+  const [filterEvents, setFilterEvents] = useState(null);
+  const [targetTime, setTargetTime] = useState(null);
   const [modalType, setModalType] = useState('');
   const [error, setError] = useState('');
   const [show, setShow] = useState(false);
@@ -101,7 +104,6 @@ const ScheduleListContainer = ({ history }) => {
   const prevClick = (schedulerData) => {
     schedulerData.prev();
     schedulerData.setEvents(events);
-    console.log(schedulerData);
     setSchedulerData(schedulerData);
     history.push('/schedule');
   };
@@ -125,7 +127,6 @@ const ScheduleListContainer = ({ history }) => {
   };
 
   const onSelectDate = (schedulerData, date) => {
-    console.log('onSelectDate');
     schedulerData.setDate(date);
     schedulerData.setEvents(schedulerData.events);
     setSchedulerData(schedulerData);
@@ -183,7 +184,7 @@ const ScheduleListContainer = ({ history }) => {
     type,
     item,
   ) => {
-    settargetTime(start);
+    setTargetTime(start);
     const today = new moment().format(DATE_FORMAT);
     if (start < today) {
       alert('시간표를 등록할 수 없습니다.');
@@ -239,7 +240,6 @@ const ScheduleListContainer = ({ history }) => {
   const onTimeChange = (time, timeString) => {
     if (timeString !== null) {
       const startTime = timeString[0];
-      const endTime = timeString[1];
       const today = new Date().getDate();
       const clickDate = new Date(targetTime).getDate();
       if (startTime < moment().format('HH:mm') && today === clickDate) {
@@ -247,8 +247,18 @@ const ScheduleListContainer = ({ history }) => {
 
         return;
       }
-      dispatch(changeInput({ key: 'workStartTime', value: startTime }));
-      dispatch(changeInput({ key: 'workEndTime', value: endTime }));
+      dispatch(
+        changeInput({
+          key: 'workStartTime',
+          value: time[0].format('YYYY-MM-DDTHH:mm:ss'),
+        }),
+      );
+      dispatch(
+        changeInput({
+          key: 'workEndTime',
+          value: time[1].format('YYYY-MM-DDTHH:mm:ss'),
+        }),
+      );
 
       setError('');
     }
@@ -269,7 +279,7 @@ const ScheduleListContainer = ({ history }) => {
       return;
     }
 
-    //dispatch(postSchedule())
+    dispatch(postSchedule({ data }));
     initializeForm('post');
     closeModal();
   };
@@ -287,8 +297,9 @@ const ScheduleListContainer = ({ history }) => {
       schedulerData.setResources([]);
     }
 
+    let scheduleEvents = null;
     if (schedules !== null) {
-      const scheduleEvents = schedules.map((schedule) => ({
+      scheduleEvents = schedules.map((schedule) => ({
         id: schedule.no,
         start: schedule.workStartTime,
         end: schedule.workEndTime,
@@ -300,7 +311,8 @@ const ScheduleListContainer = ({ history }) => {
     } else {
       schedulerData.setEvents([]);
     }
-  }, [employs, schedulerData, schedules, events]);
+    setFilterEvents(scheduleEvents);
+  }, [schedulerData, schedules, events]);
 
   useEffect(() => {
     if (user !== null) {

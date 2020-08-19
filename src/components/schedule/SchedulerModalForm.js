@@ -1,9 +1,7 @@
 import React from 'react';
-import Modal from '../../../node_modules/react-bootstrap/esm/Modal';
 import Button from '../common/Button';
 import { TimePicker } from 'antd';
-import moment from 'moment';
-
+import { Modal } from 'rsuite';
 import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 import { Form } from '../../../node_modules/react-bootstrap/esm/index';
 import styled from 'styled-components';
@@ -40,17 +38,18 @@ const SchedulerModalForm = ({
             {modalType === 'post' ? '시간표 등록' : '시간표 수정'}
           </Modal.Title>
         </Modal.Header>
+        <hr />
         <Modal.Body>
           <form>
-            <div className="form-group row">
+            <div className="form-group row col-sm-10">
               <label className="col-form-label col-sm-2 text-sm-right">
                 이름
               </label>
-              <div className="col-sm-10">
+              <div className="col-sm-9">
                 <Form.Control
                   as="select"
                   name="employNo"
-                  className=" col-sm-5"
+                  className=" col-sm-9"
                   onChange={onChange}
                   //value={modalType === 'update' ? '최민영' : ''}
                 >
@@ -65,27 +64,27 @@ const SchedulerModalForm = ({
                 </Form.Control>
               </div>
             </div>
-            <div className="form-group row">
+            <div className="form-group row col-sm-10">
               <label className="col-form-label col-sm-2 text-sm-right">
                 시간
               </label>
-              <div className="col-sm-10">
+              <div className="col-sm-9">
                 <RangePicker
                   format={'HH:mm'}
                   onChange={onTimeChange}
                 ></RangePicker>
               </div>
             </div>
-            <div className="form-group row">
+            <div className="form-group row col-sm-10">
               <label className="col-form-label col-sm-2 text-sm-right">
                 업무
               </label>
-              <div className="col-sm-10">
+              <div className="col-sm-9">
                 <div className="row m-1">
                   <Form.Control
                     as="select"
                     name="occupationNo"
-                    className=" col-sm-5"
+                    className=" col-sm-7"
                     onChange={onChange}
                     //value={modalType === 'post' ? occupations[0].name : ''}
                   >
@@ -116,6 +115,7 @@ const SchedulerModalForm = ({
           </form>
         </Modal.Body>
         <ErrorMessage>{error}</ErrorMessage>
+        <hr />
         <Modal.Footer>
           {modalType === 'post' ? (
             <Button onClick={onSchedulePost}>시간표 등록</Button>

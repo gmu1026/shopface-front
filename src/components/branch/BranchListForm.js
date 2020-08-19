@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from '../common/Button';
 import { Link, withRouter } from 'react-router-dom';
-import Modal from '../../../node_modules/react-bootstrap/esm/Modal';
+import { Modal } from 'rsuite';
 import { parseString } from '../../../node_modules/rrule/dist/esm/src/parsestring';
 
 const BranchTableBody = ({ branch, match, modal, onModalBtn, closeModal }) => {
@@ -32,11 +32,11 @@ const BranchTableBody = ({ branch, match, modal, onModalBtn, closeModal }) => {
       <Modal
         show={modal.targetModal === JSON.stringify(branch.no) && modal.show}
         onHide={closeModal}
-        style={{ width: '100%', height: '100%' }}
       >
         <Modal.Header closeButton>
           <Modal.Title>사업자 등록증 이미지</Modal.Title>
         </Modal.Header>
+        <hr />
         {branch.businessLicensePath !== null && (
           <Modal.Body>
             <img
@@ -46,6 +46,7 @@ const BranchTableBody = ({ branch, match, modal, onModalBtn, closeModal }) => {
             />
           </Modal.Body>
         )}
+        <hr />
         <Modal.Footer>
           <Button onClick={closeModal}>Close</Button>
         </Modal.Footer>
