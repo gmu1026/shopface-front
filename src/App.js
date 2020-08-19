@@ -1,5 +1,3 @@
-import Drawer from '@material-ui/core/Drawer';
-import { makeStyles } from '@material-ui/core/styles';
 import React, { lazy, Suspense, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, Switch, withRouter } from 'react-router-dom';
@@ -9,7 +7,6 @@ import client from './lib/api/client';
 import { checkExpire } from './lib/api/common/authAPI';
 import { getBranchList } from './modules/branch/branchList';
 import { logout } from './modules/common/auth';
-import IndexPage from './pages/IndexPage';
 
 const LoginPage = lazy(() => import('./pages/common/LoginPage'));
 const CertCodePage = lazy(() => import('./pages/common/CertCodePage'));
@@ -28,34 +25,6 @@ const App = ({ history, match }) => {
     branchs: branchList.branchs,
   }));
 
-  const useStyles = makeStyles((theme) => ({
-    root: {
-      display: 'flex',
-      width: '15rem',
-    },
-    drawerPaper: {
-      position: 'fixed',
-      width: '16rem',
-      paddingTop: theme.spacing(4),
-      paddingBottom: theme.spacing(4),
-      paddingLeft: '1.5rem',
-      background: '#354052',
-      color: '#fff',
-      height: '100vh',
-    },
-    content: {
-      position: 'relative',
-      left: '100px',
-      flexGrow: 1,
-      height: '100vh',
-      overflow: 'auto',
-    },
-    container: {
-      paddingTop: theme.spacing(4),
-      paddingBottom: theme.spacing(4),
-    },
-  }));
-  const classes = useStyles();
   const onLogout = () => {
     dispatch(logout());
   };
@@ -73,6 +42,7 @@ const App = ({ history, match }) => {
     } else {
       if (
         window.location.pathname === '/certcode' ||
+        //window.location.pathname === '/forgotpassword' ||
         window.location.pathname === '/register'
       ) {
         return;
@@ -100,28 +70,20 @@ const App = ({ history, match }) => {
       <>
         <div className="row">
           <div>
-            <Drawer
-              variant="permanent"
-              classes={{ paper: classes.drawerPaper }}
-            >
-              <SideBarMenu user={user} />
-            </Drawer>
+            <SideBarMenu user={user} />
           </div>
 
-          <div className="col p-0" style={{ marginLeft: '17rem' }}>
+          <div className="col p-0" style={{ marginLeft: '15rem' }}>
             <SidebarHeaderContainer
               onLogout={onLogout}
               branchs={branchs}
               user={user}
             />
-
             <div className="content">
               <Suspense fallback={<div>Loading...</div>}>
                 <Switch>
                   <Route path="/member" component={MemberPage} />
-                  <Route path="/timetable" component={IndexPage} />
-                  {/* timetable Component */}
-                  <Route path="/" component={IndexPage} exact />
+                  <Route path="/" component={SchedulePage} exact />
                   <Route path="/employ" component={EmployPage} />
                   <Route path="/occupation" component={OccupationPage} />
                   <Route path="/record" component={RecordPage} />
