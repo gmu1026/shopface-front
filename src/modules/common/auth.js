@@ -43,13 +43,17 @@ export const login = createAction(LOGIN, ({ id, password }) => ({
   password,
 }));
 export const logout = createAction(LOGOUT);
-export const registerMember = createAction(REGISTER_MEMBER, ({ member }) => ({
-  member,
-}));
+export const registerMember = createAction(
+  REGISTER_MEMBER,
+  ({ member, certCode }) => ({
+    member,
+    certCode,
+  }),
+);
 
 const loginSaga = createRequestSaga(LOGIN, authAPI.login);
 const logoutSaga = createRequestSaga(LOGOUT, authAPI.logout);
-const registerSaga = createRequestSaga(REGISTER_MEMBER, authAPI.singUp);
+const registerSaga = createRequestSaga(REGISTER_MEMBER, authAPI.signUp);
 
 export function* authSaga() {
   yield takeLatest(LOGIN, loginSaga);
@@ -69,7 +73,7 @@ const initialState = {
     phone: '',
     email: '',
   },
-  isRegister: null,
+  registerResult: null,
   user: null,
   authError: null,
 };
@@ -83,6 +87,7 @@ const auth = handleActions(
     [INITIALIZE_FORM]: (state, { payload: initForm }) => ({
       ...state,
       [initForm]: initialState[initForm],
+      registerResult: null,
       authError: null,
     }),
     [TEMP_SET_USER]: (state, { payload: { user } }) => ({
@@ -107,15 +112,15 @@ const auth = handleActions(
       ...state,
       authError: e,
     }),
-    [REGISTER_MEMBER_SUCCESS]: (state, { payload: { status } }) => ({
+    [REGISTER_MEMBER_SUCCESS]: (state, { payload: { code } }) => ({
       ...state,
-      isRegister: status,
+      registerResult: code,
       authError: null,
     }),
-    [REGISTER_MEMBER_FAILURE]: (state, { payload: error }) => ({
+    [REGISTER_MEMBER_FAILURE]: (state, { payload: { message } }) => ({
       ...state,
-      isRegister: null,
-      authError: error,
+      registerResult: null,
+      authError: message,
     }),
   },
   initialState,

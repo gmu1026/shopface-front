@@ -6,33 +6,33 @@ import { takeLatest } from 'redux-saga/effects';
 import * as occupationAPI from '../../lib/api/occupation/occupationAPI';
 import produce from 'immer';
 
-const INITIALIZE_FORM = 'occupationList/INITIALIZE_FORM'; //post 시 초기
-const CHANGE_INPUT = 'occupationList/CHANGE_INPUT';
-const INITIALIZE_RESULT = 'occupationList/INITIALIZE_RESULT'; //update시 초기
+const INITIALIZE_FORM = 'occupation/INITIALIZE_FORM'; //post 시 초기
+const CHANGE_INPUT = 'occupation/CHANGE_INPUT';
+const UPDATE_CHANGE = 'occupation/UPDATE_CHANGE';
 
 const [
   OCCUPATION_LIST,
   OCCUPATION_LIST_SUCCESS,
   OCCUPATION_LIST_FAILURE,
-] = createRequestActionTypes('occupationList/occupation_LIST');
+] = createRequestActionTypes('occupation/occupation_LIST');
 
 const [
   OCCUPATION_POST,
   OCCUPATION_POST_SUCCESS,
   OCCUPATION_POST_FAILURE,
-] = createRequestActionTypes('occupationList/OCCUPATION_POST');
+] = createRequestActionTypes('occupation/OCCUPATION_POST');
 
 const [
   OCCUPATION_UPDATE,
   OCCUPATION_UPDATE_SUCCESS,
   OCCUPATION_UPDATE_FAILURE,
-] = createRequestActionTypes('occupationList/OCCUPATION_UPDATE');
+] = createRequestActionTypes('occupation/OCCUPATION_UPDATE');
 
 const [
   OCCUPATION_DELETE,
   OCCUPATION_DELETE_SUCCESS,
   OCCUPATION_DELETE_FAILURE,
-] = createRequestActionTypes('occupationList/OCCUPATION_DELETE');
+] = createRequestActionTypes('occupation/OCCUPATION_DELETE');
 
 export const getOccupationList = createAction(
   OCCUPATION_LIST,
@@ -44,15 +44,6 @@ const occupationListSaga = createRequestSaga(
   occupationAPI.getOccupationList,
 );
 
-export function* occupationSaga() {
-  yield takeLatest(OCCUPATION_LIST, occupationListSaga);
-}
-
-export const changeInput = createAction(CHANGE_INPUT, ({ key, value }) => ({
-  key,
-  value,
-}));
-
 export const postOccupation = createAction(OCCUPATION_POST, ({ post }) => ({
   post,
 }));
@@ -62,35 +53,30 @@ export const initializeForm = createAction(
   (initForm) => initForm,
 );
 
-const initialState = {
-  occupations: null,
-  post: {
-    name: '',
-    color: '#00B050',
-  },
+export const changeInput = createAction(CHANGE_INPUT, ({ key, value }) => ({
+  key,
+  value,
+}));
 
-  updateOccupations: {
-    name: '',
-    color: '#00B050',
-  },
-  occupationResult: null,
-  occupationError: null,
-};
+export const updateChange = createAction(
+  UPDATE_CHANGE,
+  ({ index, key, value }) => ({
+    index,
+    key,
+    value,
+  }),
+);
 
 export const postSaga = createRequestSaga(
   OCCUPATION_POST,
   occupationAPI.postOccupation,
 );
-export function* occupationPostSaga() {
-  yield takeLatest(OCCUPATION_POST, postSaga);
-}
 
-export const initializeResult = createAction(INITIALIZE_RESULT);
 export const updateOccupation = createAction(
   OCCUPATION_UPDATE,
-  ({ no, data }) => ({
+  ({ no, occupation }) => ({
     no,
-    data,
+    occupation,
   }),
 );
 
@@ -98,10 +84,6 @@ export const occupationupdateSaga = createRequestSaga(
   OCCUPATION_UPDATE,
   occupationAPI.updateOccupation,
 );
-
-export function* occupationUpdateSaga() {
-  yield takeLatest(OCCUPATION_UPDATE, occupationupdateSaga);
-}
 
 export const deleteOccupation = createAction(OCCUPATION_DELETE, ({ no }) => ({
   no,
@@ -112,11 +94,30 @@ export const deleteOccupationSaga = createRequestSaga(
   occupationAPI.deleteOccupation,
 );
 
-export function* occupationDeleteSaga() {
+export function* occupationSaga() {
+  yield takeLatest(OCCUPATION_LIST, occupationListSaga);
+  yield takeLatest(OCCUPATION_POST, postSaga);
+  yield takeLatest(OCCUPATION_UPDATE, occupationupdateSaga);
   yield takeLatest(OCCUPATION_DELETE, deleteOccupationSaga);
 }
 
-const occupationList = handleActions(
+const initialState = {
+  occupations: null,
+  occupationResult: null,
+  occupationError: null,
+  postResult: null,
+  postError: null,
+  updateResult: null,
+  updateError: null,
+  deleteResult: null,
+  deleteError: null,
+  post: {
+    name: '',
+    color: '#00B050',
+  },
+};
+
+export const occupation = handleActions(
   {
     [OCCUPATION_LIST_SUCCESS]: (state, { payload: { data } }) => ({
       ...state,
@@ -132,46 +133,47 @@ const occupationList = handleActions(
       produce(state, (draft) => {
         draft['post'][key] = value;
       }),
+
+    [UPDATE_CHANGE]: (state, { payload: { index, key, value } }) =>
+      produce(state, (draft) => {
+        draft['occupations'][index][key] = value;
+      }),
     [INITIALIZE_FORM]: (state) => ({
       ...state,
       post: initialState['post'],
-      occupationResult: null,
+      postResult: null,
     }),
-    [OCCUPATION_POST_SUCCESS]: (state, { payload: { status } }) => ({
+    [OCCUPATION_POST_SUCCESS]: (state, { payload: { code } }) => ({
       ...state,
-      occupationResult: status,
-      occupationError: null,
+      postResult: code,
+      postError: null,
     }),
     [OCCUPATION_POST_FAILURE]: (state, { payload: e }) => ({
       ...state,
-      occupationError: e,
+      postError: e,
     }),
 
-    [OCCUPATION_DELETE_SUCCESS]: (state, { payload: { status } }) => ({
+    [OCCUPATION_DELETE_SUCCESS]: (state, { payload: { code } }) => ({
       ...state,
-      occupationResult: status,
-      occupationError: null,
+      deleteResult: code,
+      deleteError: null,
     }),
     [OCCUPATION_DELETE_FAILURE]: (state, { payload: { e } }) => ({
       ...state,
-      occupationError: e,
+      deleteError: e,
     }),
 
-    [INITIALIZE_RESULT]: (state) => ({
+    [OCCUPATION_UPDATE_SUCCESS]: (state, { payload: { code } }) => ({
       ...state,
-      occupationResult: null,
+      updateResult: code,
+      updateError: null,
     }),
-    [OCCUPATION_UPDATE_SUCCESS]: (state, { payload: { status } }) => ({
+    [OCCUPATION_UPDATE_FAILURE]: (state, { payload: { message } }) => ({
       ...state,
-      occupationResult: status,
-      occupationError: null,
-    }),
-    [OCCUPATION_UPDATE_FAILURE]: (state, { payload: { e } }) => ({
-      ...state,
-      occupationError: e,
+      updateError: message,
     }),
   },
   initialState,
 );
 
-export default occupationList;
+export default occupation;

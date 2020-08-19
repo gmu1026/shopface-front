@@ -1,13 +1,13 @@
 import React from 'react';
 import Button from '../common/Button';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
-const MemberTableBody = ({ member }) => {
+const MemberTableBody = ({ member, match }) => {
   return (
     <>
       <tr role="row">
         <td>
-          <Link to={`/member/${member.id}`}>{member.name}</Link>
+          <Link to={`${match.url}/${member.id}`}>{member.name}</Link>
         </td>
         <td>{member.phone}</td>
         <td>{member.email}</td>
@@ -27,6 +27,7 @@ const MemberListForm = ({
   onKeyPress,
   filterMembers,
   searchRef,
+  match,
 }) => {
   return (
     <div className="container-fluid p-0">
@@ -92,6 +93,7 @@ const MemberListForm = ({
                             <MemberTableBody
                               key={index}
                               member={member}
+                              match={match}
                             ></MemberTableBody>
                           ))
                         ) : (
@@ -114,4 +116,4 @@ const MemberListForm = ({
   );
 };
 
-export default MemberListForm;
+export default withRouter(MemberListForm);

@@ -4,13 +4,22 @@ export const getMemberList = async () => {
   const response = await client.get('/member');
   return response;
 };
-export const getMember = async ({ no }) => {
-  // TODO no -> id로 수정
-  const response = await client.get(`/member/${no}`);
+export const getMember = async ({ id }) => {
+  const response = await client.get(`/member/${id}`);
   return response;
 };
 
 export const postMember = ({ data }) => {
   const response = client.post('/member', { data });
-  console.log(response);
+  return response;
+};
+
+export const putMember = async ({ id, data }) => {
+  const response = await client.put(`/member/${id}`, data);
+  return response;
+};
+
+export const deleteMember = async ({ id }) => {
+  const response = await client.delete(`/member/${id}`);
+  return response;
 };

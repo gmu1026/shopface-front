@@ -7,10 +7,13 @@ export const login = async ({ id, password }) => {
     const name = user.signInUserSession.idToken.payload.email;
     const jwt = user.signInUserSession.idToken.jwtToken;
 
-    return { user: { name, jwt } };
-  } catch (error) {
-    console.log(error.message);
+    const response = await client.get(`/member/${name}`);
+    const type = response.data.data.type;
 
+    localStorage.setItem('user', JSON.stringify({ name, jwt, type }));
+
+    return { data: { user: { name, jwt, type } } };
+  } catch (error) {
     throw new Error(error.message);
   }
 };
@@ -27,18 +30,43 @@ export const logout = async () => {
   }
 };
 
-export const singUp = async ({ member }) => {
+export const signUp = async ({ member, certCode }) => {
+  console.log(certCode);
   const response = await Auth.signUp({
     username: member.id,
     password: member.password,
+    attributes: {
+      name: member.name,
+      phone_number: `+82${member.phone}`,
+    },
   })
-    .then(() => {
-      const response = client.post('/member', member);
+    .then(async () => {
+      const response = await client
+        .post('/member', {
+          id: member.id,
+          password: member.password,
+          name: member.name,
+          phone: member.phone,
+          email: member.email,
+          certCode: certCode,
+        })
+        .then(async (resolve) => {
+          if (certCode !== null && certCode !== '') {
+            return await client.patch('/employ', {
+              memberId: member.id,
+              certCode: certCode,
+            });
+          }
+          return resolve;
+        });
+
       return response;
     })
     .catch((e) => {
       throw new Error(e.code);
     });
+
+  return response;
 };
 
 export const checkExpire = async () => {
@@ -58,10 +86,16 @@ export const checkExpire = async () => {
   return isExpired;
 };
 
-export const checkAuthcode = () => {
-  //TODO
-  // 인증 요청 api 구현
-  const response = { status: 200 };
+export const patchEmployByCertCode = async ({ memberId, certCode }) => {
+  const response = await client.patch('/employ', {
+    memberId,
+    certCode,
+  });
   return response;
-  //return response;
+};
+
+export const checkCertCode = async ({ certCode }) => {
+  console.log(certCode);
+  const response = await client.get(`/employ/check?certcode=${certCode}`);
+  return response;
 };

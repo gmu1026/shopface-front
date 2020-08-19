@@ -1,25 +1,30 @@
-import Drawer from '@material-ui/core/Drawer';
-import { makeStyles } from '@material-ui/core/styles';
-import React, { useEffect } from 'react';
+import React, { lazy, Suspense, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Route, withRouter } from 'react-router-dom';
-import SidebarHeader from '../src/components/common/SidebarHeader';
+import { Route, Switch, withRouter } from 'react-router-dom';
 import SideBarMenu from '../src/components/common/SidebarMenu';
+import SidebarHeaderContainer from './containers/common/SidebarHeaderContainer';
 import client from './lib/api/client';
 import { checkExpire } from './lib/api/common/authAPI';
-import { logout } from './modules/common/auth';
-import BranchPage from './pages/branch/BranchPage';
-import LoginPage from './pages/common/LoginPage';
-import RegisterPage from './pages/common/RegisterPage';
-import EmployPage from './pages/employ/EmployPage';
-import IndexPage from './pages/IndexPage';
-import MemberPage from './pages/member/MemberPage';
-import OccupationPage from './pages/occupation/OccupationPage';
-import RecordPage from './pages/record/RecordPage';
-import SchedulePage from './pages/schedule/SchedulePage';
-import TimetablePage from './pages/timetable/TimetablePage';
 import { getBranchList } from './modules/branch/branchList';
-import AuthCodePage from './pages/common/AuthCodePage';
+import { logout } from './modules/common/auth';
+import dashboard from './modules/dashboard/dashboard';
+//import DashboardPage from './components/dashboard/BusinessDashboardForm'
+
+const LoginPage = lazy(() => import('./pages/common/LoginPage'));
+const CertCodePage = lazy(() => import('./pages/common/CertCodePage'));
+const BranchPage = lazy(() => import('./pages/branch/BranchPage'));
+const RegisterPage = lazy(() => import('./pages/common/RegisterPage'));
+const EmployPage = lazy(() => import('./pages/employ/EmployPage'));
+const MemberPage = lazy(() => import('./pages/member/MemberPage'));
+const OccupationPage = lazy(() => import('./pages/occupation/OccupationPage'));
+const RecordPage = lazy(() => import('./pages/record/RecordPage'));
+
+const SchedulePage = lazy(() =>
+  import('./containers/schedule/ScheduleListContainer'),
+);
+const DashboardPage = lazy(() =>
+  import('./components/dashboard/BusinessDashboardForm'),
+);
 
 const App = ({ history, match }) => {
   const dispatch = useDispatch();
@@ -28,35 +33,6 @@ const App = ({ history, match }) => {
     branchs: branchList.branchs,
   }));
 
-  const useStyles = makeStyles((theme) => ({
-    root: {
-      display: 'flex',
-      width: '15.5rem',
-    },
-    drawerPaper: {
-      position: 'fixed',
-      // whiteSpace: 'nowrap',
-      width: '17rem',
-      paddingTop: theme.spacing(4),
-      paddingBottom: theme.spacing(4),
-      paddingLeft: '1.5rem',
-      background: '#354052',
-      color: '#fff',
-      height: '100vh',
-    },
-    content: {
-      position: 'relative',
-      left: '100px',
-      flexGrow: 1,
-      height: '100vh',
-      overflow: 'auto',
-    },
-    container: {
-      paddingTop: theme.spacing(4),
-      paddingBottom: theme.spacing(4),
-    },
-  }));
-  const classes = useStyles();
   const onLogout = () => {
     dispatch(logout());
   };
@@ -69,62 +45,60 @@ const App = ({ history, match }) => {
           dispatch(logout());
         }
       });
-
       const { name } = user;
       dispatch(getBranchList({ name }));
     } else {
       if (
-        window.location.pathname === '/register/employ' ||
-        window.location.pathname === '/register/check' ||
-        window.location.pathname === '/authcode'
+        window.location.pathname === '/certcode' ||
+        //window.location.pathname === '/forgotpassword' ||
+        window.location.pathname === '/register'
       ) {
         return;
       }
       history.push('/login');
     }
-  }, [history, user]);
+  }, [history, dispatch, user]);
 
   if (
     window.location.pathname === '/login' ||
     window.location.pathname === '/register' ||
-    window.location.pathname === '/register/employ' ||
-    window.location.pathname === '/register/check' ||
-    window.location.pathname === '/authcode'
+    window.location.pathname === '/certcode'
   ) {
     return (
-      <>
-        <Route path="/login" component={LoginPage} />
-        <Route
-          path={['/register', '/register/employ', '/register/check']}
-          component={RegisterPage}
-        />
-        <Route path="/authcode" component={AuthCodePage} />
-      </>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Switch>
+          <Route path="/login" component={LoginPage} />
+          <Route path="/register" component={RegisterPage} />
+          <Route path="/certcode" component={CertCodePage} />
+        </Switch>
+      </Suspense>
     );
   } else {
     return (
       <>
         <div className="row">
           <div>
-            <Drawer
-              variant="permanent"
-              classes={{ paper: classes.drawerPaper }}
-            >
-              <SideBarMenu />
-            </Drawer>
+            <SideBarMenu user={user} />
           </div>
 
-          <div className="col p-0" style={{ marginLeft: '18.5rem' }}>
-            <SidebarHeader onLogout={onLogout} branchs={branchs} />
+          <div className="col p-0" style={{ marginLeft: '15rem' }}>
+            <SidebarHeaderContainer
+              onLogout={onLogout}
+              branchs={branchs}
+              user={user}
+            />
             <div className="content">
-              <Route path="/member" component={MemberPage} />
-              <Route path="/timetable" component={TimetablePage} />
-              <Route path="/" component={IndexPage} exact />
-              <Route path="/employ" component={EmployPage} />
-              <Route path="/occupation" component={OccupationPage} />
-              <Route path="/record" component={RecordPage} />
-              <Route path="/schedule" component={SchedulePage} />
-              <Route path="/branch" component={BranchPage} />
+              <Suspense fallback={<div>Loading...</div>}>
+                <Switch>
+                  <Route path="/member" component={MemberPage} />
+                  <Route path="/" component={DashboardPage} exact />
+                  <Route path="/employ" component={EmployPage} />
+                  <Route path="/occupation" component={OccupationPage} />
+                  <Route path="/record" component={RecordPage} />
+                  <Route path="/schedule" component={SchedulePage} />
+                  <Route path="/branch" component={BranchPage} />
+                </Switch>
+              </Suspense>
             </div>
           </div>
         </div>

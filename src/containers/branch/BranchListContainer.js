@@ -7,9 +7,9 @@ import { checkExpire } from '../../lib/api/common/authAPI';
 import { logout } from '../../modules/common/auth';
 
 const BranchListContainer = () => {
-  const [show, setShow] = useState(false);
-  const closeModal = () => setShow(false);
-  const openModal = () => setShow(true);
+  const [modal, setModal] = useState({ targetModal: '', show: false });
+  const closeModal = () => setModal({ targetModal: '', show: false });
+  const openModal = (no) => setModal({ targetModal: no, show: true });
 
   const dispatch = useDispatch();
   const { branchs, branchError, loading, user } = useSelector(
@@ -20,6 +20,10 @@ const BranchListContainer = () => {
       user: auth.user,
     }),
   );
+  const onModalBtn = (e) => {
+    const no = e.target.value;
+    openModal(no);
+  };
 
   useEffect(() => {
     if (user !== null) {
@@ -39,9 +43,9 @@ const BranchListContainer = () => {
         branchs={branchs}
         branchError={branchError}
         loading={loading}
-        show={show}
+        modal={modal}
         closeModal={closeModal}
-        openModal={openModal}
+        onModalBtn={onModalBtn}
       ></BranchListForm>
     </div>
   );

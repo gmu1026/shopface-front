@@ -1,9 +1,10 @@
 import React from 'react';
 import Button from '../common/Button';
 import { Link, withRouter } from 'react-router-dom';
-import Modal from '../../../node_modules/react-bootstrap/esm/Modal';
+import { Modal } from 'rsuite';
+import { parseString } from '../../../node_modules/rrule/dist/esm/src/parsestring';
 
-const BranchTableBody = ({ branch, match, show, openModal, closeModal }) => {
+const BranchTableBody = ({ branch, match, modal, onModalBtn, closeModal }) => {
   return (
     <>
       <tr role="row">
@@ -19,11 +20,37 @@ const BranchTableBody = ({ branch, match, show, openModal, closeModal }) => {
             : '승인 거부'}
         </td>
         <td>
-          <Button className="btn btn-outline-primary" onClick={openModal}>
+          <Button
+            className="btn btn-outline-primary"
+            value={branch.no}
+            onClick={onModalBtn}
+          >
             보기
           </Button>
         </td>
       </tr>
+      <Modal
+        show={modal.targetModal === JSON.stringify(branch.no) && modal.show}
+        onHide={closeModal}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>사업자 등록증 이미지</Modal.Title>
+        </Modal.Header>
+        <hr />
+        {branch.businessLicensePath !== null && (
+          <Modal.Body>
+            <img
+              src={branch.businessLicensePath}
+              alt="사업자 등록증 이미지"
+              style={{ width: '100%', height: '100%' }}
+            />
+          </Modal.Body>
+        )}
+        <hr />
+        <Modal.Footer>
+          <Button onClick={closeModal}>Close</Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };
@@ -33,9 +60,9 @@ const BranchListForm = ({
   branchError,
   loading,
   match,
-  show,
+  modal,
   closeModal,
-  openModal,
+  onModalBtn,
 }) => {
   return (
     <>
@@ -57,7 +84,6 @@ const BranchListForm = ({
                       </Button>
                     </div>
                   </div>
-
                   <div
                     className="modal fade"
                     tabIndex="-1"
@@ -118,9 +144,9 @@ const BranchListForm = ({
                                 key={index}
                                 branch={branch}
                                 match={match}
-                                show={show}
+                                modal={modal}
                                 closeModal={closeModal}
-                                openModal={openModal}
+                                onModalBtn={onModalBtn}
                               />
                             ))
                           ) : (
@@ -132,19 +158,6 @@ const BranchListForm = ({
                           )}
                         </tbody>
                       </table>
-                      <div>
-                        <Modal show={show} onHide={closeModal}>
-                          <Modal.Header closeButton>
-                            <Modal.Title>사업자 등록증 이미지</Modal.Title>
-                          </Modal.Header>
-                          <Modal.Body>이미지~~~~~~~~</Modal.Body>
-                          <Modal.Footer>
-                            <Button variant="secondary" onClick={closeModal}>
-                              Close
-                            </Button>
-                          </Modal.Footer>
-                        </Modal>
-                      </div>
                     </div>
                   </div>
                 </div>

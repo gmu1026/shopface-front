@@ -1,5 +1,5 @@
 import React from 'react';
-import Modal from '../../../node_modules/react-bootstrap/esm/Modal';
+import { Modal } from 'rsuite';
 import DaumPostcode from 'react-daum-postcode';
 import Button from '../common/Button';
 
@@ -108,7 +108,7 @@ const BranchDetailForm = ({
                       <br />
                       <input
                         type="file"
-                        accept="image/jpg,impge/png,image/jpeg,image/gif"
+                        accept="image/jpg, impge/png, image/jpeg, image/gif"
                         name="licenseImage"
                         onChange={onChange}
                       />

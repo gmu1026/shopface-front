@@ -48,7 +48,7 @@ const MemberListContainer = ({ history }) => {
       });
       dispatch(getMemberList());
     }
-  }, [dispatch, history, user]);
+  }, [dispatch, user]);
 
   return (
     <MemberListForm

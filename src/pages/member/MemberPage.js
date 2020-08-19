@@ -1,14 +1,23 @@
-import React from 'react';
-import { Route } from 'react-router-dom';
-import MemberDetailContainer from '../../containers/member/MemberDetailContainer';
-import MemberListContainer from '../../containers/member/MemberListContainer';
+import React, { Suspense, lazy } from 'react';
+import { Route, withRouter, Switch } from 'react-router-dom';
+const MemberDetailContainer = lazy(() =>
+  import('../../containers/member/MemberDetailContainer'),
+);
+const MemberListContainer = lazy(() =>
+  import('../../containers/member/MemberListContainer'),
+);
+
 const MemberPage = ({ match }) => {
   return (
     <div>
-      <Route path={match.url} component={MemberListContainer} exact />
-      <Route path={`${match.url}/:id`} component={MemberDetailContainer} />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Switch>
+          <Route path={match.url} component={MemberListContainer} exact />
+          <Route path={`${match.url}/:id`} component={MemberDetailContainer} />
+        </Switch>
+      </Suspense>
     </div>
   );
 };
 
-export default MemberPage;
+export default withRouter(MemberPage);

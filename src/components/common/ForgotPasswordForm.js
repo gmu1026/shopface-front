@@ -47,10 +47,10 @@ const ErrorMessage = styled.div`
   margin-left: 1rem;
 `;
 
-const AuthCodeForm = ({ type, onChange, onSubmit, error }) => {
+const ForgotPasswordForm = ({ type, onChange, onSubmit, error }) => {
   return (
     <AuthFormBlock>
-      <h3>인증코드</h3>
+      <h3>비밀번호 재발급</h3>
       <form onSubmit={onSubmit}>
         <StyledInput
           type="text"
@@ -61,7 +61,7 @@ const AuthCodeForm = ({ type, onChange, onSubmit, error }) => {
         <ErrorMessage>{error}</ErrorMessage>
         <Footer>
           <div style={{ textAlign: 'center' }}>
-            <Button>인증</Button>
+            <Button>전송</Button>
           </div>
         </Footer>
       </form>
@@ -69,4 +69,4 @@ const AuthCodeForm = ({ type, onChange, onSubmit, error }) => {
   );
 };
 
-export default AuthCodeForm;
+export default ForgotPasswordForm;

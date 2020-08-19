@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { checkCertCode, changeInput } from '../../modules/common/certCode';
 import { withRouter } from 'react-router-dom';
 
-const AuthCodeContainer = ({ history }) => {
+const ForgotPasswordContainer = ({ history }) => {
   const [error, setError] = useState('');
   const dispatch = useDispatch();
   const { certCode, certCodeResult, certCodeError, user } = useSelector(
@@ -67,4 +67,4 @@ const AuthCodeContainer = ({ history }) => {
   );
 };
 
-export default withRouter(AuthCodeContainer);
+export default withRouter(ForgotPasswordContainer);

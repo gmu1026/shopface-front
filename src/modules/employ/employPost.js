@@ -53,9 +53,9 @@ export const employPost = handleActions(
       post: initialState['post'],
       postResult: null,
     }),
-    [EMPLOY_POST_SUCCESS]: (state, { payload: { status } }) => ({
+    [EMPLOY_POST_SUCCESS]: (state, { payload: { code } }) => ({
       ...state,
-      postResult: status,
+      postResult: code,
       postError: null,
     }),
     [EMPLOY_POST_FAILURE]: (state, { payload: e }) => ({

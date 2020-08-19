@@ -11,9 +11,10 @@ import {
   initializeForm,
 } from '../../modules/employ/employPost';
 
-const EmployListContainer = ({ history }) => {
+const EmployListContainer = ({ history, match }) => {
   const [show, setShow] = useState(false);
   const [filterEmploys, setFilterEmploys] = useState(null);
+  const [employFilt, setEmployFilt] = useState(null);
   const [error, setError] = useState(null);
 
   const closeModal = () => setShow(false);
@@ -39,7 +40,7 @@ const EmployListContainer = ({ history }) => {
       postResult: employPost.postResult,
       postError: employPost.postError,
       user: auth.user,
-      name: employList.name,
+      name: employPost.post.name,
       selectedBranch: branchSelect.selectedBranch,
     }),
   );
@@ -71,10 +72,7 @@ const EmployListContainer = ({ history }) => {
     closeModal();
     e.preventDefault();
     const data = employPost;
-    if (
-      // [data.nameNo, data.branchNo, data.roleNo, data.departmentNo].includes('')
-      [data.name].includes('')
-    ) {
+    if ([data.name, data.email].includes('')) {
       setError('빈 칸을 모두 입력하세요');
       return;
     }
@@ -83,10 +81,8 @@ const EmployListContainer = ({ history }) => {
       postEmploy({
         post: {
           name: data.name,
-          state: 'B',
+          email: data.email,
           branchNo: selectedBranch,
-          roleNo: 3,
-          departmentNo: 2,
         },
       }),
     );
@@ -104,7 +100,8 @@ const EmployListContainer = ({ history }) => {
   }, [dispatch, user]);
 
   useEffect(() => {
-    if (postResult === 200) {
+    if (postResult === 'OK') {
+      alert('근무자에게 초대 메시지를 전송하였습니다.');
       dispatch(initializeForm());
       dispatch(getEmployList({ selectedBranch }));
     }
@@ -127,9 +124,15 @@ const EmployListContainer = ({ history }) => {
     }
   }, [dispatch, selectedBranch, user]);
 
+  // useEffect(() => {
+  //   const employsFilter = employs.filter((employ) => employ.state !== 'D');
+  //   setEmployFilt(employsFilter);
+  // }, [dispatch, employs, selectedBranch]);
+
   return (
     <EmployListForm
       employs={employs}
+      employFilt={employFilt}
       employError={employError}
       loading={loading}
       onChange={onChange}

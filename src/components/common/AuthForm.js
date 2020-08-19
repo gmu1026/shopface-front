@@ -85,20 +85,13 @@ const AuthForm = ({ type, onChange, onSubmit, error }) => {
               placeholder="전화번호"
               onChange={onChange}
             />
-            <StyledInput
-              type="text"
-              name="email"
-              placeholder="이메일"
-              onChange={onChange}
-            />
           </>
         )}
-        {/*  <ErrorMessage>{error}</ErrorMessage> */}
+        <ErrorMessage>{error}</ErrorMessage>
         <Footer>
           {type === 'login' && (
             <div>
-              <Link to="/">아이디 찾기</Link> {/*TODO 추후 링크 path 변경 */}
-              <Link to="/">비밀번호 찾기</Link>
+              <Link to="/">비밀번호 재발급</Link>
             </div>
           )}
         </Footer>

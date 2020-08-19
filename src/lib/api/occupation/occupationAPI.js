@@ -10,13 +10,12 @@ export const postOccupation = async ({ post }) => {
   return response;
 };
 
-export const updateOccupation = async ({ no, data }) => {
-  const response = await client.put(`/occupation/${no}`, data);
+export const updateOccupation = async ({ no, occupation }) => {
+  const response = await client.put(`/occupation/${no}`, occupation);
   return response;
 };
 
 export const deleteOccupation = async ({ no }) => {
-  // const response = await client.delete(`/occupation/${no}`);
-  const response = await client.delete(`/occupation/13`);
+  const response = await client.delete(`/occupation/${no}`);
   return response;
 };

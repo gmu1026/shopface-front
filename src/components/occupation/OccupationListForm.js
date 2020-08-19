@@ -12,18 +12,40 @@ const ErrorMessage = styled.div`
   margin-left: 1rem;
 `;
 
-const OccupationTableBody = ({ occupation, onChange, onDelete, onSubmit }) => {
+const OccupationTableBody = ({
+  occupation,
+  onChange,
+  onDelete,
+  onEdit,
+  updateChange,
+  index,
+}) => {
   return (
     <>
       <tr role="row">
         <td>
-          {/* <input type="text" value={occupation.name} onChange={onChange} /> */}
-          {occupation.name}
+          <input
+            type="text"
+            name="name"
+            className="form-control col-sm-5"
+            value={occupation.name}
+            index={index}
+            onChange={updateChange}
+          />
         </td>
-        <td>{occupation.color}</td>
         <td>
-          <Button className="btn btn-primary">수정</Button>
-          <Button className="btn btn-primary" onClick={onDelete}>
+          <Button
+            className="btn btn-primary"
+            onClick={onEdit}
+            value={occupation.no}
+          >
+            수정
+          </Button>
+          <Button
+            className="btn btn-primary"
+            onClick={onDelete}
+            value={occupation.no}
+          >
             삭제
           </Button>
         </td>
@@ -38,7 +60,10 @@ const OccupationListForm = ({
   loading,
   onSubmit,
   onChange,
+  onDelete,
+  onEdit,
   error,
+  updateChange,
   handleComplete,
   name,
   color,
@@ -67,19 +92,9 @@ const OccupationListForm = ({
                           <br />
                         </div>
                       </div>
-                      <div>
-                        색상:
-                        <input
-                          className="form-control ml-2 mr-2"
-                          type="color"
-                          id="color"
-                          name="color"
-                          onChange={onChange}
-                        />
-                      </div>
                       <div className="ml-4 mr-2">
                         <ErrorMessage>{error}</ErrorMessage>
-                        <Button className="btn btn-primary" name="postBtn">
+                        <Button className="mt-1" name="postBtn">
                           등록
                         </Button>
                       </div>
@@ -101,7 +116,6 @@ const OccupationListForm = ({
                         <thead id="table_head">
                           <tr role="row">
                             <th>업무</th>
-                            <th>색상</th>
                             <th>관리</th>
                           </tr>
                         </thead>
@@ -110,7 +124,12 @@ const OccupationListForm = ({
                             occupations.map((occupation, index) => (
                               <OccupationTableBody
                                 key={index}
+                                index={index}
                                 occupation={occupation}
+                                onDelete={onDelete}
+                                onChange={onChange}
+                                onEdit={onEdit}
+                                updateChange={updateChange}
                               ></OccupationTableBody>
                             ))
                           ) : (

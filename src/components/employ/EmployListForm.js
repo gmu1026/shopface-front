@@ -1,26 +1,33 @@
 import React from 'react';
 import Button from '../common/Button';
 import { Link, withRouter } from 'react-router-dom';
-import Modal from '../../../node_modules/react-bootstrap/esm/Modal';
-const EmployTableBody = ({ employ, match, show, openModal, closeModal }) => {
+import { Modal } from 'rsuite';
+const EmployTableBody = ({ match, employ }) => {
   return (
     <>
       <tr role="row">
         <td>
-          {' '}
-          {employ.name}
-          {/* <Link to={`${match.url}/${employ.no}`}> {employ.name}</Link> */}
+          <Link to={`${match.url}/${employ.no}`}> {employ.name}</Link>
         </td>
         <td>{employ.phone}</td>
         <td>{employ.email}</td>
-        <td>{employ.salary}</td>
+        <td> {employ.salary}</td>
         <td>
-          {employ.state === 'B'
+          {employ.state === 'I'
             ? '초대'
-            : employ.state === 'C'
+            : employ.state === 'E'
             ? '합류'
             : '비활성화'}
         </td>
+        {/* <td>
+          {employ.state === 'D' ? (
+            <Button className="btn btn-primary mr-1 ml-1" onClick={onInvite}>
+              다시 초대하기
+            </Button>
+          ) : (
+            ''
+          )}
+        </td> */}
       </tr>
     </>
   );
@@ -38,6 +45,9 @@ const EmployListForm = ({
   onSubmit,
   openModal,
   filterEmploys,
+  match,
+  employFilt,
+  onInvite,
 }) => {
   return (
     <div className="container-fluid p-0">
@@ -56,7 +66,7 @@ const EmployListForm = ({
                   <div className="col-sm-12 col-md-6">
                     <div className="row">
                       <div className="form-inline col-5"></div>
-                      <div className="form-inline col ml-6">
+                      <div className="form-inline col ml-5">
                         이름:
                         <input
                           type="text"
@@ -106,14 +116,15 @@ const EmployListForm = ({
                     </thead>
 
                     <tbody id="table_body">
-                      {filterEmploys !== null ? (
-                        filterEmploys.map((filterEmploy, index) => (
+                      {employFilt !== null ? (
+                        employFilt.map((empFilt, index) => (
                           <EmployTableBody
                             key={index}
-                            employ={filterEmploy}
+                            employ={empFilt}
+                            match={match}
                           ></EmployTableBody>
                         ))
-                      ) : employs !== null && employs !== [] ? (
+                      ) : employs !== null && employs.length > 0 ? (
                         employs.map((employ, index) => (
                           <EmployTableBody
                             key={index}
@@ -121,6 +132,7 @@ const EmployListForm = ({
                             show={show}
                             closeModal={closeModal}
                             openModal={openModal}
+                            match={match}
                           ></EmployTableBody>
                         ))
                       ) : (
@@ -141,6 +153,7 @@ const EmployListForm = ({
                       <Modal.Header closeButton>
                         <Modal.Title>근무자 초대하기</Modal.Title>
                       </Modal.Header>
+                      <hr />
                       <Modal.Body>
                         <input type="hidden" />
                         이름
@@ -163,6 +176,7 @@ const EmployListForm = ({
                           onChange={onChange}
                         />
                       </Modal.Body>
+                      <hr />
                       <Modal.Footer>
                         <Button
                           type="button"
@@ -184,52 +198,6 @@ const EmployListForm = ({
                     </Modal>
                   </form>
                 </div>
-                {/* <div
-                  className="modal fade"
-                  tabIndex="-1"
-                  role="dialog"
-                  aria-hidden="true"
-                >
-                  <div
-                    className="modal-dialog modal-dialog-centered"
-                    role="document"
-                  >
-                    <div className="modal-content">
-                      <div className="modal-header">
-                        <h5 className="modal-title">다시 초대하기</h5>
-                        <button
-                          type="button"
-                          className="close"
-                          data-dismiss="modal"
-                          aria-label="Close"
-                        >
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                      <div className="modal-body m-3">
-                        <div className="form-group">
-                          이메일
-                          <input
-                            type="text"
-                            className="form-control"
-                            name="reInviteEmail"
-                            placeholder="이메일을 입력해주세요"
-                          />
-                        </div>
-                      </div>
-                      <div className="modal-footer">
-                        <Button
-                          type="button"
-                          className="btn btn-primary"
-                          data-dismiss="modal"
-                        >
-                          Close
-                        </Button>
-                        <Button className="btn btn-primary">초대하기</Button>
-                      </div>
-                    </div>
-                  </div>
-                </div> */}
               </div>
             </div>
           </div>
