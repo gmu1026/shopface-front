@@ -1,7 +1,14 @@
 import React from 'react';
 import Button from '../common/Button';
 
-const EmployDetailForm = ({ employs, onSubmit, onChange, error }) => {
+const EmployDetailForm = ({
+  employs,
+  onSubmit,
+  onChange,
+  error,
+  onDisabled,
+  onInvite,
+}) => {
   if (employs === null) {
     return <div>loading...</div>;
   } else {
@@ -19,18 +26,16 @@ const EmployDetailForm = ({ employs, onSubmit, onChange, error }) => {
                   <div className="card-body">
                     <form onSubmit={onSubmit}>
                       <div className="col-12 col-lg-6">
-                        <div className="form-group">
+                        {/* <div className="form-group">
                           <label>이름</label>
                           <input
                             type="text"
                             className="form-control"
                             name="name"
                             onChange={onChange}
-                            value={employs.name}
-                            no={employs.no}
-                            // value={employ.name !== null ? employ.name : ''}
+                            value={employ.name !== null ? employ.name : ''}
                           />
-                        </div>
+                        </div> */}
                         {/* <div className="form-group">
                           <label>전화번호</label>
                           <input
@@ -82,23 +87,21 @@ const EmployDetailForm = ({ employs, onSubmit, onChange, error }) => {
                             className="form-control"
                             name="salary"
                             onChange={onChange}
-                            value={
-                              employs.salary !== null ? employs.salary : ''
-                            }
+                            value={employs.salary !== null ? employs.salary : 0}
+                            // value={
+                            //   employs.salary !== null ? employs.salary : ''
+                            // }
                           />
                         </div>
                         <div className="mb-3">
                           <Button
                             type="button"
                             className="btn btn-primary"
-                            onChange={onChange}
-                            disabled={employs.state === 'C'}
+                            onClick={onDisabled}
                           >
                             비활성화
                           </Button>
-                          <Button to="/employ" className="btn btn-primary">
-                            수정
-                          </Button>
+                          <Button className="btn btn-primary">수정</Button>
                           <Button
                             type="button"
                             to="/employ"
@@ -106,6 +109,17 @@ const EmployDetailForm = ({ employs, onSubmit, onChange, error }) => {
                           >
                             취소
                           </Button>
+
+                          {employs.state === 'D' ? (
+                            <Button
+                              className="btn btn-primary mr-1 ml-1"
+                              onClick={onInvite}
+                            >
+                              다시 초대하기
+                            </Button>
+                          ) : (
+                            ''
+                          )}
                         </div>
                       </div>
                     </form>

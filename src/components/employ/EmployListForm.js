@@ -2,7 +2,7 @@ import React from 'react';
 import Button from '../common/Button';
 import { Link, withRouter } from 'react-router-dom';
 import { Modal } from 'rsuite';
-const EmployTableBody = ({ employ, match, show, openModal, closeModal }) => {
+const EmployTableBody = ({ match, employ }) => {
   return (
     <>
       <tr role="row">
@@ -11,7 +11,7 @@ const EmployTableBody = ({ employ, match, show, openModal, closeModal }) => {
         </td>
         <td>{employ.phone}</td>
         <td>{employ.email}</td>
-        <td>{employ.salary}</td>
+        <td> {employ.salary}</td>
         <td>
           {employ.state === 'I'
             ? '초대'
@@ -19,6 +19,15 @@ const EmployTableBody = ({ employ, match, show, openModal, closeModal }) => {
             ? '합류'
             : '비활성화'}
         </td>
+        {/* <td>
+          {employ.state === 'D' ? (
+            <Button className="btn btn-primary mr-1 ml-1" onClick={onInvite}>
+              다시 초대하기
+            </Button>
+          ) : (
+            ''
+          )}
+        </td> */}
       </tr>
     </>
   );
@@ -37,6 +46,8 @@ const EmployListForm = ({
   openModal,
   filterEmploys,
   match,
+  employFilt,
+  onInvite,
 }) => {
   return (
     <div className="container-fluid p-0">
@@ -105,11 +116,12 @@ const EmployListForm = ({
                     </thead>
 
                     <tbody id="table_body">
-                      {filterEmploys !== null ? (
-                        filterEmploys.map((filterEmploy, index) => (
+                      {employFilt !== null ? (
+                        employFilt.map((empFilt, index) => (
                           <EmployTableBody
                             key={index}
-                            employ={filterEmploy}
+                            employ={empFilt}
+                            match={match}
                           ></EmployTableBody>
                         ))
                       ) : employs !== null && employs.length > 0 ? (
@@ -121,7 +133,6 @@ const EmployListForm = ({
                             closeModal={closeModal}
                             openModal={openModal}
                             match={match}
-                            employ={employ}
                           ></EmployTableBody>
                         ))
                       ) : (
@@ -187,52 +198,6 @@ const EmployListForm = ({
                     </Modal>
                   </form>
                 </div>
-                {/* <div
-                  className="modal fade"
-                  tabIndex="-1"
-                  role="dialog"
-                  aria-hidden="true"
-                >
-                  <div
-                    className="modal-dialog modal-dialog-centered"
-                    role="document"
-                  >
-                    <div className="modal-content">
-                      <div className="modal-header">
-                        <h5 className="modal-title">다시 초대하기</h5>
-                        <button
-                          type="button"
-                          className="close"
-                          data-dismiss="modal"
-                          aria-label="Close"
-                        >
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                      <div className="modal-body m-3">
-                        <div className="form-group">
-                          이메일
-                          <input
-                            type="text"
-                            className="form-control"
-                            name="reInviteEmail"
-                            placeholder="이메일을 입력해주세요"
-                          />
-                        </div>
-                      </div>
-                      <div className="modal-footer">
-                        <Button
-                          type="button"
-                          className="btn btn-primary"
-                          data-dismiss="modal"
-                        >
-                          Close
-                        </Button>
-                        <Button className="btn btn-primary">초대하기</Button>
-                      </div>
-                    </div>
-                  </div>
-                </div> */}
               </div>
             </div>
           </div>

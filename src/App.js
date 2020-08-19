@@ -19,7 +19,13 @@ const EmployPage = lazy(() => import('./pages/employ/EmployPage'));
 const MemberPage = lazy(() => import('./pages/member/MemberPage'));
 const OccupationPage = lazy(() => import('./pages/occupation/OccupationPage'));
 const RecordPage = lazy(() => import('./pages/record/RecordPage'));
-const SchedulePage = lazy(() => import('./pages/schedule/SchedulePage'));
+
+const SchedulePage = lazy(() =>
+  import('./components/schedule/ScheduleListForm'),
+);
+const DashboardPage = lazy(() =>
+  import('./components/dashboard/BusinessDashboardForm'),
+);
 
 const App = ({ history, match }) => {
   const dispatch = useDispatch();
@@ -121,7 +127,7 @@ const App = ({ history, match }) => {
                   <Route path="/member" component={MemberPage} />
                   <Route path="/timetable" component={IndexPage} />
                   {/* timetable Component */}
-                  <Route path="/" component={IndexPage} exact />
+                  <Route path="/" component={DashboardPage} exact />
                   <Route path="/employ" component={EmployPage} />
                   <Route path="/occupation" component={OccupationPage} />
                   <Route path="/record" component={RecordPage} />
