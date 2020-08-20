@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from '../common/Button';
 import { TimePicker } from 'antd';
-import { Modal } from 'rsuite';
+import Modal from 'react-bootstrap/Modal';
 import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 import { Form } from '../../../node_modules/react-bootstrap/esm/index';
 import styled from 'styled-components';
@@ -41,7 +41,6 @@ const SchedulerModalForm = ({
             {modalType === 'post' ? '시간표 등록' : '시간표 수정'}
           </Modal.Title>
         </Modal.Header>
-        <hr />
         <Modal.Body>
           <form>
             <div className="form-group row col-sm-10">
@@ -185,7 +184,6 @@ const SchedulerModalForm = ({
           </form>
         </Modal.Body>
         <ErrorMessage>{error}</ErrorMessage>
-        <hr />
         <Modal.Footer>
           {modalType === 'update' ? (
             <>

@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from '../common/Button';
 import { Link, withRouter } from 'react-router-dom';
-import { Modal } from 'rsuite';
+import Modal from 'react-bootstrap/Modal';
 const EmployTableBody = ({ match, employ }) => {
   return (
     <>

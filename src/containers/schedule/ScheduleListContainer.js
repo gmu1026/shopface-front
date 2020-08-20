@@ -27,35 +27,26 @@ const ScheduleListContainer = ({ history }) => {
   moment.locale('en');
   const dispatch = useDispatch();
   const {
+    user,
     schedules,
     schedulePost,
     scheduleUpdate,
     scheduleResult,
     scheduleError,
-    loading,
-    user,
     occupations,
-    selectedBranch,
     employs,
+    selectedBranch,
   } = useSelector(
-    ({
-      scheduleList,
-      loading,
-      auth,
-      occupation,
-      branchSelect,
-      employList,
-    }) => ({
+    ({ auth, scheduleList, occupation, employList, branchSelect }) => ({
+      user: auth.user,
       schedules: scheduleList.schedules,
       schedulePost: scheduleList.post,
       scheduleUpdate: scheduleList.update,
       scheduleResult: scheduleList.scheduleResult,
       scheduleError: scheduleList.scheduleError,
-      loading: loading,
-      user: auth.user,
       occupations: occupation.occupations,
-      selectedBranch: branchSelect.selectedBranch,
       employs: employList.employs,
+      selectedBranch: branchSelect.selectedBranch,
     }),
   );
 
@@ -76,12 +67,6 @@ const ScheduleListContainer = ({ history }) => {
     setError('');
   };
   const openModal = () => setShow(true);
-
-  if (schedulerData !== null) {
-    if (filterEvents !== null) {
-      schedulerData.setEvents(filterEvents);
-    }
-  }
 
   const prevClick = (data) => {
     data.prev();
@@ -165,6 +150,7 @@ const ScheduleListContainer = ({ history }) => {
       if (name === 'color') {
         changeEvent['bgColor'] = value;
       }
+
       setScheduleEvent(changeEvent);
 
       dispatch(changeUpdate({ key: name, value }));
@@ -261,10 +247,8 @@ const ScheduleListContainer = ({ history }) => {
     } else {
       dispatch(updateSchedule({ no: scheduleEvent.id, data }));
     }
-
-    initializeForm();
-    closeModal();
   };
+
   const onScheduleDelete = () => {
     dispatch(deleteSchedule({ no: scheduleEvent.id }));
   };
@@ -394,7 +378,7 @@ const ScheduleListContainer = ({ history }) => {
       dispatch(initializeForm());
       dispatch(getScheduleList({ no: selectedBranch }));
 
-      history.push('/schedule');
+      closeModal();
     }
   }, [scheduleResult, dispatch, selectedBranch]);
 
@@ -406,6 +390,8 @@ const ScheduleListContainer = ({ history }) => {
 
       dispatch(initializeForm());
       dispatch(getScheduleList({ no: selectedBranch }));
+
+      closeModal();
     }
   }, [scheduleError, dispatch, selectedBranch]);
 
