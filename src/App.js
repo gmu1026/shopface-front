@@ -71,11 +71,14 @@ const App = ({ history, match }) => {
     return (
       <>
         <div className="row">
-          <div>
+          <div style={{ position: 'fixed' }}>
             <SideBarMenu user={user} />
           </div>
 
-          <div className="col p-0" style={{ marginLeft: '15rem' }}>
+          <div
+            className="col p-0"
+            style={{ marginLeft: '16rem', position: 'relative' }}
+          >
             <SidebarHeaderContainer
               onLogout={onLogout}
               branchs={branchs}

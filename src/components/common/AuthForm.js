@@ -40,6 +40,12 @@ const Footer = styled.div`
   }
 `;
 
+const InfoMessage = styled.div`
+  color: gray;
+  text-align: left;
+  font-size: 0.8rem;
+  margin-bottom: 1rem;
+`;
 const ErrorMessage = styled.div`
   color: red;
   text-align: center;
@@ -72,6 +78,12 @@ const AuthForm = ({ type, onChange, onSubmit, error }) => {
           onChange={onChange}
         />
         {type === 'register' && (
+          <InfoMessage>
+            비밀번호는 특수문자, 소문자, 대문자, 숫자를 포함한 8자리 이상
+          </InfoMessage>
+        )}
+
+        {type === 'register' && (
           <>
             <StyledInput
               type="text"
@@ -85,6 +97,7 @@ const AuthForm = ({ type, onChange, onSubmit, error }) => {
               placeholder="전화번호"
               onChange={onChange}
             />
+            <InfoMessage>'-'를 제외한 숫자만 입력하세요</InfoMessage>
           </>
         )}
         <ErrorMessage>{error}</ErrorMessage>

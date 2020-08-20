@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal } from 'rsuite';
+import Modal from 'react-bootstrap/Modal';
 import DaumPostcode from 'react-daum-postcode';
 import Button from '../common/Button';
 
