@@ -75,7 +75,6 @@ const MemberDetailContainer = ({ match, history }) => {
       setError('빈 칸을 모두 입력하세요');
       return;
     }
-
     dispatch(memberUpdate({ id, data }));
   };
 

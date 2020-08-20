@@ -4,6 +4,7 @@ import branchDetail, { branchDetailSaga } from './branch/branchDetail';
 import branchList, { branchSaga } from './branch/branchList';
 import branchPost, { branchPostSaga } from './branch/branchPost';
 import branchSelect from './branch/branchSelect';
+import scheduleSelect from './schedule/scheduleSelect';
 import auth, { authSaga } from './common/auth';
 import certCode, { certCodeSaga } from './common/certCode';
 import loading from './common/loading';
@@ -39,6 +40,7 @@ const rootReducer = combineReducers({
   occupationSelect,
   scheduleList,
   dashboard,
+  scheduleSelect,
 });
 
 export function* rootSaga() {

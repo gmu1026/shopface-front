@@ -2,6 +2,7 @@ import React from 'react';
 import Button from '../common/Button';
 import { Link, withRouter } from 'react-router-dom';
 import Modal from 'react-bootstrap/Modal';
+import Checkbox from '@material-ui/core/Checkbox';
 const EmployTableBody = ({ match, employ }) => {
   return (
     <>
@@ -19,15 +20,6 @@ const EmployTableBody = ({ match, employ }) => {
             ? '합류'
             : '비활성화'}
         </td>
-        {/* <td>
-          {employ.state === 'D' ? (
-            <Button className="btn btn-primary mr-1 ml-1" onClick={onInvite}>
-              다시 초대하기
-            </Button>
-          ) : (
-            ''
-          )}
-        </td> */}
       </tr>
     </>
   );
@@ -48,6 +40,8 @@ const EmployListForm = ({
   match,
   employFilt,
   onInvite,
+  onChecked,
+  checked,
 }) => {
   return (
     <div className="container-fluid p-0">
@@ -60,7 +54,11 @@ const EmployListForm = ({
                 <div className="row">
                   <div className="col-sm-12 col-md-6">
                     <div className="form-group" id="check-disable" />
-                    <input type="checkbox" />
+                    <input
+                      type="checkbox"
+                      // checked={checked}
+                      // onChecked={onChecked}
+                    />
                     비활성화 근무자
                   </div>
                   <div className="col-sm-12 col-md-6">
@@ -122,6 +120,8 @@ const EmployListForm = ({
                             key={index}
                             employ={empFilt}
                             match={match}
+                            onChecked={onChecked}
+                            checked={checked}
                           ></EmployTableBody>
                         ))
                       ) : employs !== null && employs.length > 0 ? (
@@ -133,6 +133,8 @@ const EmployListForm = ({
                             closeModal={closeModal}
                             openModal={openModal}
                             match={match}
+                            onChecked={onChecked}
+                            checked={checked}
                           ></EmployTableBody>
                         ))
                       ) : (

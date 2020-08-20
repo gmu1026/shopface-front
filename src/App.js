@@ -7,7 +7,6 @@ import client from './lib/api/client';
 import { checkExpire } from './lib/api/common/authAPI';
 import { getBranchList } from './modules/branch/branchList';
 import { logout } from './modules/common/auth';
-import DashboardPage from './components/dashboard/BusinessDashboardForm';
 import SchedulePage from './containers/schedule/ScheduleListContainer';
 
 const LoginPage = lazy(() => import('./pages/common/LoginPage'));
@@ -18,6 +17,13 @@ const EmployPage = lazy(() => import('./pages/employ/EmployPage'));
 const MemberPage = lazy(() => import('./pages/member/MemberPage'));
 const OccupationPage = lazy(() => import('./pages/occupation/OccupationPage'));
 const RecordPage = lazy(() => import('./pages/record/RecordPage'));
+
+const BusinessDashboardPage = lazy(() =>
+  import('./pages/dashboard/BusinessDashboardPage'),
+);
+const EmployDashboardPage = lazy(() =>
+  import('./pages/dashboard/EmployDashboardPage'),
+);
 
 const App = ({ history, match }) => {
   const dispatch = useDispatch();
@@ -88,10 +94,16 @@ const App = ({ history, match }) => {
               <Suspense fallback={<div>Loading...</div>}>
                 <Switch>
                   <Route path="/member" component={MemberPage} />
-                  <Route path="/" component={DashboardPage} exact />
+                  <Route path="/timetable" component={IndexPage} />
+                  <Route path="/" component={EmployDashboardPage} exact />
+                  {/* <Route
+                    path="/dashboard"
+                    component={EmployDashboardPage}
+                    exact
+                  /> */}
                   <Route path="/employ" component={EmployPage} />
                   <Route path="/occupation" component={OccupationPage} />
-                  <Route path="/record" component={RecordPage} />
+                  <Route path="/record" component={EmployDashboardPage} />
                   <Route path="/schedule" component={SchedulePage} />
                   <Route path="/branch" component={BranchPage} />
                 </Switch>
