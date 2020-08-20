@@ -5,6 +5,7 @@ import { Modal } from 'rsuite';
 import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 import { Form } from '../../../node_modules/react-bootstrap/esm/index';
 import styled from 'styled-components';
+import moment from 'moment';
 
 const ErrorMessage = styled.div`
   color: red;
@@ -15,6 +16,7 @@ const ErrorMessage = styled.div`
 `;
 
 const SchedulerModalForm = ({
+  schedule,
   show,
   closeModal,
   modalType,
@@ -22,7 +24,8 @@ const SchedulerModalForm = ({
   employs,
   onChange,
   onTimeChange,
-  onSchedulePost,
+  onScheduleSubmit,
+  onScheduleDelete,
   error,
 }) => {
   const { RangePicker } = TimePicker;
@@ -46,22 +49,39 @@ const SchedulerModalForm = ({
                 이름
               </label>
               <div className="col-sm-9">
-                <Form.Control
-                  as="select"
-                  name="employNo"
-                  className=" col-sm-9"
-                  onChange={onChange}
-                  //value={modalType === 'update' ? '최민영' : ''}
-                >
-                  <option>근무자를 선택하세요</option>
-                  {filterEmploys !== null &&
-                    filterEmploys !== [] &&
-                    filterEmploys.map((employ, index) => (
-                      <option key={index} value={employ.no}>
-                        {employ.name}
-                      </option>
-                    ))}
-                </Form.Control>
+                {modalType === 'update' ? (
+                  <Form.Control
+                    as="select"
+                    name="employNo"
+                    className=" col-sm-9"
+                    onChange={onChange}
+                    value={schedule.resourecId}
+                  >
+                    {filterEmploys !== null &&
+                      filterEmploys !== [] &&
+                      filterEmploys.map((employ, index) => (
+                        <option key={index} value={employ.no}>
+                          {employ.name}
+                        </option>
+                      ))}
+                  </Form.Control>
+                ) : (
+                  <Form.Control
+                    as="select"
+                    name="employNo"
+                    className=" col-sm-9"
+                    onChange={onChange}
+                  >
+                    <option>근무자를 선택하세요</option>
+                    {filterEmploys !== null &&
+                      filterEmploys !== [] &&
+                      filterEmploys.map((employ, index) => (
+                        <option key={index} value={employ.no}>
+                          {employ.name}
+                        </option>
+                      ))}
+                  </Form.Control>
+                )}
               </div>
             </div>
             <div className="form-group row col-sm-10">
@@ -69,10 +89,28 @@ const SchedulerModalForm = ({
                 시간
               </label>
               <div className="col-sm-9">
-                <RangePicker
-                  format={'HH:mm'}
-                  onChange={onTimeChange}
-                ></RangePicker>
+                {modalType === 'update' ? (
+                  <RangePicker
+                    format={'HH:mm'}
+                    onChange={onTimeChange}
+                    showTime={{
+                      defaultValue: [
+                        moment(
+                          schedule.start.substring(
+                            schedule.start.indexOf('T') + 1,
+                          ),
+                          'HH:mm',
+                        ),
+                        moment(
+                          schedule.end.substring(schedule.end.indexOf('T') + 1),
+                          'HH:mm',
+                        ),
+                      ],
+                    }}
+                  />
+                ) : (
+                  <RangePicker format={'HH:mm'} onChange={onTimeChange} />
+                )}
               </div>
             </div>
             <div className="form-group row col-sm-10">
@@ -81,34 +119,66 @@ const SchedulerModalForm = ({
               </label>
               <div className="col-sm-9">
                 <div className="row m-1">
-                  <Form.Control
-                    as="select"
-                    name="occupationNo"
-                    className=" col-sm-7"
-                    onChange={onChange}
-                    //value={modalType === 'post' ? occupations[0].name : ''}
-                  >
-                    <option>업무를 선택하세요</option>
-                    {occupations != null && occupations.length > 0 ? (
-                      occupations.map((occupation, index) => (
-                        <option key={index} value={occupation.no}>
-                          {occupation.name}
-                        </option>
-                      ))
-                    ) : (
-                      <option>업무를 등록해주세요</option>
-                    )}
-                  </Form.Control>
-                  <Form.Control
-                    as="input"
-                    type="color"
-                    name="color"
-                    placeholder="업무"
-                    className=" col-sm-4 ml-3"
-                    onChange={onChange}
-                    //value={modalType === 'update' ? occupations[0].color : ''}
-                    readOnly
-                  />
+                  {modalType === 'update' ? (
+                    <>
+                      <Form.Control
+                        as="select"
+                        name="occupationNo"
+                        className=" col-sm-7"
+                        onChange={onChange}
+                        value={schedule.occupationNo}
+                      >
+                        {occupations != null && occupations.length > 0 ? (
+                          occupations.map((occupation, index) => (
+                            <option key={index} value={occupation.no}>
+                              {occupation.name}
+                            </option>
+                          ))
+                        ) : (
+                          <option>업무를 등록해주세요</option>
+                        )}
+                      </Form.Control>
+                      <Form.Control
+                        as="input"
+                        type="color"
+                        name="color"
+                        placeholder="업무"
+                        className=" col-sm-4 ml-3"
+                        onChange={onChange}
+                        value={schedule.bgColor}
+                        readOnly
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <Form.Control
+                        as="select"
+                        name="occupationNo"
+                        className=" col-sm-7"
+                        onChange={onChange}
+                      >
+                        <option>업무를 선택하세요</option>
+                        {occupations != null && occupations.length > 0 ? (
+                          occupations.map((occupation, index) => (
+                            <option key={index} value={occupation.no}>
+                              {occupation.name}
+                            </option>
+                          ))
+                        ) : (
+                          <option>업무를 등록해주세요</option>
+                        )}
+                      </Form.Control>
+                      <Form.Control
+                        as="input"
+                        type="color"
+                        name="color"
+                        placeholder="업무"
+                        className=" col-sm-4 ml-3"
+                        onChange={onChange}
+                        readOnly
+                      />
+                    </>
+                  )}
                 </div>
               </div>
             </div>
@@ -117,13 +187,13 @@ const SchedulerModalForm = ({
         <ErrorMessage>{error}</ErrorMessage>
         <hr />
         <Modal.Footer>
-          {modalType === 'post' ? (
-            <Button onClick={onSchedulePost}>시간표 등록</Button>
-          ) : (
+          {modalType === 'update' ? (
             <>
-              <Button>수정</Button>
-              <Button>삭제</Button>
+              <Button onClick={onScheduleSubmit}>수정</Button>
+              <Button onClick={onScheduleDelete}>삭제</Button>
             </>
+          ) : (
+            <Button onClick={onScheduleSubmit}>시간표 등록</Button>
           )}
         </Modal.Footer>
       </Modal>

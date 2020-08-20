@@ -57,7 +57,7 @@ const BusinessDashboardForm = ({
   return (
     <div className="container-fluid p-0">
       <h1 className="h3 mb-3">근무 현황</h1>
-      <Clock format={'YYYY년 MM월 DD일 HH:mm:ss'} ticking={true} />
+      {/*  <Clock format={'YYYY년 MM월 DD일 HH:mm:ss'} ticking={true} /> */}
       <div className="row">
         <div className="col-12">
           <div className="card">
