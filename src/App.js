@@ -130,7 +130,7 @@ const App = ({ history, match }) => {
                   <Route path="/member" component={MemberPage} />
                   <Route path="/timetable" component={IndexPage} />
                   {/* timetable Component */}
-                  <Route path="/" component={BusinessDashboardPage} exact />
+                  <Route path="/" component={EmployDashboardPage} exact />
                   {/* <Route
                     path="/dashboard"
                     component={EmployDashboardPage}

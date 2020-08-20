@@ -1,7 +1,7 @@
 import React from 'react';
-// import Button from '../common/Button';
+import Button from '../common/Button';
 import { withRouter } from 'react-router-dom';
-const DashboardTableBody = ({ emp }) => {
+const DashboardTableBody = ({ emp, onWork, onQuit }) => {
   return (
     <>
       <tr role="row">
@@ -15,12 +15,22 @@ const DashboardTableBody = ({ emp }) => {
         <td>{emp.scheduleStatus}</td>
         <td>{emp.actualWorkingHours}</td>
         <td>{emp.actualSalary}</td>
+        <td>
+          <Button className="btn btn-primary" onWork={onWork} value={emp.no}>
+            출근
+          </Button>
+        </td>
+        <td>
+          <Button className="btn btn-primary" onQuit={onQuit} value={emp.no}>
+            퇴근
+          </Button>
+        </td>
       </tr>
     </>
   );
 };
 
-const EmployDashboard = ({ employ, error, loading, match }) => {
+const EmployDashboard = ({ employ, error, loading, match, onWork, onQuit }) => {
   return (
     <div className="container-fluid p-0">
       <div className="row">
@@ -43,44 +53,42 @@ const EmployDashboard = ({ employ, error, loading, match }) => {
             </div>
             <div className="row">
               <div className="col-sm-12">
-                <form>
-                  <table
-                    className="table table-striped dataTable no-footer dtr-inline"
-                    role="grid"
-                    aria-describedby="datatables-buttons_info"
-                  >
-                    <thead>
-                      근무중
-                      <tr role="row">
-                        <th>근무지</th>
-                        <th>담당 업무</th>
-                        <th>스케줄</th>
-                        <th>예상 시간</th>
-                        <th>예상급여</th>
-                        <th>상태</th>
-                        <th>실제시간</th>
-                        <th>실제 급여</th>
-                      </tr>
-                    </thead>
-                    <tbody id="table_body">
-                      {employ !== null && employ.length > 0 ? (
-                        employ.map((emp, index) => (
-                          <DashboardTableBody
-                            key={index}
-                            match={match}
-                            emp={emp}
-                          ></DashboardTableBody>
-                        ))
-                      ) : (
-                        <>
-                          <tr role="row">
-                            <td colSpan="4">데이터가 없습니다.</td>
-                          </tr>
-                        </>
-                      )}
-                    </tbody>
-                  </table>
-                </form>
+                <table
+                  className="table table-striped dataTable no-footer dtr-inline"
+                  role="grid"
+                  aria-describedby="datatables-buttons_info"
+                >
+                  <thead>
+                    근무중
+                    <tr role="row">
+                      <th>근무지</th>
+                      <th>담당 업무</th>
+                      <th>스케줄</th>
+                      <th>예상 시간</th>
+                      <th>예상급여</th>
+                      <th>상태</th>
+                      <th>실제시간</th>
+                      <th>실제 급여</th>
+                    </tr>
+                  </thead>
+                  <tbody id="table_body">
+                    {employ !== null && employ.length > 0 ? (
+                      employ.map((emp, index) => (
+                        <DashboardTableBody
+                          key={index}
+                          match={match}
+                          emp={emp}
+                        ></DashboardTableBody>
+                      ))
+                    ) : (
+                      <>
+                        <tr role="row">
+                          <td colSpan="4">데이터가 없습니다.</td>
+                        </tr>
+                      </>
+                    )}
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>

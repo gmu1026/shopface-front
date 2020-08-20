@@ -14,28 +14,14 @@ const BusinessDashboardContainer = () => {
     user,
     selectedBranch,
     // selectedSchedule,
-    putWorkTime,
-    putQuitTime,
   } = useSelector(({ dashboard, loading, auth, branchSelect }) => ({
     business: dashboard.business,
     error: dashboard.error,
     loading: loading,
     user: auth.user,
     selectedBranch: branchSelect.selectedBranch,
-    putWorkTime: dashboard.putWorkTime,
-    putQuitTime: dashboard.putQuitTime,
     // selectedSchedule: scheduleSelect.selectedSchedule,
   }));
-
-  // const onWork = () => {
-  //   const no =
-  //   dispatch(putWorkTime({no}));
-  // }
-
-  // const onQuit = () => {
-  //   const no =
-  //   dispatch(putQuitTime({no}));
-  // }
 
   useEffect(() => {
     if (user !== null) {
@@ -59,8 +45,6 @@ const BusinessDashboardContainer = () => {
       business={business}
       error={error}
       loading={loading}
-      // onWork={onWork}
-      // onQuit={onQuit}
     ></BusinessDashboard>
   );
 };
