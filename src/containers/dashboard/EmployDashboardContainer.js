@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
-import EmployDashboardForm from '../../components/dashboard/EmployDashboardForm';
+import EmployDashboard from '../../components/dashboard/EmployDashboard';
 import { checkExpire } from '../../lib/api/common/authAPI';
 import { logout } from '../../modules/common/auth';
 import { useDispatch, useSelector } from 'react-redux';
-import { getEmployDashboardList } from '../../modules/dashboard/dashboard';
+import { getEmployDashboard } from '../../modules/dashboard/dashboard';
 const EmployDashboardContainer = () => {
   const dispatch = useDispatch();
-  const { employDashboards, dashboardError, loading, user } = useSelector(
+  const { employ, error, loading, user } = useSelector(
     ({ dashboard, loading, auth }) => ({
-      employDashboards: dashboard.employDashboards,
-      dashboardError: dashboard.dashboardError,
+      employ: dashboard.employ,
+      error: dashboard.error,
       loading: loading,
       user: auth.user,
     }),
@@ -23,16 +23,21 @@ const EmployDashboardContainer = () => {
           dispatch(logout());
         }
       });
-      dispatch(getEmployDashboardList());
+      dispatch(
+        getEmployDashboard({
+          id: user.name,
+          state: 'R',
+        }),
+      );
     }
   }, [dispatch, user]);
 
   return (
-    <EmployDashboardForm
-      employDashboards={employDashboards}
-      dashboardError={dashboardError}
+    <EmployDashboard
+      employ={employ}
+      error={error}
       loading={loading}
-    ></EmployDashboardForm>
+    ></EmployDashboard>
   );
 };
 

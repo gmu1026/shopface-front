@@ -36,7 +36,7 @@ const MemberDetailForm = ({
                         className="form-control"
                         name="name"
                         onChange={onChange}
-                        value={member.name}
+                        value={member.name !== null ? member.name : ''}
                         readOnly
                       />
                     </div>
@@ -73,7 +73,7 @@ const MemberDetailForm = ({
                         type="text"
                         className="form-control"
                         name="email"
-                        value={member.email}
+                        value={member.email !== null ? member.email : ''}
                         onChange={onChange}
                       />
                       <br />
@@ -153,7 +153,11 @@ const MemberDetailForm = ({
                         className="form-control"
                         name="detailAddress"
                         onChange={onChange}
-                        value={member.detailAddress}
+                        value={
+                          member.detailAddress !== null
+                            ? member.detailAddress
+                            : ''
+                        }
                         // value={
                         //   member.detailAddress !== null
                         //     ? member.detailAddress

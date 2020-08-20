@@ -23,8 +23,11 @@ const RecordPage = lazy(() => import('./pages/record/RecordPage'));
 const SchedulePage = lazy(() =>
   import('./components/schedule/ScheduleListForm'),
 );
-const DashboardPage = lazy(() =>
-  import('./components/dashboard/BusinessDashboardForm'),
+const BusinessDashboardPage = lazy(() =>
+  import('./pages/dashboard/BusinessDashboardPage'),
+);
+const EmployDashboardPage = lazy(() =>
+  import('./pages/dashboard/EmployDashboardPage'),
 );
 
 const App = ({ history, match }) => {
@@ -127,10 +130,15 @@ const App = ({ history, match }) => {
                   <Route path="/member" component={MemberPage} />
                   <Route path="/timetable" component={IndexPage} />
                   {/* timetable Component */}
-                  <Route path="/" component={DashboardPage} exact />
+                  <Route path="/" component={BusinessDashboardPage} exact />
+                  {/* <Route
+                    path="/dashboard"
+                    component={EmployDashboardPage}
+                    exact
+                  /> */}
                   <Route path="/employ" component={EmployPage} />
                   <Route path="/occupation" component={OccupationPage} />
-                  <Route path="/record" component={RecordPage} />
+                  <Route path="/record" component={EmployDashboardPage} />
                   <Route path="/schedule" component={SchedulePage} />
                   <Route path="/branch" component={BranchPage} />
                 </Switch>

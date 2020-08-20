@@ -1,6 +1,6 @@
 import client from '../client';
 
-export const getScheduleList = async () => {
-  const response = await client.get('/schedule');
-  return { data: response.data };
+export const getScheduleList = async ({ selectedBranch }) => {
+  const response = await client.get(`/branch/${selectedBranch}/schedule`);
+  return response;
 };

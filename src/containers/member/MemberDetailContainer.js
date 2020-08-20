@@ -73,12 +73,12 @@ const MemberDetailContainer = ({ match, history }) => {
       setError('빈 칸을 모두 입력하세요');
       return;
     }
-    const id = match.params.id;
+    const id = user.name;
     dispatch(memberUpdate({ id, data }));
   };
 
   const onDelete = (e) => {
-    const id = match.params.id;
+    const id = user.name;
     dispatch(memberDelete({ id }));
   };
 
@@ -89,10 +89,10 @@ const MemberDetailContainer = ({ match, history }) => {
           dispatch(logout());
         }
       });
-      const id = match.params.id;
+      const id = user.name;
       dispatch(getMemberDetail({ id }));
     }
-  }, [dispatch, match.params.id, user]);
+  }, [dispatch, user.name, user]);
 
   useEffect(() => {
     if (memberResult === 'OK') {

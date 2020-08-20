@@ -16,6 +16,7 @@ const EmployListContainer = ({ history, match }) => {
   const [filterEmploys, setFilterEmploys] = useState(null);
   const [employFilt, setEmployFilt] = useState(null);
   const [error, setError] = useState(null);
+  const [checked, setChecked] = useState(false);
 
   const closeModal = () => setShow(false);
   const openModal = () => setShow(true);
@@ -31,8 +32,16 @@ const EmployListContainer = ({ history, match }) => {
     user,
     name,
     selectedBranch,
+    selectedSchedule,
   } = useSelector(
-    ({ employList, employPost, loading, auth, branchSelect }) => ({
+    ({
+      employList,
+      employPost,
+      loading,
+      auth,
+      branchSelect,
+      scheduleSelect,
+    }) => ({
       employs: employList.employs,
       employError: employList.employError,
       loading: loading,
@@ -42,8 +51,16 @@ const EmployListContainer = ({ history, match }) => {
       user: auth.user,
       name: employPost.post.name,
       selectedBranch: branchSelect.selectedBranch,
+      selectedSchedule: scheduleSelect.selectedSchedule,
     }),
   );
+
+  const onCheck = (e) => {
+    const {
+      target: { checked },
+    } = e;
+    setChecked({ checked });
+  };
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -144,6 +161,8 @@ const EmployListContainer = ({ history, match }) => {
       show={show}
       closeModal={closeModal}
       openModal={openModal}
+      onCheck={onCheck}
+      checked={checked}
     ></EmployListForm>
   );
 };

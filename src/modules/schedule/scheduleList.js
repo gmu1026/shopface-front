@@ -11,7 +11,10 @@ const [
   SCHEDULE_LIST_FAILURE,
 ] = createRequestActionTypes('scheduleList/schedule_LIST');
 
-export const getScheduleList = createAction(SCHEDULE_LIST);
+export const getScheduleList = createAction(
+  SCHEDULE_LIST,
+  (selectedBranch) => selectedBranch,
+);
 
 const scheduleListSaga = createRequestSaga(
   SCHEDULE_LIST,
