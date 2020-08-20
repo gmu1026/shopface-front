@@ -242,6 +242,7 @@ const ScheduleListContainer = ({ history }) => {
     } else {
       data = scheduleUpdate;
     }
+
     if (
       [
         data.employNo,
@@ -355,7 +356,7 @@ const ScheduleListContainer = ({ history }) => {
         resourceId: schedule.employNo,
         title:
           new Date(schedule.workStartTime).getHours() +
-          '-' +
+          '~' +
           new Date(schedule.workEndTime).getHours() +
           ' ' +
           schedule.occupationName,
@@ -393,18 +394,20 @@ const ScheduleListContainer = ({ history }) => {
       dispatch(initializeForm());
       dispatch(getScheduleList({ no: selectedBranch }));
 
-      closeModal();
       history.push('/schedule');
     }
-  });
+  }, [scheduleResult, dispatch, selectedBranch]);
 
   useEffect(() => {
     if (scheduleError !== null) {
       alert(`시간표 ${scheduleError}을 실패 했습니다.`);
+      setScheduleEvent(null);
+      setModalType('');
 
       dispatch(initializeForm());
+      dispatch(getScheduleList({ no: selectedBranch }));
     }
-  });
+  }, [scheduleError, dispatch, selectedBranch]);
 
   useEffect(() => {
     return () => closeModal();

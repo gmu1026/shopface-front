@@ -6,6 +6,7 @@ export const getOccupationList = async ({ selectedBranch }) => {
 };
 
 export const postOccupation = async ({ post }) => {
+  console.log(post);
   const response = await client.post('/occupation', post);
   return response;
 };

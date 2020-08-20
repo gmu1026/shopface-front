@@ -80,7 +80,7 @@ export const updateOccupation = createAction(
   }),
 );
 
-export const occupationupdateSaga = createRequestSaga(
+export const occupationUpdateSaga = createRequestSaga(
   OCCUPATION_UPDATE,
   occupationAPI.updateOccupation,
 );
@@ -97,38 +97,22 @@ export const deleteOccupationSaga = createRequestSaga(
 export function* occupationSaga() {
   yield takeLatest(OCCUPATION_LIST, occupationListSaga);
   yield takeLatest(OCCUPATION_POST, postSaga);
-  yield takeLatest(OCCUPATION_UPDATE, occupationupdateSaga);
+  yield takeLatest(OCCUPATION_UPDATE, occupationUpdateSaga);
   yield takeLatest(OCCUPATION_DELETE, deleteOccupationSaga);
 }
 
 const initialState = {
   occupations: null,
-  occupationResult: null,
+  occupationPostResult: null,
+  occupationChangeResult: null,
   occupationError: null,
-  postResult: null,
-  postError: null,
-  updateResult: null,
-  updateError: null,
-  deleteResult: null,
-  deleteError: null,
   post: {
     name: '',
-    color: '#00B050',
   },
 };
 
 export const occupation = handleActions(
   {
-    [OCCUPATION_LIST_SUCCESS]: (state, { payload: { data } }) => ({
-      ...state,
-      occupations: data,
-      occupationError: null,
-    }),
-    [OCCUPATION_LIST_FAILURE]: (state, { payload: { e } }) => ({
-      ...state,
-      occupationError: e,
-    }),
-
     [CHANGE_INPUT]: (state, { payload: { key, value } }) =>
       produce(state, (draft) => {
         draft['post'][key] = value;
@@ -141,36 +125,47 @@ export const occupation = handleActions(
     [INITIALIZE_FORM]: (state) => ({
       ...state,
       post: initialState['post'],
-      postResult: null,
+      occupationPostResult: null,
+      occupationChangeResult: null,
+      occupationError: null,
+    }),
+    [OCCUPATION_LIST_SUCCESS]: (state, { payload: { data } }) => ({
+      ...state,
+      occupations: data,
+      occupationError: null,
+    }),
+    [OCCUPATION_LIST_FAILURE]: (state, { payload: { e } }) => ({
+      ...state,
+      occupationError: e,
     }),
     [OCCUPATION_POST_SUCCESS]: (state, { payload: { code } }) => ({
       ...state,
-      postResult: code,
-      postError: null,
+      occupationPostResult: code,
+      occupationError: null,
     }),
-    [OCCUPATION_POST_FAILURE]: (state, { payload: e }) => ({
+    [OCCUPATION_POST_FAILURE]: (state) => ({
       ...state,
-      postError: e,
+      occupationError: '등록',
     }),
 
     [OCCUPATION_DELETE_SUCCESS]: (state, { payload: { code } }) => ({
       ...state,
-      deleteResult: code,
+      occupationChangeResult: code,
       deleteError: null,
     }),
-    [OCCUPATION_DELETE_FAILURE]: (state, { payload: { e } }) => ({
+    [OCCUPATION_DELETE_FAILURE]: (state) => ({
       ...state,
-      deleteError: e,
+      occupationError: '삭제',
     }),
 
     [OCCUPATION_UPDATE_SUCCESS]: (state, { payload: { code } }) => ({
       ...state,
-      updateResult: code,
-      updateError: null,
+      occupationChangeResult: code,
+      occupationError: null,
     }),
-    [OCCUPATION_UPDATE_FAILURE]: (state, { payload: { message } }) => ({
+    [OCCUPATION_UPDATE_FAILURE]: (state) => ({
       ...state,
-      updateError: message,
+      occupationError: '수정',
     }),
   },
   initialState,

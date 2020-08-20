@@ -23,7 +23,6 @@ const ScheduleListForm = ({
         <div className="row">
           <div className="col-12">
             <div className="card">
-              <div className="card-header"></div>
               <div className="card-body">
                 <Scheduler
                   schedulerData={schedulerData}
