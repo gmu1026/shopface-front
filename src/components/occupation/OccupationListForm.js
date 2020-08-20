@@ -2,7 +2,6 @@ import React from 'react';
 import Button from '../common/Button';
 import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
-// import spectrum from '../../spect';
 
 const ErrorMessage = styled.div`
   color: red;
@@ -14,7 +13,6 @@ const ErrorMessage = styled.div`
 
 const OccupationTableBody = ({
   occupation,
-  onChange,
   onDelete,
   onEdit,
   updateChange,

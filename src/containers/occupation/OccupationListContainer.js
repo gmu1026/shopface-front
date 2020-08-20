@@ -19,29 +19,19 @@ const OccupationListContainer = ({ history }) => {
   const dispatch = useDispatch();
   const {
     occupations,
-    occupationError,
     occupationPost,
-    postError,
-    postResult,
-    updateError,
-    updateResult,
-    deleteError,
-    deleteResult,
-    loading,
+    occupationPostResult,
+    occupationChangeResult,
+    occupationError,
     user,
     selectedBranch,
-  } = useSelector(({ occupation, auth, loading, branchSelect }) => ({
+  } = useSelector(({ occupation, auth, branchSelect }) => ({
     occupations: occupation.occupations,
-    occupationError: occupation.occupationError,
     occupationPost: occupation.post,
-    postError: occupation.postError,
-    postResult: occupation.postResult,
-    deleteOccupation: occupation.deleteOccupation,
-    deleteError: occupation.deleteError,
-    deleteResult: occupation.deleteResult,
-    updateOccupation: occupation.updateOccupation,
-    updateError: occupation.updateError,
-    updateResult: occupation.updateResult,
+    occupationPostResult: occupation.occupationPostResult,
+    occupationChangeResult: occupation.occupationChangeResult,
+    occupationError: occupation.occupationError,
+    user: auth.user,
     selectedBranch: branchSelect.selectedBranch,
   }));
 
@@ -72,20 +62,21 @@ const OccupationListContainer = ({ history }) => {
     e.preventDefault();
 
     const data = occupationPost;
-    if ([data.name, data.color].includes('')) {
+    if ([data.name].includes('')) {
       setError('빈 칸을 모두 입력하세요');
       return;
     }
-    setError(null);
+
     dispatch(
       postOccupation({
         post: {
           name: data.name,
-          color: data.color,
           branchNo: selectedBranch,
         },
       }),
     );
+
+    setError(null);
   };
 
   const onEdit = (e) => {
@@ -116,41 +107,42 @@ const OccupationListContainer = ({ history }) => {
           dispatch(logout());
         }
       });
+
       if (selectedBranch !== null && selectedBranch !== '') {
+        console.log(selectedBranch);
         dispatch(getOccupationList({ selectedBranch }));
       }
     }
   }, [dispatch, selectedBranch, user]);
 
   useEffect(() => {
-    if (postResult === 'OK') {
-      alert('등록되었습니다');
-      dispatch(initializeForm());
+    if (occupationPostResult === 'OK') {
+      alert('업무가 등록 되었습니다');
+    }
+    if (occupationChangeResult) {
+      alert('업무가 변경 되었습니다');
+    }
+
+    dispatch(initializeForm());
+
+    if (selectedBranch !== null && selectedBranch !== '') {
       dispatch(getOccupationList({ selectedBranch }));
     }
-  }, [postResult, dispatch, selectedBranch]);
+  }, [occupationPostResult, occupationChangeResult, dispatch, selectedBranch]);
 
   useEffect(() => {
-    if (updateResult === 'OK') {
-      // alert('수정되었습니다');
-      dispatch(initializeForm());
-      dispatch(getOccupationList({ selectedBranch }));
-    }
-  }, [updateResult, dispatch, selectedBranch]);
+    if (occupationError !== null) {
+      alert(`업무 ${occupationError}에 실패 했습니다.`);
 
-  useEffect(() => {
-    if (deleteResult === 'OK') {
-      // alert('삭제되었습니다');
       dispatch(initializeForm());
       dispatch(getOccupationList({ selectedBranch }));
     }
-  }, [deleteResult, dispatch, selectedBranch]);
+  });
 
   return (
     <OccupationListForm
       occupations={occupations}
       occupationError={occupationError}
-      loading={loading}
       onSubmit={onSubmit}
       onEdit={onEdit}
       onChange={onChange}
