@@ -1,7 +1,7 @@
 import client from '../client';
 
-export const getRecordList = async () => {
-  const response = await client.get('/record');
+export const getRecordList = async ({ id }) => {
+  const response = await client.get(`/member/${id}/record`);
   return response;
 };
 

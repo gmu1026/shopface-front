@@ -4,35 +4,32 @@ import EmployDashboard from '../../components/dashboard/EmployDashboard';
 import { checkExpire } from '../../lib/api/common/authAPI';
 import { logout } from '../../modules/common/auth';
 import { useDispatch, useSelector } from 'react-redux';
-import { getEmployDashboard } from '../../modules/dashboard/dashboard';
-const EmployDashboardContainer = () => {
+import {
+  getEmployDashboard,
+  putWorkTime,
+  putQuitTime,
+} from '../../modules/dashboard/dashboard';
+const EmployDashboardContainer = ({ history }) => {
   const dispatch = useDispatch();
-  const {
-    employ,
-    error,
-    loading,
-    user,
-    putWorkTime,
-    putQuitTime,
-  } = useSelector(({ dashboard, loading, auth }) => ({
-    employ: dashboard.employ,
-    error: dashboard.error,
-    loading: loading,
-    user: auth.user,
-    putWorkTime: dashboard.putWorkTime,
-    putQuitTime: dashboard.putQuitTime,
-  }));
+  const { employ, error, loading, user, workResult, quitResult } = useSelector(
+    ({ dashboard, loading, auth }) => ({
+      employ: dashboard.employ,
+      error: dashboard.error,
+      loading: loading,
+      user: auth.user,
+      workResult: dashboard.workResult,
+      quitResult: dashboard.quitResult,
+    }),
+  );
 
   const onWork = (e) => {
-    e.preventDefault();
-    console.log(e.target);
-    dispatch(putWorkTime({ no: '189' }));
+    // console.log(e.target.type);
+    dispatch(putWorkTime({ no: '191' }));
   };
 
   const onQuit = (e) => {
-    e.preventDefault();
-    console.log(e.target);
-    dispatch(putQuitTime({ no: '189' }));
+    // console.log(e.target);
+    dispatch(putQuitTime({ no: '191' }));
   };
 
   useEffect(() => {
@@ -50,6 +47,20 @@ const EmployDashboardContainer = () => {
       );
     }
   }, [dispatch, user]);
+
+  useEffect(() => {
+    if (workResult === 'OK') {
+      alert('출근하셨습니다');
+      history.push('/');
+    }
+  }, [workResult, history, dispatch]);
+
+  useEffect(() => {
+    if (quitResult === 'OK') {
+      alert('퇴근하셨습니다');
+      history.push('/');
+    }
+  }, [quitResult, history, dispatch]);
 
   return (
     <EmployDashboard
