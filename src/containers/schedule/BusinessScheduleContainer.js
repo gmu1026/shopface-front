@@ -1,4 +1,3 @@
-//1. import
 import React, { useState, useEffect } from 'react';
 import { SchedulerData, ViewTypes, DATE_FORMAT } from 'react-big-scheduler';
 import 'react-big-scheduler/lib/css/style.css';
@@ -179,8 +178,7 @@ const ScheduleListContainer = ({ history }) => {
           changeUpdate({
             key: 'workStartTime',
             value:
-              targetTime.substring(0, targetTime.indexOf(' ')) +
-              'T' +
+              targetTime.substring(0, targetTime.indexOf('T') + 1) +
               time[0].format('HH:mm:ss'),
           }),
         );
@@ -188,8 +186,7 @@ const ScheduleListContainer = ({ history }) => {
           changeUpdate({
             key: 'workEndTime',
             value:
-              targetTime.substring(0, targetTime.indexOf(' ')) +
-              'T' +
+              targetTime.substring(0, targetTime.indexOf('T') + 1) +
               time[1].format('HH:mm:ss'),
           }),
         );
@@ -384,15 +381,21 @@ const ScheduleListContainer = ({ history }) => {
 
   useEffect(() => {
     if (scheduleError !== null) {
+      if (scheduleError === undefined) {
+        alert('오류가 발생했습니다.');
+
+        return;
+      }
       alert(`시간표 ${scheduleError}을 실패 했습니다.`);
-      setScheduleEvent(null);
-      setModalType('');
-
-      dispatch(initializeForm());
-      dispatch(getScheduleList({ no: selectedBranch }));
-
-      closeModal();
     }
+
+    setScheduleEvent(null);
+    setModalType('');
+
+    dispatch(initializeForm());
+    dispatch(getScheduleList({ no: selectedBranch }));
+
+    closeModal();
   }, [scheduleError, dispatch, selectedBranch]);
 
   useEffect(() => {

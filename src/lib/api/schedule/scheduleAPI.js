@@ -5,6 +5,11 @@ export const getScheduleList = async ({ no }) => {
   return response;
 };
 
+export const getEmployScheduleList = async ({ id }) => {
+  const response = await client.get(`/member/${id}/schedule`);
+  return response;
+};
+
 export const getSchedule = async ({ no }) => {
   const response = await client.get(`/schedule/${no}`);
   return response;

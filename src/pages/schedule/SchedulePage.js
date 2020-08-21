@@ -1,9 +1,20 @@
 import React from 'react';
-import ScheduleListContainer from '../../containers/schedule/ScheduleListContainer';
+import BusinessScheduleContainer from '../../containers/schedule/BusinessScheduleContainer';
+import EmployScheduleContainer from '../../containers/schedule/EmployScheduleContainer';
+import { useSelector } from 'react-redux';
 const SchedulePage = () => {
+  const { user } = useSelector(({ auth }) => ({ user: auth.user }));
   return (
     <div>
-      <ScheduleListContainer />
+      {user !== null ? (
+        user.type === 'B' ? (
+          <BusinessScheduleContainer />
+        ) : (
+          <EmployScheduleContainer />
+        )
+      ) : (
+        <div></div>
+      )}
     </div>
   );
 };

@@ -3,7 +3,15 @@ import Modal from 'react-bootstrap/Modal';
 import { Link, withRouter } from 'react-router-dom';
 import Button from '../common/Button';
 
-const BranchTableBody = ({ branch, match, modal, onModalBtn, closeModal }) => {
+const BranchTableBody = ({
+  branch,
+  match,
+  modal,
+  onModalBtn,
+  closeModal,
+  onConfirm,
+  onReject,
+}) => {
   return (
     <>
       <tr role="row">
@@ -11,13 +19,7 @@ const BranchTableBody = ({ branch, match, modal, onModalBtn, closeModal }) => {
           <Link to={`${match.url}/${branch.no}`}> {branch.name}</Link>
         </td>
         <td>{branch.phone}</td>
-        <td>
-          {branch.approvalStatus === 'W'
-            ? '승인 대기중'
-            : branch.approvalStatus === 'Y'
-            ? '승인 완료'
-            : '승인 거부'}
-        </td>
+        <td>{branch.state === 'N' ? '미승인' : '승인'}</td>
         <td>
           <Button
             className="btn btn-outline-primary"
@@ -26,6 +28,17 @@ const BranchTableBody = ({ branch, match, modal, onModalBtn, closeModal }) => {
           >
             보기
           </Button>
+        </td>
+        <td>
+          {branch.state === 'Y' ? (
+            <Button onClick={onReject} value={branch.no}>
+              사업장 거부
+            </Button>
+          ) : (
+            <Button onClick={onConfirm} value={branch.no}>
+              사업장 승인
+            </Button>
+          )}
         </td>
       </tr>
       <Modal
@@ -60,6 +73,8 @@ const BranchListForm = ({
   modal,
   closeModal,
   onModalBtn,
+  onConfirm,
+  onReject,
 }) => {
   return (
     <>
@@ -103,9 +118,6 @@ const BranchListForm = ({
                             <span aria-hidden="true">×</span>
                           </button>
                         </div>
-                        <div className="modal-body m-3">
-                          {/* <img src="" width="835px" height="1000px" /> */}
-                        </div>
                         <div className="modal-footer">
                           <button
                             type="button"
@@ -132,6 +144,7 @@ const BranchListForm = ({
                             <th>전화변호</th>
                             <th>승인 현황</th>
                             <th>사업장 등록증</th>
+                            <th></th>
                           </tr>
                         </thead>
                         <tbody id="table_body">
@@ -144,6 +157,8 @@ const BranchListForm = ({
                                 modal={modal}
                                 closeModal={closeModal}
                                 onModalBtn={onModalBtn}
+                                onConfirm={onConfirm}
+                                onReject={onReject}
                               />
                             ))
                           ) : (

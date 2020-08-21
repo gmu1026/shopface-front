@@ -39,9 +39,13 @@ export const getBusinessDashboard = createAction(
   (state) => state,
 );
 
-export const putWorkTime = createAction(EMPLOY_PUTWORKTIME, (no) => no);
+export const putWorkTime = createAction(EMPLOY_PUTWORKTIME, ({ no }) => ({
+  no,
+}));
 
-export const putQuitTime = createAction(EMPLOY_PUTQUITTIME, (no) => no);
+export const putQuitTime = createAction(EMPLOY_PUTQUITTIME, ({ no }) => ({
+  no,
+}));
 const employSaga = createRequestSaga(
   EMPLOY_DASHBOARD,
   dashboardAPI.getEmployDashboard,

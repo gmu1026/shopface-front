@@ -16,9 +16,11 @@ const [
   SCHEDULE_LIST_SUCCESS,
   SCHEDULE_LIST_FAILURE,
 ] = createRequestActionTypes('scheduleList/schedule_LIST');
-const [SCHEDULE, SCHEDULE_SUCCESS, SCHEDULE_FAILURE] = createRequestActionTypes(
-  'scheduleList/SCHEDULE',
-);
+const [
+  EMPLOY_SCHEDULE_LIST,
+  EMPLOY_SCHEDULE_LIST_SUCCESS,
+  EMPLOY_SCHEDULE_LIST_FAILURE,
+] = createRequestActionTypes('scheduleList/EMPLOY_SCHEDULE_LIST');
 const [
   SCHEDULE_POST,
   SCHEDULE_POST_SUCCESS,
@@ -57,7 +59,12 @@ export const initializeForm = createAction(
 export const getScheduleList = createAction(SCHEDULE_LIST, ({ no }) => ({
   no,
 }));
-export const getSchdeule = createAction(SCHEDULE, ({ no }) => ({ no }));
+export const getEmployScheduleList = createAction(
+  EMPLOY_SCHEDULE_LIST,
+  ({ id }) => ({
+    id,
+  }),
+);
 export const postSchedule = createAction(SCHEDULE_POST, ({ data }) => ({
   data,
 }));
@@ -73,7 +80,10 @@ const getScheduleListSaga = createRequestSaga(
   SCHEDULE_LIST,
   scheduleAPI.getScheduleList,
 );
-const getScheduleSaga = createRequestSaga(SCHEDULE, scheduleAPI.getSchedule);
+const getEmployScheduleListSaga = createRequestSaga(
+  EMPLOY_SCHEDULE_LIST,
+  scheduleAPI.getEmployScheduleList,
+);
 const postScheduleSaga = createRequestSaga(
   SCHEDULE_POST,
   scheduleAPI.postSchedule,
@@ -89,7 +99,7 @@ const deleteScheduleSaga = createRequestSaga(
 
 export function* scheduleSaga() {
   yield takeLatest(SCHEDULE_LIST, getScheduleListSaga);
-  yield takeLatest(SCHEDULE, getScheduleSaga);
+  yield takeLatest(EMPLOY_SCHEDULE_LIST, getEmployScheduleListSaga);
   yield takeLatest(SCHEDULE_POST, postScheduleSaga);
   yield takeLatest(SCHEDULE_UPDATE, updateScheduleSaga);
   yield takeLatest(SCHEDULE_DELETE, deleteScheduleSaga);
@@ -97,7 +107,7 @@ export function* scheduleSaga() {
 
 const initialState = {
   schedules: null,
-  schedule: null,
+  employSchedules: null,
   scheduleError: null,
   post: {
     employNo: '',
@@ -146,12 +156,12 @@ const scheduleList = handleActions(
       ...state,
       scheduleError: e,
     }),
-    [SCHEDULE_SUCCESS]: (state, { payload: { data } }) => ({
+    [EMPLOY_SCHEDULE_LIST_SUCCESS]: (state, { payload: { data } }) => ({
       ...state,
-      schedules: data,
+      employSchedules: data,
       scheduleError: null,
     }),
-    [SCHEDULE_FAILURE]: (state, { payload: { e } }) => ({
+    [EMPLOY_SCHEDULE_LIST_FAILURE]: (state, { payload: { e } }) => ({
       ...state,
       scheduleError: e,
     }),

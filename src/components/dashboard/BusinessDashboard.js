@@ -2,7 +2,7 @@ import React from 'react';
 import Clock from 'react-live-clock';
 // import Button from '../common/Button';
 import { withRouter } from 'react-router-dom';
-const DashboardTableBody = ({ dashboard }) => {
+const RTableBody = ({ dashboard }) => {
   return (
     <>
       <tr role="row">
@@ -13,12 +13,24 @@ const DashboardTableBody = ({ dashboard }) => {
         </td>
         <td>{dashboard.hoursPlan}</td>
         <td>{dashboard.salaryPlan}</td>
-        <td>{dashboard.scheduleStatus}</td>
+        <td>
+          {dashboard.scheduleStatus === 'R'
+            ? '근무중'
+            : dashboard.scheduleStatus === 'W'
+            ? '근무 예정'
+            : '근무 완료'}
+        </td>
         <td>{dashboard.actualWorkingHours}</td>
         <td>{dashboard.actualSalary}</td>
       </tr>
+    </>
+  );
+};
 
-      {/* <tr role="row2">
+const WTableBody = ({ dashboard }) => {
+  return (
+    <>
+      <tr role="row">
         <td>{dashboard.employName}</td>
         <td>{dashboard.occupationName}</td>
         <td>
@@ -26,12 +38,15 @@ const DashboardTableBody = ({ dashboard }) => {
         </td>
         <td>{dashboard.hoursPlan}</td>
         <td>{dashboard.salaryPlan}</td>
-        <td>{dashboard.actualWorkingHours}</td>
-        <td>{dashboard.actualSalary}</td>
-        <td>{dashboard.scheduleStatus}</td>
       </tr>
+    </>
+  );
+};
 
-      <tr role="row3">
+const CTableBody = ({ dashboard }) => {
+  return (
+    <>
+      <tr role="row">
         <td>{dashboard.employName}</td>
         <td>{dashboard.occupationName}</td>
         <td>
@@ -39,10 +54,16 @@ const DashboardTableBody = ({ dashboard }) => {
         </td>
         <td>{dashboard.hoursPlan}</td>
         <td>{dashboard.salaryPlan}</td>
+        <td>
+          {dashboard.scheduleStatus === 'R'
+            ? '근무중'
+            : dashboard.scheduleStatus === 'W'
+            ? '근무 예정'
+            : '근무 완료'}
+        </td>
         <td>{dashboard.actualWorkingHours}</td>
         <td>{dashboard.actualSalary}</td>
-        <td>{dashboard.scheduleStatus}</td>
-      </tr> */}
+      </tr>
     </>
   );
 };
@@ -51,7 +72,7 @@ const BusinessDashboard = ({ business, error, loading, match }) => {
   return (
     <div className="container-fluid p-0">
       <h1 className="h3 mb-3">근무 현황</h1>
-      {/*  <Clock format={'YYYY년 MM월 DD일 HH:mm:ss'} ticking={true} /> */}
+      <Clock format={'YYYY년 MM월 DD일 HH:mm:ss'} ticking={true} />
       <div className="row">
         <div className="col-12">
           <div className="card">
@@ -73,7 +94,7 @@ const BusinessDashboard = ({ business, error, loading, match }) => {
             <div className="row">
               <div className="col-sm-12">
                 <form>
-                  <h5>근무중</h5>
+                  근무중
                   <table
                     className="table table-striped dataTable no-footer dtr-inline"
                     role="grid"
@@ -90,37 +111,84 @@ const BusinessDashboard = ({ business, error, loading, match }) => {
                         <th>실제시간</th>
                         <th>실제 급여</th>
                       </tr>
-                      {/* 근무예정
-                      <tr role="row">
-                        <th>근무자</th>
-                        <th>담당 업무</th>
-                        <th>스케줄</th>
-                        <th>예상 시간</th>
-                        <th>예상급여</th>
-                        <th>상태</th>
-                        <th>실제 시간</th>
-                        <th>실제 급여</th>
-                      </tr>
-                      근무완료
-                      <tr role="row">
-                        <th>근무자</th>
-                        <th>담당 업무</th>
-                        <th>스케줄</th>
-                        <th>예상 시간</th>
-                        <th>예상급여</th>
-                        <th>상태</th>
-                        <th>실제 시간</th>
-                        <th>실제 급여</th>
-                      </tr> */}
                     </thead>
                     <tbody>
                       {business !== null ? (
                         business.map((dashboard, index) => (
-                          <DashboardTableBody
+                          <RTableBody
                             key={index}
-                            match={match}
                             dashboard={dashboard}
-                          ></DashboardTableBody>
+                          ></RTableBody>
+                        ))
+                      ) : (
+                        <>
+                          <tr role="row">
+                            <td colSpan="4">데이터가 없습니다.</td>
+                          </tr>
+                        </>
+                      )}
+                    </tbody>
+                  </table>
+                  근무예정
+                  <table
+                    className="table table-striped dataTable no-footer dtr-inline"
+                    role="grid"
+                    aria-describedby="datatables-buttons_info"
+                  >
+                    <thead>
+                      <tr role="row">
+                        <th>근무자</th>
+                        <th>담당 업무</th>
+                        <th>스케줄</th>
+                        <th>예상 시간</th>
+                        <th>예상급여</th>
+                        <th>상태</th>
+                        <th>실제시간</th>
+                        <th>실제 급여</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {business !== null ? (
+                        business.map((dashboard, index) => (
+                          <WTableBody
+                            key={index}
+                            dashboard={dashboard}
+                          ></WTableBody>
+                        ))
+                      ) : (
+                        <>
+                          <tr role="row">
+                            <td colSpan="4">데이터가 없습니다.</td>
+                          </tr>
+                        </>
+                      )}
+                    </tbody>
+                  </table>
+                  근무완료
+                  <table
+                    className="table table-striped dataTable no-footer dtr-inline"
+                    role="grid"
+                    aria-describedby="datatables-buttons_info"
+                  >
+                    <thead>
+                      <tr role="row">
+                        <th>근무자</th>
+                        <th>담당 업무</th>
+                        <th>스케줄</th>
+                        <th>예상 시간</th>
+                        <th>예상급여</th>
+                        <th>상태</th>
+                        <th>실제시간</th>
+                        <th>실제 급여</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {business !== null ? (
+                        business.map((dashboard, index) => (
+                          <CTableBody
+                            key={index}
+                            dashboard={dashboard}
+                          ></CTableBody>
                         ))
                       ) : (
                         <>

@@ -24,7 +24,7 @@ const RecordListContainer = () => {
           dispatch(logout());
         }
       });
-      dispatch(getRecordList());
+      dispatch(getRecordList({ id: user.name }));
     }
   }, [dispatch, user]);
 

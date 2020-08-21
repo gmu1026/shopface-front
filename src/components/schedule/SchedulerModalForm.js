@@ -33,6 +33,7 @@ const SchedulerModalForm = ({
   if (employs !== null && employs !== []) {
     filterEmploys = employs.filter((employ) => employ.state === 'E');
   }
+
   return (
     <>
       <Modal show={show} onHide={closeModal}>
@@ -54,7 +55,7 @@ const SchedulerModalForm = ({
                     name="employNo"
                     className=" col-sm-9"
                     onChange={onChange}
-                    value={schedule.resourecId}
+                    value={schedule.resourceId}
                   >
                     {filterEmploys !== null &&
                       filterEmploys !== [] &&
