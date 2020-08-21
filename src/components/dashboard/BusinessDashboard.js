@@ -59,7 +59,7 @@ const BusinessDashboard = ({ business, error, loading, match }) => {
               <div className="dataTables_wrapper dt-bootstrap4 no-footer">
                 <div className="row">
                   <div className="col-sm-12 col-md-6">
-                    <div className="form-group" id="check-disable" />
+                    <div className="form-group" />
                   </div>
                   <div className="col-sm-12 col-md-6">
                     <div className="row">
@@ -73,13 +73,13 @@ const BusinessDashboard = ({ business, error, loading, match }) => {
             <div className="row">
               <div className="col-sm-12">
                 <form>
+                  <h5>근무중</h5>
                   <table
                     className="table table-striped dataTable no-footer dtr-inline"
                     role="grid"
                     aria-describedby="datatables-buttons_info"
                   >
                     <thead>
-                      근무중
                       <tr role="row">
                         <th>근무자</th>
                         <th>담당 업무</th>
@@ -113,7 +113,7 @@ const BusinessDashboard = ({ business, error, loading, match }) => {
                         <th>실제 급여</th>
                       </tr> */}
                     </thead>
-                    <tbody id="table_body">
+                    <tbody>
                       {business !== null ? (
                         business.map((dashboard, index) => (
                           <DashboardTableBody
@@ -124,7 +124,6 @@ const BusinessDashboard = ({ business, error, loading, match }) => {
                         ))
                       ) : (
                         <>
-                          {' '}
                           <tr role="row">
                             <td colSpan="4">데이터가 없습니다.</td>
                           </tr>

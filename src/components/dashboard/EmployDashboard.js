@@ -40,7 +40,7 @@ const EmployDashboard = ({ employ, error, loading, match, onWork, onQuit }) => {
               <div className="dataTables_wrapper dt-bootstrap4 no-footer">
                 <div className="row">
                   <div className="col-sm-12 col-md-6">
-                    <div className="form-group" id="check-disable" />
+                    <div className="form-group" />
                   </div>
                   <div className="col-sm-12 col-md-6">
                     <div className="row">
@@ -53,13 +53,13 @@ const EmployDashboard = ({ employ, error, loading, match, onWork, onQuit }) => {
             </div>
             <div className="row">
               <div className="col-sm-12">
+                <h5>근무중</h5>
                 <table
                   className="table table-striped dataTable no-footer dtr-inline"
                   role="grid"
                   aria-describedby="datatables-buttons_info"
                 >
                   <thead>
-                    근무중
                     <tr role="row">
                       <th>근무지</th>
                       <th>담당 업무</th>
@@ -71,7 +71,7 @@ const EmployDashboard = ({ employ, error, loading, match, onWork, onQuit }) => {
                       <th>실제 급여</th>
                     </tr>
                   </thead>
-                  <tbody id="table_body">
+                  <tbody>
                     {employ !== null && employ.length > 0 ? (
                       employ.map((emp, index) => (
                         <DashboardTableBody

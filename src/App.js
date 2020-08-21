@@ -16,7 +16,7 @@ const RegisterPage = lazy(() => import('./pages/common/RegisterPage'));
 const EmployPage = lazy(() => import('./pages/employ/EmployPage'));
 const MemberPage = lazy(() => import('./pages/member/MemberPage'));
 const OccupationPage = lazy(() => import('./pages/occupation/OccupationPage'));
-const RecordPage = lazy(() => import('./pages/record/RecordPage'));
+//const RecordPage = lazy(() => import('./pages/record/RecordPage'));
 
 const BusinessDashboardPage = lazy(() =>
   import('./pages/dashboard/BusinessDashboardPage'),
@@ -94,7 +94,6 @@ const App = ({ history, match }) => {
               <Suspense fallback={<div>Loading...</div>}>
                 <Switch>
                   <Route path="/member" component={MemberPage} />
-                  <Route path="/timetable" component={IndexPage} />
                   <Route path="/" component={EmployDashboardPage} exact />
                   {/* <Route
                     path="/dashboard"
@@ -103,7 +102,7 @@ const App = ({ history, match }) => {
                   /> */}
                   <Route path="/employ" component={EmployPage} />
                   <Route path="/occupation" component={OccupationPage} />
-                  <Route path="/record" component={EmployDashboardPage} />
+                  <Route path="/record" component={BusinessDashboardPage} />
                   <Route path="/schedule" component={SchedulePage} />
                   <Route path="/branch" component={BranchPage} />
                 </Switch>

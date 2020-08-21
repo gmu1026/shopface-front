@@ -17,10 +17,7 @@ import memberList, { memberSaga } from './member/memberList';
 import occupationSelect from './occupation/occupationSelect';
 import recordList, { recordSaga } from './record/recordList';
 import scheduleList, { scheduleSaga } from './schedule/scheduleList';
-import dashboard, {
-  businessDashboardSaga,
-  employDashboardSaga,
-} from './dashboard/dashboard';
+import dashboard, { dashboardSaga } from './dashboard/dashboard';
 
 const rootReducer = combineReducers({
   auth,
@@ -58,8 +55,7 @@ export function* rootSaga() {
     employDetailSaga(),
     memberDetailSaga(),
     scheduleSaga(),
-    businessDashboardSaga(),
-    employDashboardSaga(),
+    dashboardSaga(),
   ]);
 }
 
