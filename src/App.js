@@ -7,7 +7,7 @@ import client from './lib/api/client';
 import { checkExpire } from './lib/api/common/authAPI';
 import { getBranchList } from './modules/branch/branchList';
 import { logout } from './modules/common/auth';
-import SchedulePage from './containers/schedule/ScheduleListContainer';
+import SchedulePage from './pages/schedule/SchedulePage';
 
 const LoginPage = lazy(() => import('./pages/common/LoginPage'));
 const CertCodePage = lazy(() => import('./pages/common/CertCodePage'));
