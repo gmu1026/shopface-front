@@ -78,7 +78,7 @@ export function* employDetailSaga() {
 }
 
 const initialState = {
-  employs: null,
+  employ: null,
   employResult: null,
   employError: null,
 };
@@ -86,7 +86,7 @@ export const employDetail = handleActions(
   {
     [CHANGE_INPUT]: (state, { payload: { key, value } }) =>
       produce(state, (draft) => {
-        draft['employs'][key] = value;
+        draft['employ'][key] = value;
       }),
     [INITIALIZE_RESULT]: (state) => ({
       ...state,
@@ -94,7 +94,7 @@ export const employDetail = handleActions(
     }),
     [EMPLOY_DETAIL_SUCCESS]: (state, { payload: { data } }) => ({
       ...state,
-      employs: data,
+      employ: data,
       employResult: null,
       employError: null,
     }),

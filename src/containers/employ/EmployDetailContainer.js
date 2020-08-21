@@ -15,9 +15,9 @@ const EmployDetailContainer = ({ match, history }) => {
   const [error, setError] = useState(null);
 
   const dispatch = useDispatch();
-  const { employs, employResult, employError, user } = useSelector(
+  const { employ, employResult, employError, user } = useSelector(
     ({ employDetail, auth }) => ({
-      employs: employDetail.employs,
+      employ: employDetail.employ,
       employError: employDetail.employError,
       employResult: employDetail.employResult,
       user: auth.user,
@@ -46,8 +46,8 @@ const EmployDetailContainer = ({ match, history }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    let data = employs;
-    if ([data.salary].includes('')) {
+    let data = employ;
+    if ([data.salary, data.name].includes('')) {
       setError('빈 칸을 모두 입력하세요');
       return;
     }
@@ -81,7 +81,7 @@ const EmployDetailContainer = ({ match, history }) => {
         onSubmit={onSubmit}
         onChange={onChange}
         error={error}
-        employs={employs}
+        employ={employ}
         onDisabled={onDisabled}
         onInvite={onInvite}
       ></EmployDetailForm>

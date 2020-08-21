@@ -55,6 +55,11 @@ const LoginForm = ({ history, match }) => {
 
   useEffect(() => {
     if (user !== null) {
+      if (user.type === 'A') {
+        history.push('/member');
+        return;
+      }
+
       history.push('/');
     }
     dispatch(initialize());

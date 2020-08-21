@@ -11,13 +11,7 @@ const BranchTableBody = ({ branch, match, modal, onModalBtn, closeModal }) => {
           <Link to={`${match.url}/${branch.no}`}> {branch.name}</Link>
         </td>
         <td>{branch.phone}</td>
-        <td>
-          {branch.approvalStatus === 'W'
-            ? '승인 대기중'
-            : branch.approvalStatus === 'Y'
-            ? '승인 완료'
-            : '승인 거부'}
-        </td>
+        <td>{branch.state === 'N' ? '미승인' : '승인'}</td>
         <td>
           <Button
             className="btn btn-outline-primary"
@@ -102,9 +96,6 @@ const BranchListForm = ({
                           >
                             <span aria-hidden="true">×</span>
                           </button>
-                        </div>
-                        <div className="modal-body m-3">
-                          {/* <img src="" width="835px" height="1000px" /> */}
                         </div>
                         <div className="modal-footer">
                           <button

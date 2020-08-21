@@ -79,25 +79,30 @@ const SidebarMenu = ({ user }) => {
             <div></div>
           )}
 
-          <SubMenu title="설정">
-            {user !== null && ['B', 'E'].includes(user.type) ? (
-              <MenuItem>
-                <Link to={user != null ? `/member/${user.name}` : '/login'}>
-                  나의 정보 관리
-                </Link>
-              </MenuItem>
+          {user !== null && ['B', 'E'].includes(user.type) ? (
+            user.type === 'B' ? (
+              <SubMenu title="설정">
+                <MenuItem>
+                  <Link to={user != null ? `/member/${user.name}` : '/login'}>
+                    나의 정보 관리
+                  </Link>
+                </MenuItem>
+                <MenuItem>
+                  <Link to="/occupation">업무 관리 </Link>
+                </MenuItem>
+              </SubMenu>
             ) : (
-              <div></div>
-            )}
-
-            {user !== null && user.type === 'B' ? (
-              <MenuItem>
-                <Link to="/occupation">업무 관리 </Link>
-              </MenuItem>
-            ) : (
-              <div></div>
-            )}
-          </SubMenu>
+              <SubMenu title="설정">
+                <MenuItem>
+                  <Link to={user != null ? `/member/${user.name}` : '/login'}>
+                    나의 정보 관리
+                  </Link>
+                </MenuItem>
+              </SubMenu>
+            )
+          ) : (
+            <div></div>
+          )}
         </Menu>
       </ProSidebar>
     </div>

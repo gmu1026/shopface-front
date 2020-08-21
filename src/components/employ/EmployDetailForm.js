@@ -2,14 +2,14 @@ import React from 'react';
 import Button from '../common/Button';
 
 const EmployDetailForm = ({
-  employs,
+  employ,
   onSubmit,
   onChange,
   error,
   onDisabled,
   onInvite,
 }) => {
-  if (employs === null) {
+  if (employ === null) {
     return <div>loading...</div>;
   } else {
     return (
@@ -26,7 +26,7 @@ const EmployDetailForm = ({
                   <div className="card-body">
                     <form onSubmit={onSubmit}>
                       <div className="col-12 col-lg-6">
-                        {/* <div className="form-group">
+                        <div className="form-group">
                           <label>이름</label>
                           <input
                             type="text"
@@ -35,15 +35,15 @@ const EmployDetailForm = ({
                             onChange={onChange}
                             value={employ.name !== null ? employ.name : ''}
                           />
-                        </div> */}
-                        {/* <div className="form-group">
+                        </div>
+                        <div className="form-group">
                           <label>전화번호</label>
                           <input
                             type="text"
                             className="form-control"
                             name="phone"
-                            readOnly
-                            value={employs.phone !== null ? employs.phone : ''}
+                            disabled
+                            value={employ.phone !== null ? employ.phone : ''}
                           />
                         </div>
                         <div className="form-group">
@@ -52,8 +52,8 @@ const EmployDetailForm = ({
                             type="text"
                             className="form-control"
                             name="email"
-                            readOnly
-                            value={employs.email !== null ? employs.email : ''}
+                            disabled
+                            value={employ.email !== null ? employ.email : ''}
                           />
                         </div>
                         <div className="form-group">
@@ -62,8 +62,10 @@ const EmployDetailForm = ({
                             type="text"
                             className="form-control"
                             name="bankName"
-                            readOnly
-                            value={employs.bankName}
+                            disabled
+                            value={
+                              employ.bankName !== null ? employ.bankName : ''
+                            }
                           />
                         </div>
                         <div className="form-group">
@@ -72,14 +74,14 @@ const EmployDetailForm = ({
                             type="text"
                             className="form-control"
                             name="accountNum"
-                            readOnly
+                            disabled
                             value={
-                              employs.accountNum !== null
-                                ? employs.accountNum
+                              employ.accountNum !== null
+                                ? employ.accountNum
                                 : ''
                             }
                           />
-                        </div> */}
+                        </div>
                         <div className="form-group">
                           <label>급여</label>
                           <input
@@ -87,10 +89,7 @@ const EmployDetailForm = ({
                             className="form-control"
                             name="salary"
                             onChange={onChange}
-                            value={employs.salary !== null ? employs.salary : 0}
-                            // value={
-                            //   employs.salary !== null ? employs.salary : ''
-                            // }
+                            value={employ.salary !== null ? employ.salary : 0}
                           />
                         </div>
                         <div className="mb-3">
@@ -110,7 +109,7 @@ const EmployDetailForm = ({
                             취소
                           </Button>
 
-                          {employs.state === 'D' ? (
+                          {employ.state === 'D' ? (
                             <Button
                               className="btn btn-primary mr-1 ml-1"
                               onClick={onInvite}
