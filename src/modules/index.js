@@ -4,6 +4,7 @@ import branchDetail, { branchDetailSaga } from './branch/branchDetail';
 import branchList, { branchSaga } from './branch/branchList';
 import branchPost, { branchPostSaga } from './branch/branchPost';
 import branchSelect from './branch/branchSelect';
+import scheduleSelect from './schedule/scheduleSelect';
 import auth, { authSaga } from './common/auth';
 import certCode, { certCodeSaga } from './common/certCode';
 import loading from './common/loading';
@@ -16,10 +17,7 @@ import memberList, { memberSaga } from './member/memberList';
 import occupationSelect from './occupation/occupationSelect';
 import recordList, { recordSaga } from './record/recordList';
 import scheduleList, { scheduleSaga } from './schedule/scheduleList';
-import dashboard, {
-  businessDashboardSaga,
-  employDashboardSaga,
-} from './dashboard/dashboard';
+import dashboard, { dashboardSaga } from './dashboard/dashboard';
 
 const rootReducer = combineReducers({
   auth,
@@ -39,6 +37,7 @@ const rootReducer = combineReducers({
   occupationSelect,
   scheduleList,
   dashboard,
+  scheduleSelect,
 });
 
 export function* rootSaga() {
@@ -56,8 +55,7 @@ export function* rootSaga() {
     employDetailSaga(),
     memberDetailSaga(),
     scheduleSaga(),
-    businessDashboardSaga(),
-    employDashboardSaga(),
+    dashboardSaga(),
   ]);
 }
 

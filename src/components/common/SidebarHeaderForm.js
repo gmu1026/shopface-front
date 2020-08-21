@@ -32,9 +32,12 @@ const SideBarHeaderForm = ({
           <i className="hamburger align-self-center"></i>
         </a>
         <div className="navbar-collapse collapse">
-          <div className="ml-auto" style={{ width: '200px' }}>
-            <BranchSelectBox branchs={branchs} />
-          </div>
+          {user !== null && user.type === 'B' && (
+            <div className="ml-auto" style={{ width: '200px' }}>
+              <BranchSelectBox branchs={branchs} />
+            </div>
+          )}
+
           <ul className="navbar-nav ml-auto">
             <li className="nav-item dropdown">
               <div className="position-relative">

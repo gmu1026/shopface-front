@@ -37,6 +37,8 @@ const BranchPostContainer = ({ history }) => {
         value,
       }),
     );
+
+    setError('');
   };
 
   const onSubmit = (e) => {

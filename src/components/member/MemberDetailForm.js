@@ -75,7 +75,7 @@ const MemberDetailForm = ({
                         type="text"
                         className="form-control"
                         name="email"
-                        value={member.email}
+                        value={member.email !== null ? member.email : ''}
                         onChange={onChange}
                         disabled={disabled}
                       />
