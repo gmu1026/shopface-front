@@ -3,7 +3,15 @@ import Modal from 'react-bootstrap/Modal';
 import { Link, withRouter } from 'react-router-dom';
 import Button from '../common/Button';
 
-const BranchTableBody = ({ branch, match, modal, onModalBtn, closeModal }) => {
+const BranchTableBody = ({
+  branch,
+  match,
+  modal,
+  onModalBtn,
+  closeModal,
+  onConfirm,
+  onReject,
+}) => {
   return (
     <>
       <tr role="row">
@@ -20,6 +28,17 @@ const BranchTableBody = ({ branch, match, modal, onModalBtn, closeModal }) => {
           >
             보기
           </Button>
+        </td>
+        <td>
+          {branch.state === 'Y' ? (
+            <Button onClick={onReject} value={branch.no}>
+              사업장 거부
+            </Button>
+          ) : (
+            <Button onClick={onConfirm} value={branch.no}>
+              사업장 승인
+            </Button>
+          )}
         </td>
       </tr>
       <Modal
@@ -54,6 +73,8 @@ const BranchListForm = ({
   modal,
   closeModal,
   onModalBtn,
+  onConfirm,
+  onReject,
 }) => {
   return (
     <>
@@ -123,6 +144,7 @@ const BranchListForm = ({
                             <th>전화변호</th>
                             <th>승인 현황</th>
                             <th>사업장 등록증</th>
+                            <th></th>
                           </tr>
                         </thead>
                         <tbody id="table_body">
@@ -135,6 +157,8 @@ const BranchListForm = ({
                                 modal={modal}
                                 closeModal={closeModal}
                                 onModalBtn={onModalBtn}
+                                onConfirm={onConfirm}
+                                onReject={onReject}
                               />
                             ))
                           ) : (

@@ -45,8 +45,10 @@ const App = ({ history, match }) => {
         }
       });
 
-      const { name } = user;
-      dispatch(getBranchList({ name }));
+      if (user.type !== 'A') {
+        const { name } = user;
+        dispatch(getBranchList({ name }));
+      }
     } else {
       if (
         window.location.pathname === '/certcode' ||

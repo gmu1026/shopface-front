@@ -109,7 +109,6 @@ const OccupationListContainer = ({ history }) => {
       });
 
       if (selectedBranch !== null && selectedBranch !== '') {
-        console.log(selectedBranch);
         dispatch(getOccupationList({ selectedBranch }));
       }
     }
