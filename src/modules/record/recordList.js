@@ -11,7 +11,7 @@ const [
   RECORD_LIST_FAILURE,
 ] = createRequestActionTypes('recordList/record_LIST');
 
-export const getRecordList = createAction(RECORD_LIST);
+export const getRecordList = createAction(RECORD_LIST, (id) => id);
 
 const recordListSaga = createRequestSaga(RECORD_LIST, recordAPI.getRecordList);
 
