@@ -31,6 +31,15 @@ const SidebarHeaderContainer = ({ onLogout, branchs, user }) => {
   };
 
   const onPatchEmployByCertCode = () => {
+    if (certCode === '') {
+      setError('인증코드를 입력해주세요');
+      return;
+    }
+    if (certCode.length !== 6) {
+      setError('인증코드는 6자리 입니다.');
+      return;
+    }
+
     const { name } = user;
     dispatch(patchEmployByCertCode({ memberId: name, certCode }));
   };

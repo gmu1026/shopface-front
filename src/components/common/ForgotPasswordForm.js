@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
 import Button from './Button';
+import ErrorMessage from './ErrorMessage';
 
 const AuthFormBlock = styled.div`
   h3 {
@@ -10,7 +11,6 @@ const AuthFormBlock = styled.div`
     margin-bottom: 1rem;
   }
 `;
-
 const StyledInput = styled.input`
   font-size: 1rem;
   border: none;
@@ -26,7 +26,6 @@ const StyledInput = styled.input`
     margin-top: 1rem;
   }
 `;
-
 const Footer = styled.div`
   margin-top: 1rem;
   text-align: left;
@@ -37,14 +36,6 @@ const Footer = styled.div`
       color: ${palette.gray[9]};
     }
   }
-`;
-
-const ErrorMessage = styled.div`
-  color: red;
-  text-align: center;
-  font-size: 0.875rem;
-  margin-top: 1rem;
-  margin-left: 1rem;
 `;
 
 const ForgotPasswordForm = ({ type, onChange, onSubmit, error }) => {

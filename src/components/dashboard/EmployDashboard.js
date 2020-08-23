@@ -6,11 +6,9 @@ const RTableBody = ({ emp, onWork, onQuit }) => {
     <>
       <tr role="row">
         <td>
-          {' '}
           {emp.workStartTime}~{emp.workEndTime}_{emp.branchName}(
           {emp.occupationName})
         </td>
-        <br></br>
         <td>
           <Button
             type="button"

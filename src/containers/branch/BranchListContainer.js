@@ -83,6 +83,7 @@ const BranchListContainer = () => {
     <div>
       <BranchListForm
         branchs={branchs}
+        user={user}
         branchError={branchError}
         loading={loading}
         modal={modal}

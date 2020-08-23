@@ -24,14 +24,13 @@ export const logout = async () => {
   });
   try {
     localStorage.removeItem('user');
-    return { message: 'Success' }; // 수정요망
+    return { message: 'Success' };
   } catch (error) {
     throw new Error('로그아웃 실패');
   }
 };
 
 export const signUp = async ({ member, certCode }) => {
-  console.log(certCode);
   const response = await Auth.signUp({
     username: member.id,
     password: member.password,
@@ -95,7 +94,6 @@ export const patchEmployByCertCode = async ({ memberId, certCode }) => {
 };
 
 export const checkCertCode = async ({ certCode }) => {
-  console.log(certCode);
   const response = await client.get(`/employ/check?certcode=${certCode}`);
   return response;
 };

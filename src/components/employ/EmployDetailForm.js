@@ -1,5 +1,6 @@
 import React from 'react';
 import Button from '../common/Button';
+import ErrorMessage from '../common/ErrorMessage';
 
 const EmployDetailForm = ({
   employ,
@@ -92,6 +93,7 @@ const EmployDetailForm = ({
                             value={employ.salary !== null ? employ.salary : 0}
                           />
                         </div>
+                        <ErrorMessage>{error}</ErrorMessage>
                         <div className="mb-3">
                           <Button
                             type="button"

@@ -4,15 +4,7 @@ import Button from './Button';
 import BranchSelectBox from '../branch/BranchSelectForm';
 import Modal from '../../../node_modules/react-bootstrap/esm/Modal';
 import { Form } from '../../../node_modules/react-bootstrap/esm/index';
-import styled from 'styled-components';
-
-const ErrorMessage = styled.div`
-  color: red;
-  text-align: center;
-  font-size: 0.875rem;
-  margin-top: 1rem;
-  margin-left: 1rem;
-`;
+import ErrorMessage from './ErrorMessage';
 
 const SideBarHeaderForm = ({
   user,
