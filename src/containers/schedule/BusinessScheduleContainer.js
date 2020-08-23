@@ -233,7 +233,8 @@ const ScheduleListContainer = ({ history }) => {
         data.workEndTime,
         data.occupationNo,
         data.color,
-      ].includes('')
+      ].includes('') ||
+      [data.employNo, data.occupationNo].includes('x')
     ) {
       setError('값을 모두 선택해주세요');
       return;
@@ -361,9 +362,9 @@ const ScheduleListContainer = ({ history }) => {
       });
 
       if (selectedBranch !== '') {
-        dispatch(getOccupationList({ selectedBranch }));
-        dispatch(getEmployList({ selectedBranch }));
         dispatch(getScheduleList({ no: selectedBranch }));
+        dispatch(getEmployList({ selectedBranch }));
+        dispatch(getOccupationList({ selectedBranch }));
       }
     }
   }, [dispatch, selectedBranch, user]);

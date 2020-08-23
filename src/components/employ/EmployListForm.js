@@ -2,7 +2,6 @@ import React from 'react';
 import Button from '../common/Button';
 import { Link, withRouter } from 'react-router-dom';
 import Modal from 'react-bootstrap/Modal';
-import Checkbox from '@material-ui/core/Checkbox';
 const EmployTableBody = ({ match, employ }) => {
   return (
     <>
@@ -28,7 +27,6 @@ const EmployTableBody = ({ match, employ }) => {
 const EmployListForm = ({
   employs,
   employError,
-  loading,
   show,
   onChange,
   onSearch,

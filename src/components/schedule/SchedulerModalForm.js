@@ -72,7 +72,7 @@ const SchedulerModalForm = ({
                     className=" col-sm-9"
                     onChange={onChange}
                   >
-                    <option>근무자를 선택하세요</option>
+                    <option value="x">근무자를 선택하세요</option>
                     {filterEmploys !== null &&
                       filterEmploys !== [] &&
                       filterEmploys.map((employ, index) => (
@@ -135,7 +135,7 @@ const SchedulerModalForm = ({
                             </option>
                           ))
                         ) : (
-                          <option>업무를 등록해주세요</option>
+                          <option value="x">업무를 등록해주세요</option>
                         )}
                       </Form.Control>
                       <Form.Control
@@ -157,7 +157,7 @@ const SchedulerModalForm = ({
                         className=" col-sm-7"
                         onChange={onChange}
                       >
-                        <option>업무를 선택하세요</option>
+                        <option value="x">업무를 선택하세요</option>
                         {occupations != null && occupations.length > 0 ? (
                           occupations.map((occupation, index) => (
                             <option key={index} value={occupation.no}>
@@ -165,7 +165,7 @@ const SchedulerModalForm = ({
                             </option>
                           ))
                         ) : (
-                          <option>업무를 등록해주세요</option>
+                          <option value="x">업무를 등록해주세요</option>
                         )}
                       </Form.Control>
                       <Form.Control
