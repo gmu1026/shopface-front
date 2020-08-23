@@ -14,12 +14,22 @@ import {
 const EmployListContainer = ({ history, match }) => {
   const [show, setShow] = useState(false);
   const [filterEmploys, setFilterEmploys] = useState(null);
-  const [employFilt, setEmployFilt] = useState(null);
   const [error, setError] = useState(null);
   const [checked, setChecked] = useState(false);
+  //const [employFilt, setEmployFilt] = useState(null);
 
   const closeModal = () => setShow(false);
-  const openModal = () => setShow(true);
+  const openModal = () => {
+    const filterBranch = branchs.filter(
+      (branch) => branch.no === selectedBranch,
+    );
+
+    if (filterBranch[0].state === 'N') {
+      alert('현재 사업장이 승인되지 않은 상태입니다.');
+      return;
+    }
+    setShow(true);
+  };
 
   const dispatch = useDispatch();
   const {
@@ -31,6 +41,7 @@ const EmployListContainer = ({ history, match }) => {
     postError,
     user,
     name,
+    branchs,
     selectedBranch,
     selectedSchedule,
   } = useSelector(
@@ -39,6 +50,7 @@ const EmployListContainer = ({ history, match }) => {
       employPost,
       loading,
       auth,
+      branchList,
       branchSelect,
       scheduleSelect,
     }) => ({
@@ -50,6 +62,7 @@ const EmployListContainer = ({ history, match }) => {
       postError: employPost.postError,
       user: auth.user,
       name: employPost.post.name,
+      branchs: branchList.branchs,
       selectedBranch: branchSelect.selectedBranch,
       selectedSchedule: scheduleSelect.selectedSchedule,
     }),
@@ -149,7 +162,7 @@ const EmployListContainer = ({ history, match }) => {
   return (
     <EmployListForm
       employs={employs}
-      employFilt={employFilt}
+      //employFilt={employFilt}
       employError={employError}
       loading={loading}
       onChange={onChange}
