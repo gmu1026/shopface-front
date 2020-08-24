@@ -18,9 +18,11 @@ import occupationSelect from './occupation/occupationSelect';
 import recordList, { recordSaga } from './record/recordList';
 import scheduleList, { scheduleSaga } from './schedule/scheduleList';
 import dashboard, { dashboardSaga } from './dashboard/dashboard';
+import alarm, { alarmSaga } from './common/alarm';
 
 const rootReducer = combineReducers({
   auth,
+  alarm,
   certCode,
   loading,
   branchList,
@@ -43,6 +45,7 @@ const rootReducer = combineReducers({
 export function* rootSaga() {
   yield all([
     authSaga(),
+    alarmSaga(),
     certCodeSaga(),
     branchSaga(),
     branchPostSaga(),

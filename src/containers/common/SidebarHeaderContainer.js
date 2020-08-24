@@ -19,7 +19,6 @@ const SidebarHeaderContainer = ({ onLogout, branchs, user }) => {
   const [error, setError] = useState(null);
 
   const [show, setShow] = useState(false);
-
   const closeModal = () => setShow(false);
   const openModal = () => setShow(true);
 
