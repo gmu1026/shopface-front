@@ -2,7 +2,11 @@ import React, { useState, useEffect } from 'react';
 import AuthCodeForm from '../../components/common/AuthCordForm';
 import AuthTemplate from '../../components/common/AuthTemplate';
 import { useSelector, useDispatch } from 'react-redux';
-import { checkCertCode, changeInput } from '../../modules/common/certCode';
+import {
+  checkCertCode,
+  changeInput,
+  initialize,
+} from '../../modules/common/certCode';
 import { withRouter } from 'react-router-dom';
 
 const AuthCodeContainer = ({ history }) => {
@@ -47,8 +51,9 @@ const AuthCodeContainer = ({ history }) => {
     }
     if (certCodeResult === false) {
       setError('잘못된 인증코드입니다.');
+      dispatch(initialize());
     }
-  }, [certCodeResult, history]);
+  }, [certCodeResult, history, dispatch]);
 
   useEffect(() => {
     if (user !== null) {
