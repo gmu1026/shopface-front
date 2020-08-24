@@ -1,15 +1,7 @@
 import React from 'react';
 import Button from '../common/Button';
-import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
-
-const ErrorMessage = styled.div`
-  color: red;
-  text-align: left;
-  font-size: 0.875rem;
-  margin-top: 1rem;
-  margin-left: 1rem;
-`;
+import ErrorMessage from '../common/ErrorMessage';
 
 const OccupationTableBody = ({
   occupation,

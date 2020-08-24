@@ -5,6 +5,7 @@ import Button from '../common/Button';
 
 const BranchTableBody = ({
   branch,
+  user,
   match,
   modal,
   onModalBtn,
@@ -29,17 +30,19 @@ const BranchTableBody = ({
             보기
           </Button>
         </td>
-        <td>
-          {branch.state === 'Y' ? (
-            <Button onClick={onReject} value={branch.no}>
-              사업장 거부
-            </Button>
-          ) : (
-            <Button onClick={onConfirm} value={branch.no}>
-              사업장 승인
-            </Button>
-          )}
-        </td>
+        {user !== null && user.type === 'A' && (
+          <td>
+            {branch.state === 'Y' ? (
+              <Button onClick={onReject} value={branch.no}>
+                사업장 거부
+              </Button>
+            ) : (
+              <Button onClick={onConfirm} value={branch.no}>
+                사업장 승인
+              </Button>
+            )}
+          </td>
+        )}
       </tr>
       <Modal
         show={modal.targetModal === JSON.stringify(branch.no) && modal.show}
@@ -67,6 +70,7 @@ const BranchTableBody = ({
 
 const BranchListForm = ({
   branchs,
+  user,
   branchError,
   loading,
   match,
@@ -144,7 +148,7 @@ const BranchListForm = ({
                             <th>전화변호</th>
                             <th>승인 현황</th>
                             <th>사업장 등록증</th>
-                            <th></th>
+                            {user !== null && user.type === 'A' && <th></th>}
                           </tr>
                         </thead>
                         <tbody id="table_body">
@@ -153,6 +157,7 @@ const BranchListForm = ({
                               <BranchTableBody
                                 key={index}
                                 branch={branch}
+                                user={user}
                                 match={match}
                                 modal={modal}
                                 closeModal={closeModal}

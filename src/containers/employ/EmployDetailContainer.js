@@ -56,14 +56,6 @@ const EmployDetailContainer = ({ match, history }) => {
   };
 
   useEffect(() => {
-    if (employResult === 'OK') {
-      alert('수정되었습니다');
-      dispatch(initializeResult());
-      history.push('/employ');
-    }
-  }, [employResult, history, dispatch]);
-
-  useEffect(() => {
     if (user !== null) {
       checkExpire().then((isExpired) => {
         if (isExpired) {
@@ -74,6 +66,20 @@ const EmployDetailContainer = ({ match, history }) => {
       dispatch(getEmployhDetail({ no }));
     }
   }, [dispatch, match.params.no, user]);
+
+  useEffect(() => {
+    if (employResult === 'OK') {
+      alert('수정되었습니다');
+      dispatch(initializeResult());
+      history.push('/employ');
+    }
+  }, [employResult, history, dispatch]);
+
+  useEffect(() => {
+    if (employError !== null) {
+      setError(employError);
+    }
+  }, [employError]);
 
   return (
     <div>

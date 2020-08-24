@@ -43,12 +43,13 @@ const OccupationListContainer = ({ history }) => {
         value,
       }),
     );
+
+    setError('');
   };
 
   const onUpdateChange = (e) => {
     const index = e.target.getAttribute('index');
     const { name, value } = e.target;
-
     dispatch(
       updateChange({
         index,
@@ -88,7 +89,7 @@ const OccupationListContainer = ({ history }) => {
 
     const data = modifiedOcupation[0];
     if ([data.name].includes('')) {
-      setError('빈 칸을 모두 입력하세요');
+      alert('업무명을 입력 해주세요');
       return;
     }
 

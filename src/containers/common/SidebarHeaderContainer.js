@@ -19,7 +19,6 @@ const SidebarHeaderContainer = ({ onLogout, branchs, user }) => {
   const [error, setError] = useState(null);
 
   const [show, setShow] = useState(false);
-
   const closeModal = () => setShow(false);
   const openModal = () => setShow(true);
 
@@ -31,6 +30,15 @@ const SidebarHeaderContainer = ({ onLogout, branchs, user }) => {
   };
 
   const onPatchEmployByCertCode = () => {
+    if (certCode === '') {
+      setError('인증코드를 입력해주세요');
+      return;
+    }
+    if (certCode.length !== 6) {
+      setError('인증코드는 6자리 입니다.');
+      return;
+    }
+
     const { name } = user;
     dispatch(patchEmployByCertCode({ memberId: name, certCode }));
   };
@@ -38,6 +46,7 @@ const SidebarHeaderContainer = ({ onLogout, branchs, user }) => {
   useEffect(() => {
     if (certCodeResult === true) {
       closeModal();
+
       alert('지점등록에 성공했습니다.');
       dispatch(initialize());
 
@@ -45,6 +54,7 @@ const SidebarHeaderContainer = ({ onLogout, branchs, user }) => {
     }
     if (certCodeResult === false) {
       setError('잘못된 인증번호 입니다.');
+      dispatch(initialize());
     }
   }, [certCodeResult, dispatch]);
 

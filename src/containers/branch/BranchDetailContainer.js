@@ -56,6 +56,7 @@ const BranchDetailContainer = ({ match, history }) => {
         value,
       }),
     );
+
     setError('');
   };
 
@@ -76,19 +77,19 @@ const BranchDetailContainer = ({ match, history }) => {
       return;
     }
 
-    const formData = new FormData();
-    formData.append('name', data.name);
-    formData.append('phone', data.phone);
-    formData.append('address', data.address);
-    formData.append('detailAddress', data.detailAddress);
-    formData.append('zipCode', data.zipCode);
+    const branchFormData = new FormData();
+    branchFormData.append('name', data.name);
+    branchFormData.append('phone', data.phone);
+    branchFormData.append('address', data.address);
+    branchFormData.append('detailAddress', data.detailAddress);
+    branchFormData.append('zipCode', data.zipCode);
 
     if (imgFile !== null) {
-      formData.append('businessLicenseImage', imgFile);
+      branchFormData.append('businessLicenseImage', imgFile);
     }
 
     const no = match.params.no;
-    dispatch(branchUpdate({ no, data: formData }));
+    dispatch(branchUpdate({ no, data: branchFormData }));
   };
 
   const onDelete = () => {
@@ -115,6 +116,12 @@ const BranchDetailContainer = ({ match, history }) => {
     }
   }, [branchResult, history, dispatch]);
 
+  useEffect(() => {
+    if (branchError !== null) {
+      setError(branchError);
+    }
+  }, [branchError]);
+
   return (
     <div>
       <BranchDetailForm
@@ -122,13 +129,13 @@ const BranchDetailContainer = ({ match, history }) => {
         onChange={onChange}
         onDelete={onDelete}
         originBranch={originBranch}
-        error={error}
-        handleComplete={handleComplete}
+        show={show}
         closeModal={closeModal}
         openModal={openModal}
-        show={show}
         zoneCode={zoneCode}
         address={address}
+        handleComplete={handleComplete}
+        error={error}
       ></BranchDetailForm>
     </div>
   );

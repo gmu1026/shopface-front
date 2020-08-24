@@ -1,11 +1,40 @@
 import client from '../client';
 
-export const getEmployDashboard = async ({ id, state }) => {
+export const getEmployWDashboard = async ({ id, state }) => {
   const response = await client.get(`/employee/${id}/${state}`);
   return response;
 };
 
-export const getBusinessDashboard = async ({ id, selectedBranch, state }) => {
+export const getEmployRDashboard = async ({ id, state }) => {
+  const response = await client.get(`/employee/${id}/${state}`);
+  return response;
+};
+
+export const getEmployCDashboard = async ({ id, state }) => {
+  const response = await client.get(`/employee/${id}/${state}`);
+  return response;
+};
+
+// export cont getEmployADashboard = async({id,state}) => {
+//   const response = await client.get(`/employee/${id}/${state}`);
+//   return response;
+// }
+
+export const getBusinessWDashboard = async ({ id, selectedBranch, state }) => {
+  const response = await client.get(
+    `/businessman/${id}/branch/${selectedBranch}/${state}`,
+  );
+  return response;
+};
+
+export const getBusinessRDashboard = async ({ id, selectedBranch, state }) => {
+  const response = await client.get(
+    `/businessman/${id}/branch/${selectedBranch}/${state}`,
+  );
+  return response;
+};
+
+export const getBusinessCDashboard = async ({ id, selectedBranch, state }) => {
   const response = await client.get(
     `/businessman/${id}/branch/${selectedBranch}/${state}`,
   );

@@ -11,7 +11,6 @@ import { getEmployScheduleList } from '../../modules/schedule/scheduleList';
 import { logout } from '../../modules/common/auth';
 
 const EmployScheduleContainer = ({ history }) => {
-  moment.locale('en');
   const dispatch = useDispatch();
   const { user, employSchedules, scheduleError } = useSelector(
     ({ auth, scheduleList }) => ({
@@ -21,13 +20,12 @@ const EmployScheduleContainer = ({ history }) => {
     }),
   );
 
+  moment.locale('en');
   const [schedulerData, setSchedulerData] = useState(
     new SchedulerData(new moment().format(DATE_FORMAT), ViewTypes.Week),
   );
   schedulerData.config.schedulerWidth = '80%';
-
   const [employEvents, setEmployEvents] = useState(null);
-  const [error, setError] = useState('');
 
   const prevClick = (data) => {
     data.prev();
@@ -56,31 +54,6 @@ const EmployScheduleContainer = ({ history }) => {
     history.push('/schedule');
   };
 
-  const newEvent = (
-    schedulerData,
-    slotId,
-    slotName,
-    start,
-    end,
-    type,
-    item,
-  ) => {
-    return;
-  };
-
-  const eventClicked = (data, event) => {
-    return;
-  };
-
-  const onSelectDate = (schedulerData, date) => {
-    schedulerData.setDate(date);
-    schedulerData.setEvents(employEvents);
-
-    setSchedulerData(schedulerData);
-
-    history.push('/schedule');
-  };
-
   const onScrollRight = (data, schedulerContent, maxScrollLeft) => {
     if (data.ViewTypes === ViewTypes.Day) {
       data.next();
@@ -98,11 +71,6 @@ const EmployScheduleContainer = ({ history }) => {
 
       schedulerContent.scrollLeft = 10;
     }
-  };
-
-  const toggleExpandFunc = (schedulerData, slotId) => {
-    schedulerData.toggleExpandStatus(slotId);
-    setSchedulerData(schedulerData);
   };
 
   const nonAgendaCellHeaderTemplateResolver = (
@@ -153,8 +121,6 @@ const EmployScheduleContainer = ({ history }) => {
           name: branchResources.find((s) => s.id === id).name,
         };
       });
-      console.log(distinctResoures);
-
       schedulerData.setResources(distinctResoures);
 
       const scheduleEvents = employSchedules.map((schedule) => ({
@@ -205,7 +171,7 @@ const EmployScheduleContainer = ({ history }) => {
 
       dispatch(getEmployScheduleList({ id: user.name }));
     }
-  }, [scheduleError, dispatch]);
+  }, [scheduleError, dispatch, user.name]);
 
   return (
     <ScheduleListForm
@@ -213,12 +179,8 @@ const EmployScheduleContainer = ({ history }) => {
       prevClick={prevClick}
       nextClick={nextClick}
       onViewChange={onViewChange}
-      eventItemClick={eventClicked}
-      newEvent={newEvent}
-      onSelectDate={onSelectDate}
       onScrollLeft={onScrollLeft}
       onScrollRight={onScrollRight}
-      toggleExpandFunc={toggleExpandFunc}
       nonAgendaCellHeaderTemplateResolver={nonAgendaCellHeaderTemplateResolver}
     />
   );

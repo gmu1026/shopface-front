@@ -1,19 +1,10 @@
 import React from 'react';
 import Button from '../common/Button';
-import styled from 'styled-components';
 import DaumPostcode from 'react-daum-postcode';
 import Modal from '../../../node_modules/react-bootstrap/esm/Modal';
-
-const ErrorMessage = styled.div`
-  color: red;
-  text-align: left;
-  font-size: 0.875rem;
-  margin-top: 1rem;
-  margin-left: 1rem;
-`;
+import ErrorMessage from '../common/ErrorMessage';
 
 const branchPostForm = ({
-  postCode,
   onSubmit,
   onChange,
   error,

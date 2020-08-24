@@ -53,6 +53,8 @@ const MemberDetailContainer = ({ match, history }) => {
         value,
       }),
     );
+
+    setError('');
   };
 
   const onSubmit = (e) => {
@@ -92,7 +94,7 @@ const MemberDetailContainer = ({ match, history }) => {
 
       dispatch(getMemberDetail({ id }));
     }
-  }, [dispatch, user]);
+  }, [dispatch, user, id]);
 
   useEffect(() => {
     if (user !== null) {
@@ -100,11 +102,13 @@ const MemberDetailContainer = ({ match, history }) => {
         setDisabled(true);
       }
     }
-  }, [member, id, user.name]);
+  }, [member, id, user]);
 
   useEffect(() => {
     if (memberResult === 'OK') {
       alert('변경되었습니다');
+
+      setError('');
       dispatch(initializeResult());
 
       if (id === user.name) {
@@ -118,17 +122,17 @@ const MemberDetailContainer = ({ match, history }) => {
     <div>
       <MemberDetailForm
         member={member}
-        onSubmit={onSubmit}
-        onChange={onChange}
-        onDelete={onDelete}
-        error={error}
-        handleComplete={handleComplete}
-        closeModal={closeModal}
-        openModal={openModal}
         show={show}
+        error={error}
         zoneCode={zoneCode}
         address={address}
         disabled={disabled}
+        onSubmit={onSubmit}
+        onChange={onChange}
+        onDelete={onDelete}
+        closeModal={closeModal}
+        openModal={openModal}
+        handleComplete={handleComplete}
       ></MemberDetailForm>
     </div>
   );

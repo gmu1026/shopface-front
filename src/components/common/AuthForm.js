@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
 import Button from './Button';
+import ErrorMessage from './ErrorMessage';
 
 const AuthFormBlock = styled.div`
   h3 {
@@ -46,14 +47,6 @@ const InfoMessage = styled.div`
   font-size: 0.8rem;
   margin-bottom: 1rem;
 `;
-const ErrorMessage = styled.div`
-  color: red;
-  text-align: center;
-  font-size: 0.875rem;
-  margin-top: 1rem;
-  margin-left: 1rem;
-`;
-
 const typeMap = {
   login: '로그인',
   register: '회원가입',

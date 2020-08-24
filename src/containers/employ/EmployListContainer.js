@@ -16,7 +16,7 @@ const EmployListContainer = ({ history, match }) => {
   const [filterEmploys, setFilterEmploys] = useState(null);
   const [error, setError] = useState(null);
   const [checked, setChecked] = useState(false);
-  //const [employFilt, setEmployFilt] = useState(null);
+  const [employFilt, setEmployFilt] = useState(null);
 
   const closeModal = () => setShow(false);
   const openModal = () => {
@@ -162,7 +162,7 @@ const EmployListContainer = ({ history, match }) => {
   return (
     <EmployListForm
       employs={employs}
-      //employFilt={employFilt}
+      employFilt={employFilt}
       employError={employError}
       loading={loading}
       onChange={onChange}

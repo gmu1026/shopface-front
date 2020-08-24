@@ -26,8 +26,6 @@ const RegisterContainer = ({ history, match }) => {
   const onChange = (e) => {
     setError(null);
     const { name, value } = e.target;
-    //TODO 추후 수정
-    // id바뀌면 이메일도 동시에 바뀜
     if (name === 'id') {
       dispatch(
         changeInput({
