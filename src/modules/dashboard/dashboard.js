@@ -5,10 +5,22 @@ import createRequestSaga, {
 import { takeLatest } from 'redux-saga/effects';
 import * as dashboardAPI from '../../lib/api/dashboard/dashboardAPI';
 const [
-  EMPLOY_DASHBOARD,
-  EMPLOY_DASHBOARD_SUCCESS,
-  EMPLOY_DASHBOARD_FAILURE,
-] = createRequestActionTypes('dashboard/EMPLOY_DASHBOARD');
+  EMPLOY_WDASHBOARD,
+  EMPLOY_WDASHBOARD_SUCCESS,
+  EMPLOY_WDASHBOARD_FAILURE,
+] = createRequestActionTypes('dashboard/EMPLOY_WDASHBOARD');
+
+const [
+  EMPLOY_RDASHBOARD,
+  EMPLOY_RDASHBOARD_SUCCESS,
+  EMPLOY_RDASHBOARD_FAILURE,
+] = createRequestActionTypes('dashboard/EMPLOY_RDASHBOARD');
+
+const [
+  EMPLOY_CDASHBOARD,
+  EMPLOY_CDASHBOARD_SUCCESS,
+  EMPLOY_CDASHBOARD_FAILURE,
+] = createRequestActionTypes('dashboard/EMPLOY_CDASHBOARD');
 
 const [
   EMPLOY_PUTWORKTIME,
@@ -22,18 +34,52 @@ const [
   EMPLOY_PUTQUITTIME_FAILURE,
 ] = createRequestActionTypes('dashboard/EMPLOY_PUTQUITTIME');
 const [
-  BUSINESS_DASHBOARD,
-  BUSINESS_DASHBOARD_SUCCESS,
-  BUSINESS_DASHBOARD_FAILURE,
-] = createRequestActionTypes('dashboard/BUSINESS_DASHBOARD');
-
-export const getEmployDashboard = createAction(
-  EMPLOY_DASHBOARD,
+  BUSINESS_WDASHBOARD,
+  BUSINESS_WDASHBOARD_SUCCESS,
+  BUSINESS_WDASHBOARD_FAILURE,
+] = createRequestActionTypes('dashboard/BUSINESS_WDASHBOARD');
+const [
+  BUSINESS_RDASHBOARD,
+  BUSINESS_RDASHBOARD_SUCCESS,
+  BUSINESS_RDASHBOARD_FAILURE,
+] = createRequestActionTypes('dashboard/BUSINESS_RDASHBOARD');
+const [
+  BUSINESS_CDASHBOARD,
+  BUSINESS_CDASHBOARD_SUCCESS,
+  BUSINESS_CDASHBOARD_FAILURE,
+] = createRequestActionTypes('dashboard/BUSINESS_CDASHBOARD');
+const INITIALIZE_FORM = 'dashboard/INITIALIZE_FORM';
+export const getEmployWDashboard = createAction(
+  EMPLOY_WDASHBOARD,
   (id) => id,
   (state) => state,
 );
-export const getBusinessDashboard = createAction(
-  BUSINESS_DASHBOARD,
+
+export const getEmployRDashboard = createAction(
+  EMPLOY_RDASHBOARD,
+  (id) => id,
+  (state) => state,
+);
+
+export const getEmployCDashboard = createAction(
+  EMPLOY_CDASHBOARD,
+  (id) => id,
+  (state) => state,
+);
+export const getBusinessWDashboard = createAction(
+  BUSINESS_WDASHBOARD,
+  (selectedBranch) => selectedBranch,
+  (id) => id,
+  (state) => state,
+);
+export const getBusinessRDashboard = createAction(
+  BUSINESS_RDASHBOARD,
+  (selectedBranch) => selectedBranch,
+  (id) => id,
+  (state) => state,
+);
+export const getBusinessCDashboard = createAction(
+  BUSINESS_CDASHBOARD,
   (selectedBranch) => selectedBranch,
   (id) => id,
   (state) => state,
@@ -46,15 +92,31 @@ export const putWorkTime = createAction(EMPLOY_PUTWORKTIME, ({ no }) => ({
 export const putQuitTime = createAction(EMPLOY_PUTQUITTIME, ({ no }) => ({
   no,
 }));
-const employSaga = createRequestSaga(
-  EMPLOY_DASHBOARD,
-  dashboardAPI.getEmployDashboard,
-);
-const businessSaga = createRequestSaga(
-  BUSINESS_DASHBOARD,
-  dashboardAPI.getBusinessDashboard,
+const employWSaga = createRequestSaga(
+  EMPLOY_WDASHBOARD,
+  dashboardAPI.getEmployWDashboard,
 );
 
+const employRSaga = createRequestSaga(
+  EMPLOY_RDASHBOARD,
+  dashboardAPI.getEmployRDashboard,
+);
+const employCSaga = createRequestSaga(
+  EMPLOY_CDASHBOARD,
+  dashboardAPI.getEmployCDashboard,
+);
+const businessWSaga = createRequestSaga(
+  BUSINESS_WDASHBOARD,
+  dashboardAPI.getBusinessWDashboard,
+);
+const businessRSaga = createRequestSaga(
+  BUSINESS_RDASHBOARD,
+  dashboardAPI.getBusinessRDashboard,
+);
+const businessCSaga = createRequestSaga(
+  BUSINESS_CDASHBOARD,
+  dashboardAPI.getBusinessCDashboard,
+);
 const workSaga = createRequestSaga(
   EMPLOY_PUTWORKTIME,
   dashboardAPI.putWorkTime,
@@ -65,16 +127,30 @@ const quitSaga = createRequestSaga(
   dashboardAPI.putQuitTime,
 );
 
+export const initializeForm = createAction(
+  INITIALIZE_FORM,
+  (initForm) => initForm,
+);
+
 export function* dashboardSaga() {
-  yield takeLatest(BUSINESS_DASHBOARD, businessSaga);
-  yield takeLatest(EMPLOY_DASHBOARD, employSaga);
+  yield takeLatest(BUSINESS_WDASHBOARD, businessWSaga);
+  yield takeLatest(BUSINESS_RDASHBOARD, businessRSaga);
+  yield takeLatest(BUSINESS_CDASHBOARD, businessCSaga);
+  yield takeLatest(EMPLOY_WDASHBOARD, employWSaga);
+  yield takeLatest(EMPLOY_RDASHBOARD, employRSaga);
+  yield takeLatest(EMPLOY_CDASHBOARD, employCSaga);
   yield takeLatest(EMPLOY_PUTWORKTIME, workSaga);
   yield takeLatest(EMPLOY_PUTQUITTIME, quitSaga);
 }
 
 const initialState = {
-  employ: null,
-  business: null,
+  employW: null,
+  employR: null,
+  employC: null,
+  businessW: null,
+  businessR: null,
+  businessC: null,
+  dashboardResult: null,
   workResult: null,
   quitResult: null,
   error: null,
@@ -82,22 +158,62 @@ const initialState = {
 
 const dashboard = handleActions(
   {
-    [BUSINESS_DASHBOARD_SUCCESS]: (state, { payload: { data } }) => ({
+    [INITIALIZE_FORM]: (state) => ({
       ...state,
-      business: data,
+      dashboardResult: null,
+    }),
+    [BUSINESS_WDASHBOARD_SUCCESS]: (state, { payload: { data } }) => ({
+      ...state,
+      businessW: data,
       error: null,
     }),
-    [BUSINESS_DASHBOARD_FAILURE]: (state, { payload: { e } }) => ({
+    [BUSINESS_WDASHBOARD_FAILURE]: (state, { payload: { e } }) => ({
+      ...state,
+      error: e,
+    }),
+    [BUSINESS_RDASHBOARD_SUCCESS]: (state, { payload: { data } }) => ({
+      ...state,
+      businessR: data,
+      error: null,
+    }),
+    [BUSINESS_RDASHBOARD_FAILURE]: (state, { payload: { e } }) => ({
+      ...state,
+      error: e,
+    }),
+    [BUSINESS_CDASHBOARD_SUCCESS]: (state, { payload: { data } }) => ({
+      ...state,
+      businessC: data,
+      error: null,
+    }),
+    [BUSINESS_CDASHBOARD_FAILURE]: (state, { payload: { e } }) => ({
       ...state,
       error: e,
     }),
 
-    [EMPLOY_DASHBOARD_SUCCESS]: (state, { payload: { data } }) => ({
+    [EMPLOY_WDASHBOARD_SUCCESS]: (state, { payload: { data } }) => ({
       ...state,
-      employ: data,
+      employW: data,
       error: null,
     }),
-    [EMPLOY_DASHBOARD_FAILURE]: (state, { payload: { e } }) => ({
+    [EMPLOY_WDASHBOARD_FAILURE]: (state, { payload: { e } }) => ({
+      ...state,
+      error: e,
+    }),
+    [EMPLOY_RDASHBOARD_SUCCESS]: (state, { payload: { data } }) => ({
+      ...state,
+      employR: data,
+      error: null,
+    }),
+    [EMPLOY_RDASHBOARD_FAILURE]: (state, { payload: { e } }) => ({
+      ...state,
+      error: e,
+    }),
+    [EMPLOY_CDASHBOARD_SUCCESS]: (state, { payload: { data } }) => ({
+      ...state,
+      employC: data,
+      error: null,
+    }),
+    [EMPLOY_CDASHBOARD_FAILURE]: (state, { payload: { e } }) => ({
       ...state,
       error: e,
     }),

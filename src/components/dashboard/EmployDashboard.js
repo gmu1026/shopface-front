@@ -1,24 +1,29 @@
 import React from 'react';
 import Button from '../common/Button';
 import { withRouter } from 'react-router-dom';
-const RTableBody = ({ emp, onWork, onQuit }) => {
+import ErrorMessage from '../common/ErrorMessage';
+const RTableBody = ({ Rtable, onWork, onQuit }) => {
   return (
     <>
       <tr role="row">
         <td>
-          {emp.workStartTime}~{emp.workEndTime}_{emp.branchName}(
-          {emp.occupationName})
+          {Rtable.workStartTime}~{Rtable.workEndTime}_{Rtable.branchName}(
+          {Rtable.occupationName})
         </td>
         <td>
           <Button
             type="button"
             className="btn btn-outline-primary"
             onClick={onWork}
-            value={emp.no}
+            value={Rtable.no}
           >
             출근
           </Button>
-          <Button className="btn btn-primary" onClick={onQuit} value={emp.no}>
+          <Button
+            className="btn btn-primary"
+            onClick={onQuit}
+            value={Rtable.no}
+          >
             퇴근
           </Button>
         </td>
@@ -27,26 +32,28 @@ const RTableBody = ({ emp, onWork, onQuit }) => {
   );
 };
 
-const WTableBody = ({ emp, onWork, onQuit }) => {
+const WTableBody = ({ Wtable, onWork, onQuit }) => {
   return (
     <>
       <tr role="row">
-        <td>{emp.branchName}</td>
-        <td>{emp.occupationName}</td>
+        <td>{Wtable.branchName}</td>
+        <td>{Wtable.occupationName}</td>
         <td>
-          {emp.workStartTime}~{emp.workEndTime}
+          {Wtable.workStartTime}~{Wtable.workEndTime}
         </td>
-        <td>{emp.hoursPlan}</td>
-        <td>{emp.salaryPlan}</td>
+        <td>{Wtable.hoursPlan}</td>
+        <td>{Wtable.salaryPlan}</td>
         <td>
-          {emp.state === 'R'
+          {Wtable.state === 'R'
             ? '근무중'
-            : emp.state === 'W'
+            : Wtable.state === 'W'
             ? '근무 예정'
-            : '근무 완료'}
+            : Wtable.state === 'C'
+            ? '근무 완료'
+            : ''}
         </td>
-        <td>{emp.actualWorkingHours}</td>
-        <td>{emp.actualSalary}</td>
+        <td>{Wtable.actualWorkingHours}</td>
+        <td>{Wtable.actualSalary}</td>
         <td>
           <Button>요청하기</Button>
         </td>
@@ -55,26 +62,28 @@ const WTableBody = ({ emp, onWork, onQuit }) => {
   );
 };
 
-const CTableBody = ({ emp, onWork, onQuit }) => {
+const CTableBody = ({ Ctable, onWork, onQuit }) => {
   return (
     <>
       <tr role="row">
-        <td>{emp.branchName}</td>
-        <td>{emp.occupationName}</td>
+        <td>{Ctable.branchName}</td>
+        <td>{Ctable.occupationName}</td>
         <td>
-          {emp.workStartTime}~{emp.workEndTime}
+          {Ctable.workStartTime}~{Ctable.workEndTime}
         </td>
-        <td>{emp.hoursPlan}</td>
-        <td>{emp.salaryPlan}</td>
+        <td>{Ctable.hoursPlan}</td>
+        <td>{Ctable.salaryPlan}</td>
         <td>
-          {emp.state === 'R'
+          {Ctable.state === 'R'
             ? '근무중'
-            : emp.state === 'W'
+            : Ctable.state === 'W'
             ? '근무 예정'
-            : '근무 완료'}
+            : Ctable.state === 'C'
+            ? '근무 완료'
+            : ''}
         </td>
-        <td>{emp.actualWorkingHours}</td>
-        <td>{emp.actualSalary}</td>
+        <td>{Ctable.actualWorkingHours}</td>
+        <td>{Ctable.actualSalary}</td>
         <td>
           <Button>요청하기</Button>
         </td>
@@ -83,7 +92,16 @@ const CTableBody = ({ emp, onWork, onQuit }) => {
   );
 };
 
-const EmployDashboard = ({ employ, error, loading, match, onWork, onQuit }) => {
+const EmployDashboard = ({
+  employR,
+  employW,
+  employC,
+  error,
+  loading,
+  match,
+  onWork,
+  onQuit,
+}) => {
   return (
     <div className="container-fluid p-0">
       <div className="row">
@@ -112,24 +130,12 @@ const EmployDashboard = ({ employ, error, loading, match, onWork, onQuit }) => {
                   role="grid"
                   aria-describedby="datatables-buttons_info"
                 >
-                  {/* <thead>
-                    <tr role="row">
-                      <th>근무지</th>
-                      <th>담당 업무</th>
-                      <th>스케줄</th>
-                      <th>예상 시간</th>
-                      <th>예상급여</th>
-                      <th>상태</th>
-                      <th>실제시간</th>
-                      <th>실제 급여</th>
-                    </tr>
-                  </thead> */}
                   <tbody>
-                    {employ !== null && employ.length > 0 ? (
-                      employ.map((emp, index) => (
+                    {employR !== null && employR.length > 0 ? (
+                      employR.map((Rtable, index) => (
                         <RTableBody
                           key={index}
-                          emp={emp}
+                          Rtable={Rtable}
                           onWork={onWork}
                           onQuit={onQuit}
                         ></RTableBody>
@@ -163,9 +169,9 @@ const EmployDashboard = ({ employ, error, loading, match, onWork, onQuit }) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {employ !== null && employ.length > 0 ? (
-                      employ.map((emp, index) => (
-                        <WTableBody key={index} emp={emp}></WTableBody>
+                    {employW !== null && employW.length > 0 ? (
+                      employW.map((Wtable, index) => (
+                        <WTableBody key={index} Wtable={Wtable}></WTableBody>
                       ))
                     ) : (
                       <>
@@ -195,9 +201,9 @@ const EmployDashboard = ({ employ, error, loading, match, onWork, onQuit }) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {employ !== null && employ.length > 0 ? (
-                      employ.map((emp, index) => (
-                        <CTableBody key={index} emp={emp}></CTableBody>
+                    {employC !== null && employC.length > 0 ? (
+                      employC.map((Ctable, index) => (
+                        <CTableBody key={index} Ctable={Ctable}></CTableBody>
                       ))
                     ) : (
                       <>

@@ -1,7 +1,8 @@
 import React from 'react';
 import Clock from 'react-live-clock';
-// import Button from '../common/Button';
+import Button from '../common/Button';
 import { withRouter } from 'react-router-dom';
+import { BiRefresh } from 'react-icons/bi';
 const RTableBody = ({ dashboard }) => {
   return (
     <>
@@ -17,8 +18,10 @@ const RTableBody = ({ dashboard }) => {
           {dashboard.scheduleStatus === 'R'
             ? '근무중'
             : dashboard.scheduleStatus === 'W'
+            ? '근무 완료'
+            : dashboard.scheduleStatus === 'C'
             ? '근무 예정'
-            : '근무 완료'}
+            : ''}
         </td>
         <td>{dashboard.actualWorkingHours}</td>
         <td>{dashboard.actualSalary}</td>
@@ -54,13 +57,13 @@ const CTableBody = ({ dashboard }) => {
         </td>
         <td>{dashboard.hoursPlan}</td>
         <td>{dashboard.salaryPlan}</td>
-        <td>
-          {dashboard.scheduleStatus === 'R'
-            ? '근무중'
-            : dashboard.scheduleStatus === 'W'
-            ? '근무 예정'
-            : '근무 완료'}
-        </td>
+        {dashboard.scheduleStatus === 'R'
+          ? '근무중'
+          : dashboard.scheduleStatus === 'W'
+          ? '근무 완료'
+          : dashboard.scheduleStatus === 'C'
+          ? '근무 예정'
+          : ''}
         <td>{dashboard.actualWorkingHours}</td>
         <td>{dashboard.actualSalary}</td>
       </tr>
@@ -68,11 +71,23 @@ const CTableBody = ({ dashboard }) => {
   );
 };
 
-const BusinessDashboard = ({ business, error, loading, match }) => {
+const BusinessDashboard = ({
+  businessW,
+  businessR,
+  businessC,
+  error,
+  loading,
+  match,
+  onRefresh,
+}) => {
   return (
     <div className="container-fluid p-0">
       <h1 className="h3 mb-3">근무 현황</h1>
       <Clock format={'YYYY년 MM월 DD일 HH:mm:ss'} ticking={true} />
+      <Button onClick={onRefresh}>
+        새로 고침
+        <BiRefresh />
+      </Button>
       <div className="row">
         <div className="col-12">
           <div className="card">
@@ -113,8 +128,8 @@ const BusinessDashboard = ({ business, error, loading, match }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {business !== null ? (
-                        business.map((dashboard, index) => (
+                      {businessR !== null ? (
+                        businessR.map((dashboard, index) => (
                           <RTableBody
                             key={index}
                             dashboard={dashboard}
@@ -129,6 +144,7 @@ const BusinessDashboard = ({ business, error, loading, match }) => {
                       )}
                     </tbody>
                   </table>
+                  <br></br>
                   근무예정
                   <table
                     className="table table-striped dataTable no-footer dtr-inline"
@@ -148,8 +164,8 @@ const BusinessDashboard = ({ business, error, loading, match }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {business !== null ? (
-                        business.map((dashboard, index) => (
+                      {businessW !== null ? (
+                        businessW.map((dashboard, index) => (
                           <WTableBody
                             key={index}
                             dashboard={dashboard}
@@ -164,6 +180,7 @@ const BusinessDashboard = ({ business, error, loading, match }) => {
                       )}
                     </tbody>
                   </table>
+                  <br></br>
                   근무완료
                   <table
                     className="table table-striped dataTable no-footer dtr-inline"
@@ -183,8 +200,8 @@ const BusinessDashboard = ({ business, error, loading, match }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {business !== null ? (
-                        business.map((dashboard, index) => (
+                      {businessC !== null ? (
+                        businessC.map((dashboard, index) => (
                           <CTableBody
                             key={index}
                             dashboard={dashboard}
