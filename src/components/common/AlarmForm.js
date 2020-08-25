@@ -59,7 +59,7 @@ const AlarmForm = ({ formAlarm, onDelete, onAllList }) => {
                 <Dropdown.Divider />
               </div>
             ))}
-          <Dropdown.Item style={{ textAlign: 'center' }} onClick={onAllList}>
+          <Dropdown.Item style={{ textAlign: 'center' }}>
             전체 알람 보기
           </Dropdown.Item>
         </Dropdown.Menu>

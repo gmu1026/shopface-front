@@ -71,6 +71,7 @@ const EmployDetailContainer = ({ match, history }) => {
     if (employResult === 'OK') {
       alert('수정되었습니다');
       dispatch(initializeResult());
+
       history.push('/employ');
     }
   }, [employResult, history, dispatch]);

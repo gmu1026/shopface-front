@@ -91,6 +91,7 @@ export const employDetail = handleActions(
     [INITIALIZE_RESULT]: (state) => ({
       ...state,
       employResult: null,
+      employError: null,
     }),
     [EMPLOY_DETAIL_SUCCESS]: (state, { payload: { data } }) => ({
       ...state,

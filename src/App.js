@@ -17,16 +17,9 @@ const EmployPage = lazy(() => import('./pages/employ/EmployPage'));
 const MemberPage = lazy(() => import('./pages/member/MemberPage'));
 const OccupationPage = lazy(() => import('./pages/occupation/OccupationPage'));
 const RecordPage = lazy(() => import('./pages/record/RecordPage'));
-
 const DashboardPage = lazy(() => import('./pages/dashboard/DashboardPage'));
-// const BusinessDashboardPage = lazy(() =>
-//   import('./pages/dashboard/BusinessDashboardPage'),
-// );
-// const EmployDashboardPage = lazy(() =>
-//   import('./pages/dashboard/EmployDashboardPage'),
-// );
 
-const App = ({ history, match }) => {
+const App = ({ history }) => {
   const dispatch = useDispatch();
   const { user, branchs } = useSelector(({ auth, branchList }) => ({
     user: auth.user,

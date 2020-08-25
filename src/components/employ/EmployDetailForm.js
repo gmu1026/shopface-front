@@ -99,6 +99,7 @@ const EmployDetailForm = ({
                             type="button"
                             className="btn btn-primary"
                             onClick={onDisabled}
+                            disabled={employ.state === 'D' && 'disabled'}
                           >
                             비활성화
                           </Button>

@@ -2,7 +2,7 @@ import React from 'react';
 import Button from '../common/Button';
 import { TimePicker } from 'antd';
 import Modal from 'react-bootstrap/Modal';
-import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
+import 'antd/dist/antd.css';
 import { Form } from '../../../node_modules/react-bootstrap/esm/index';
 import moment from 'moment';
 import ErrorMessage from '../common/ErrorMessage';
@@ -89,12 +89,12 @@ const SchedulerModalForm = ({
                       defaultValue: [
                         moment(
                           schedule.start.substring(
-                            schedule.start.indexOf('T') + 1,
+                            schedule.start.indexOf(' ') + 1,
                           ),
                           'HH:mm',
                         ),
                         moment(
-                          schedule.end.substring(schedule.end.indexOf('T') + 1),
+                          schedule.end.substring(schedule.end.indexOf(' ') + 1),
                           'HH:mm',
                         ),
                       ],
@@ -160,8 +160,7 @@ const SchedulerModalForm = ({
                           <option value="x">업무를 등록해주세요</option>
                         )}
                       </Form.Control>
-                      <Form.Control
-                        as="input"
+                      <input
                         type="color"
                         name="color"
                         placeholder="업무"

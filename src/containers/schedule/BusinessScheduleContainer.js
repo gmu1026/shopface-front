@@ -1,11 +1,15 @@
-import React, { useState, useEffect, lazy } from 'react';
-import { SchedulerData, ViewTypes, DATE_FORMAT } from 'react-big-scheduler';
+import React, { useState, useEffect } from 'react';
+import Scheduler, {
+  SchedulerData,
+  ViewTypes,
+  DATE_FORMAT,
+} from 'react-big-scheduler';
 import 'react-big-scheduler/lib/css/style.css';
 import moment from 'moment';
 import DragDropContext from './DndContext';
 import { withRouter } from 'react-router-dom';
 import ScheduleListForm from '../../components/schedule/ScheduleListForm';
-//import SchedulerModalForm from '../../components/schedule/SchedulerModalForm'; //ToDo lazy 사용
+import SchedulerModalForm from '../../components/schedule/SchedulerModalForm'; //ToDo lazy 사용
 import { useSelector, useDispatch } from 'react-redux';
 import { checkExpire } from '../../lib/api/common/authAPI';
 import {
@@ -21,10 +25,6 @@ import {
 import { getOccupationList } from '../../modules/occupation/occupation';
 import { logout } from '../../modules/common/auth';
 import { getEmployList } from '../../modules/employ/employList';
-
-const schedulerModalForm = lazy(() =>
-  import('../../components/schedule/SchedulerModalForm'),
-);
 
 const ScheduleListContainer = ({ history }) => {
   moment.locale('en');
@@ -71,21 +71,6 @@ const ScheduleListContainer = ({ history }) => {
   };
   const openModal = () => {
     setShow(true);
-    return (
-      <schedulerModalForm
-        schedule={scheduleEvent}
-        occupations={occupations}
-        show={show}
-        closeModal={closeModal}
-        employs={employs}
-        modalType={modalType}
-        onChange={onChange}
-        onTimeChange={onTimeChange}
-        onScheduleSubmit={onScheduleSubmit}
-        onScheduleDelete={onScheduleDelete}
-        error={error}
-      />
-    );
   };
 
   const prevClick = (data) => {
@@ -160,8 +145,9 @@ const ScheduleListContainer = ({ history }) => {
   };
 
   const onChange = (e) => {
-    const { name, value } = e.target;
+    setError('');
 
+    const { name, value } = e.target;
     if (modalType === 'update') {
       let changeEvent = scheduleEvent;
       if (name === 'occupationNo') {
@@ -172,19 +158,18 @@ const ScheduleListContainer = ({ history }) => {
       }
 
       setScheduleEvent(changeEvent);
-
       dispatch(changeUpdate({ key: name, value }));
-      setError('');
 
       return;
     }
 
     dispatch(changeInput({ key: name, value }));
-    setError('');
   };
 
   const onTimeChange = (time, timeString) => {
-    if (timeString !== null) {
+    setError('');
+
+    if (time !== null) {
       const startTime = timeString[0];
       const today = new Date().getDate();
       const clickDate = new Date(targetTime).getDate();
@@ -199,7 +184,7 @@ const ScheduleListContainer = ({ history }) => {
           changeUpdate({
             key: 'workStartTime',
             value:
-              targetTime.substring(0, targetTime.indexOf('T') + 1) + // TODO 삼항 연산자로 변경
+              targetTime.substring(0, targetTime.indexOf(' ') + 1) +
               time[0].format('HH:mm:ss'),
           }),
         );
@@ -207,11 +192,10 @@ const ScheduleListContainer = ({ history }) => {
           changeUpdate({
             key: 'workEndTime',
             value:
-              targetTime.substring(0, targetTime.indexOf('T') + 1) +
+              targetTime.substring(0, targetTime.indexOf(' ') + 1) +
               time[1].format('HH:mm:ss'),
           }),
         );
-        setError('');
 
         return;
       }
@@ -221,7 +205,7 @@ const ScheduleListContainer = ({ history }) => {
           key: 'workStartTime',
           value:
             targetTime.substring(0, targetTime.indexOf(' ')) +
-            'T' +
+            ' ' +
             time[0].format('HH:mm:ss'),
         }),
       );
@@ -230,12 +214,10 @@ const ScheduleListContainer = ({ history }) => {
           key: 'workEndTime',
           value:
             targetTime.substring(0, targetTime.indexOf(' ')) +
-            'T' +
+            ' ' +
             time[1].format('HH:mm:ss'),
         }),
       );
-
-      setError('');
     }
   };
 
@@ -263,9 +245,9 @@ const ScheduleListContainer = ({ history }) => {
 
     if (modalType === 'post') {
       dispatch(postSchedule({ data }));
-    } else {
-      dispatch(updateSchedule({ no: scheduleEvent.id, data }));
+      return;
     }
+    dispatch(updateSchedule({ no: scheduleEvent.id, data }));
   };
 
   const onScheduleDelete = () => {
@@ -381,12 +363,16 @@ const ScheduleListContainer = ({ history }) => {
           dispatch(logout());
         }
       });
+      if (selectedBranch === '') {
+        alert('사업장을 등록해주세요');
+        history.push('/branch');
 
-      if (selectedBranch !== '') {
-        dispatch(getScheduleList({ no: selectedBranch }));
-        dispatch(getEmployList({ selectedBranch }));
-        dispatch(getOccupationList({ selectedBranch }));
+        return;
       }
+
+      dispatch(getScheduleList({ no: selectedBranch }));
+      dispatch(getEmployList({ selectedBranch }));
+      dispatch(getOccupationList({ selectedBranch }));
     }
   }, [dispatch, selectedBranch, user]);
 
@@ -409,15 +395,15 @@ const ScheduleListContainer = ({ history }) => {
         return;
       }
       alert(`시간표 ${scheduleError}을 실패 했습니다.`);
+
+      setScheduleEvent(null);
+      setModalType('');
+
+      dispatch(initializeForm());
+      dispatch(getScheduleList({ no: selectedBranch }));
+
+      closeModal();
     }
-
-    setScheduleEvent(null);
-    setModalType('');
-
-    dispatch(initializeForm());
-    dispatch(getScheduleList({ no: selectedBranch }));
-
-    closeModal();
   }, [scheduleError, dispatch, selectedBranch]);
 
   useEffect(() => {
@@ -441,7 +427,7 @@ const ScheduleListContainer = ({ history }) => {
           nonAgendaCellHeaderTemplateResolver
         }
       />
-      {/*  <SchedulerModalForm
+      <SchedulerModalForm
         schedule={scheduleEvent}
         occupations={occupations}
         show={show}
@@ -453,7 +439,7 @@ const ScheduleListContainer = ({ history }) => {
         onScheduleSubmit={onScheduleSubmit}
         onScheduleDelete={onScheduleDelete}
         error={error}
-      /> */}
+      />
     </>
   );
 };

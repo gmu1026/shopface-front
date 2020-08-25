@@ -23,7 +23,7 @@ const AlarmContainer = () => {
   function changeContentType({ type }) {
     switch (type) {
       case 'ABSENTEEISM_SCHEDULE':
-        return '근무 결근';
+        return '근무자 결근';
       case 'JOIN_EMPLOYEE':
         return '근무자 합류';
       case 'ADD_SCHEDULE':
@@ -41,7 +41,7 @@ const AlarmContainer = () => {
       case 'COMMUTE_FAIL':
         return '출퇴근 인증 실패';
       default:
-        console.log('오류발생.');
+        console.log('해당없음');
     }
   }
   function changeFormData({ alarms }) {
@@ -51,7 +51,7 @@ const AlarmContainer = () => {
       contents: alarm.contents.split('. '),
       registerDate: alarm.registerDate.substring(
         0,
-        alarm.registerDate.indexOf('T'),
+        alarm.registerDate.indexOf(' '),
       ),
     }));
 
@@ -63,20 +63,12 @@ const AlarmContainer = () => {
     dispatch(alarmDelete({ no }));
   };
 
-  const onAllList = (e) => {
-    if (alarms !== null) {
-      if (alarms.length > 0) {
-        const data = changeFormData({ alarms });
-        setFormAlarm(data);
-      }
-    }
-  };
-
   useEffect(() => {
     if (alarms !== null) {
       if (alarms.length > 0) {
-        const data = changeFormData({ alarms });
-        setFormAlarm(data.slice(0, 3));
+        setFormAlarm(changeFormData({ alarms }));
+      } else {
+        setFormAlarm(null);
       }
     }
   }, [alarms]);
@@ -106,13 +98,7 @@ const AlarmContainer = () => {
     }
   }, [alarmError, dispatch]);
 
-  return (
-    <AlarmForm
-      formAlarm={formAlarm}
-      onDelete={onDelete}
-      onAllList={onAllList}
-    />
-  );
+  return <AlarmForm formAlarm={formAlarm} onDelete={onDelete} />;
 };
 
 export default AlarmContainer;

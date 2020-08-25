@@ -21,13 +21,16 @@ const EmployListContainer = ({ history, match }) => {
   const closeModal = () => setShow(false);
   const openModal = () => {
     const filterBranch = branchs.filter(
-      (branch) => branch.no === selectedBranch,
+      (branch) => branch.no === parseInt(selectedBranch),
     );
 
-    if (filterBranch[0].state === 'N') {
-      alert('현재 사업장이 승인되지 않은 상태입니다.');
-      return;
+    if (filterBranch.length > 0) {
+      if (filterBranch[0].state === 'N') {
+        alert('현재 사업장이 승인되지 않은 상태입니다.');
+        return;
+      }
     }
+
     setShow(true);
   };
 
@@ -119,17 +122,6 @@ const EmployListContainer = ({ history, match }) => {
   };
 
   useEffect(() => {
-    if (user !== null) {
-      checkExpire().then((isExpired) => {
-        if (isExpired) {
-          dispatch(logout());
-        }
-      });
-    }
-    dispatch(initializeForm('post'));
-  }, [dispatch, user]);
-
-  useEffect(() => {
     if (postResult === 'OK') {
       alert('근무자에게 초대 메시지를 전송하였습니다.');
       dispatch(initializeForm());
@@ -150,7 +142,15 @@ const EmployListContainer = ({ history, match }) => {
           dispatch(logout());
         }
       });
+
+      if (selectedBranch === '') {
+        alert('사업장을 등록해주세요');
+        history.push('/branch');
+
+        return;
+      }
       dispatch(getEmployList({ selectedBranch }));
+      dispatch(initializeForm('post'));
     }
   }, [dispatch, selectedBranch, user]);
 
