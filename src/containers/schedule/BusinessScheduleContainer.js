@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { SchedulerData, ViewTypes, DATE_FORMAT } from 'react-big-scheduler';
+import Scheduler, {
+  SchedulerData,
+  ViewTypes,
+  DATE_FORMAT,
+} from 'react-big-scheduler';
 import 'react-big-scheduler/lib/css/style.css';
 import moment from 'moment';
 import DragDropContext from './DndContext';
 import { withRouter } from 'react-router-dom';
 import ScheduleListForm from '../../components/schedule/ScheduleListForm';
-import SchedulerModalForm from '../../components/schedule/SchedulerModalForm';
+import SchedulerModalForm from '../../components/schedule/SchedulerModalForm'; //ToDo lazy 사용
 import { useSelector, useDispatch } from 'react-redux';
 import { checkExpire } from '../../lib/api/common/authAPI';
 import {
@@ -65,7 +69,9 @@ const ScheduleListContainer = ({ history }) => {
     setShow(false);
     setError('');
   };
-  const openModal = () => setShow(true);
+  const openModal = () => {
+    setShow(true);
+  };
 
   const prevClick = (data) => {
     data.prev();
@@ -139,8 +145,9 @@ const ScheduleListContainer = ({ history }) => {
   };
 
   const onChange = (e) => {
-    const { name, value } = e.target;
+    setError('');
 
+    const { name, value } = e.target;
     if (modalType === 'update') {
       let changeEvent = scheduleEvent;
       if (name === 'occupationNo') {
@@ -151,19 +158,18 @@ const ScheduleListContainer = ({ history }) => {
       }
 
       setScheduleEvent(changeEvent);
-
       dispatch(changeUpdate({ key: name, value }));
-      setError('');
 
       return;
     }
 
     dispatch(changeInput({ key: name, value }));
-    setError('');
   };
 
   const onTimeChange = (time, timeString) => {
-    if (timeString !== null) {
+    setError('');
+
+    if (time !== null) {
       const startTime = timeString[0];
       const today = new Date().getDate();
       const clickDate = new Date(targetTime).getDate();
@@ -178,7 +184,7 @@ const ScheduleListContainer = ({ history }) => {
           changeUpdate({
             key: 'workStartTime',
             value:
-              targetTime.substring(0, targetTime.indexOf('T') + 1) +
+              targetTime.substring(0, targetTime.indexOf(' ') + 1) +
               time[0].format('HH:mm:ss'),
           }),
         );
@@ -186,11 +192,10 @@ const ScheduleListContainer = ({ history }) => {
           changeUpdate({
             key: 'workEndTime',
             value:
-              targetTime.substring(0, targetTime.indexOf('T') + 1) +
+              targetTime.substring(0, targetTime.indexOf(' ') + 1) +
               time[1].format('HH:mm:ss'),
           }),
         );
-        setError('');
 
         return;
       }
@@ -200,7 +205,7 @@ const ScheduleListContainer = ({ history }) => {
           key: 'workStartTime',
           value:
             targetTime.substring(0, targetTime.indexOf(' ')) +
-            'T' +
+            ' ' +
             time[0].format('HH:mm:ss'),
         }),
       );
@@ -209,12 +214,10 @@ const ScheduleListContainer = ({ history }) => {
           key: 'workEndTime',
           value:
             targetTime.substring(0, targetTime.indexOf(' ')) +
-            'T' +
+            ' ' +
             time[1].format('HH:mm:ss'),
         }),
       );
-
-      setError('');
     }
   };
 
@@ -242,9 +245,9 @@ const ScheduleListContainer = ({ history }) => {
 
     if (modalType === 'post') {
       dispatch(postSchedule({ data }));
-    } else {
-      dispatch(updateSchedule({ no: scheduleEvent.id, data }));
+      return;
     }
+    dispatch(updateSchedule({ no: scheduleEvent.id, data }));
   };
 
   const onScheduleDelete = () => {
@@ -360,12 +363,16 @@ const ScheduleListContainer = ({ history }) => {
           dispatch(logout());
         }
       });
+      if (selectedBranch === '') {
+        alert('사업장을 등록해주세요');
+        history.push('/branch');
 
-      if (selectedBranch !== '') {
-        dispatch(getScheduleList({ no: selectedBranch }));
-        dispatch(getEmployList({ selectedBranch }));
-        dispatch(getOccupationList({ selectedBranch }));
+        return;
       }
+
+      dispatch(getScheduleList({ no: selectedBranch }));
+      dispatch(getEmployList({ selectedBranch }));
+      dispatch(getOccupationList({ selectedBranch }));
     }
   }, [dispatch, selectedBranch, user]);
 
@@ -388,15 +395,15 @@ const ScheduleListContainer = ({ history }) => {
         return;
       }
       alert(`시간표 ${scheduleError}을 실패 했습니다.`);
+
+      setScheduleEvent(null);
+      setModalType('');
+
+      dispatch(initializeForm());
+      dispatch(getScheduleList({ no: selectedBranch }));
+
+      closeModal();
     }
-
-    setScheduleEvent(null);
-    setModalType('');
-
-    dispatch(initializeForm());
-    dispatch(getScheduleList({ no: selectedBranch }));
-
-    closeModal();
   }, [scheduleError, dispatch, selectedBranch]);
 
   useEffect(() => {

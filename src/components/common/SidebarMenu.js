@@ -48,28 +48,31 @@ const SidebarMenu = ({ user }) => {
           ) : (
             <div></div>
           )}
-          {user !== null && user.type === 'B' ? (
-            <>
-              <SubMenu title="근태 관리">
-                <MenuItem>
-                  <Link to="/record">근무 기록 </Link>
-                </MenuItem>
-                <MenuItem>
-                  <Link to="#">이벤트 관리 </Link>
-                </MenuItem>
-              </SubMenu>
-              <SubMenu title="사업장 관리">
-                <MenuItem>
-                  <Link to="/branch">사업장 관리 </Link>
-                </MenuItem>
-                <MenuItem>
-                  <Link to="/employ">근무자 관리 </Link>
-                </MenuItem>
-              </SubMenu>
-            </>
+          {user !== null && ['B', 'E'].includes(user.type) ? (
+            <SubMenu title="근태 관리">
+              <MenuItem>
+                <Link to="/record">근무 기록 </Link>
+              </MenuItem>
+              <MenuItem>
+                <Link to="#">이벤트 관리 </Link>
+              </MenuItem>
+            </SubMenu>
           ) : (
             <div></div>
           )}
+          {user !== null && user.type === 'B' ? (
+            <SubMenu title="사업장 관리">
+              <MenuItem>
+                <Link to="/branch">사업장 관리 </Link>
+              </MenuItem>
+              <MenuItem>
+                <Link to="/employ">근무자 관리 </Link>
+              </MenuItem>
+            </SubMenu>
+          ) : (
+            <div></div>
+          )}
+
           {user !== null && ['B', 'E'].includes(user.type) ? (
             <MenuItem>
               급여관리

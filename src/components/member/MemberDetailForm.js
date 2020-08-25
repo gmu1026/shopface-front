@@ -2,6 +2,7 @@ import React from 'react';
 import Modal from 'react-bootstrap/Modal';
 import DaumPostcode from 'react-daum-postcode';
 import Button from '../common/Button';
+import ErrorMessage from '../common/ErrorMessage';
 
 const MemberDetailForm = ({
   member,
@@ -170,9 +171,7 @@ const MemberDetailForm = ({
                       />
                       <br />
                     </div>
-                    <div className="form-group" style={{ color: 'red' }}>
-                      {error}
-                    </div>
+                    <ErrorMessage>{error}</ErrorMessage>
                     {!disabled && (
                       <Button className="btn btn-outline-primary">수정</Button>
                     )}

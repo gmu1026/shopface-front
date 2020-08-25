@@ -14,7 +14,6 @@ import employPost, { employPostSaga } from './employ/employPost';
 import memberDetail, { memberDetailSaga } from './member/memberDetail';
 import occupation, { occupationSaga } from './occupation/occupation';
 import memberList, { memberSaga } from './member/memberList';
-import occupationSelect from './occupation/occupationSelect';
 import recordList, { recordSaga } from './record/recordList';
 import scheduleList, { scheduleSaga } from './schedule/scheduleList';
 import dashboard, { dashboardSaga } from './dashboard/dashboard';
@@ -36,7 +35,6 @@ const rootReducer = combineReducers({
   employDetail,
   memberDetail,
   branchSelect,
-  occupationSelect,
   scheduleList,
   dashboard,
   scheduleSelect,

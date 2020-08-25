@@ -38,30 +38,33 @@ const EmployDashboardContainer = ({ history }) => {
   }));
 
   const onWork = (e) => {
-    // console.log(e.target.no);
-    dispatch(putWorkTime({ no: '368' }));
+    const no = e.target.value;
+    dispatch(putWorkTime({ no }));
   };
 
   const onQuit = (e) => {
-    // console.log(e.target);
-    dispatch(putQuitTime({ no: '368' }));
+    const no = e.target.value;
+    dispatch(putQuitTime({ no }));
   };
 
-  useEffect(() => {
-    if (user !== null) {
-      checkExpire().then((isExpired) => {
-        if (isExpired) {
-          dispatch(logout());
-        }
-      });
-      dispatch(
-        getEmployRDashboard({
-          id: user.name,
-          state: 'R',
-        }),
-      );
-    }
-  }, [dispatch, user]);
+  useEffect(
+    (e) => {
+      if (user !== null) {
+        checkExpire().then((isExpired) => {
+          if (isExpired) {
+            dispatch(logout());
+          }
+        });
+        dispatch(
+          getEmployRDashboard({
+            id: user.name,
+            state: 'R',
+          }),
+        );
+      }
+    },
+    [dispatch, user],
+  );
 
   useEffect(() => {
     if (user !== null) {

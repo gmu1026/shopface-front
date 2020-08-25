@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from '../common/Button';
 import { withRouter } from 'react-router-dom';
-import ErrorMessage from '../common/ErrorMessage';
+// import ErrorMessage from '../common/ErrorMessage';
 const RTableBody = ({ Rtable, onWork, onQuit }) => {
   return (
     <>
@@ -13,16 +13,16 @@ const RTableBody = ({ Rtable, onWork, onQuit }) => {
         <td>
           <Button
             type="button"
-            className="btn btn-outline-primary"
+            className="btn btn-primary"
             onClick={onWork}
-            value={Rtable.no}
+            value={Rtable.scheduleNo}
           >
             출근
           </Button>
           <Button
             className="btn btn-primary"
             onClick={onQuit}
-            value={Rtable.no}
+            value={Rtable.scheduleNo}
           >
             퇴근
           </Button>
@@ -31,7 +31,6 @@ const RTableBody = ({ Rtable, onWork, onQuit }) => {
     </>
   );
 };
-
 const WTableBody = ({ Wtable, onWork, onQuit }) => {
   return (
     <>
