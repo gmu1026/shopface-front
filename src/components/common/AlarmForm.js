@@ -35,7 +35,7 @@ const AlarmForm = ({ formAlarm, onDelete, onAllList }) => {
           </svg>
         </Dropdown.Toggle>
       </div>
-      <div style={{ position: 'relative', right: 400 }}>
+      <div style={{ position: 'relative', right: 350 }}>
         <Dropdown.Menu className="dropdown-menu dropdown-menu-lg dropdown-menu-right py-0">
           <Dropdown.Header style={{ textAlign: 'center' }}>
             읽지 않은 알람 목록
