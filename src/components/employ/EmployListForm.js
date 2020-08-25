@@ -92,10 +92,8 @@ const EmployListForm = ({
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="row">
-              <div className="col-sm-12">
-                <form>
+              <div className="row">
+                <div className="col-sm-12">
                   <table
                     className="table table-striped dataTable no-footer dtr-inline"
                     role="grid"
@@ -144,59 +142,59 @@ const EmployListForm = ({
                       )}
                     </tbody>
                   </table>
-                </form>
 
-                <div className="form-group">
-                  <form onSubmit={onSubmit}>
-                    <input type="hidden" />
-                    <Modal show={show} onHide={closeModal}>
-                      <Modal.Header closeButton>
-                        <Modal.Title>근무자 초대하기</Modal.Title>
-                      </Modal.Header>
-                      <hr />
-                      <Modal.Body>
-                        <input type="hidden" />
-                        이름
-                        <input
-                          type="text"
-                          className="form-control"
-                          name="name"
-                          placeholder="이름을 입력해주세요"
-                          id="name"
-                          onChange={onChange}
-                        />
-                        <br />
-                        이메일
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="email"
-                          placeholder="이메일을 입력해주세요"
-                          name="email"
-                          onChange={onChange}
-                        />
-                      </Modal.Body>
-                      <hr />
-                      <Modal.Footer>
-                        <Button
-                          type="button"
-                          variant="secondary"
-                          className="btn btn-outline-primary"
-                          data-dismiss="modal"
-                          onClick={closeModal}
-                        >
-                          Close
-                        </Button>
-                        <Button
-                          variant="secondary"
-                          className="btn btn-outline-primary"
-                          onClick={onSubmit}
-                        >
-                          초대하기
-                        </Button>
-                      </Modal.Footer>
-                    </Modal>
-                  </form>
+                  <div className="form-group">
+                    <form onSubmit={onSubmit}>
+                      <input type="hidden" />
+                      <Modal show={show} onHide={closeModal}>
+                        <Modal.Header closeButton>
+                          <Modal.Title>근무자 초대하기</Modal.Title>
+                        </Modal.Header>
+                        <hr />
+                        <Modal.Body>
+                          <input type="hidden" />
+                          이름
+                          <input
+                            type="text"
+                            className="form-control"
+                            name="name"
+                            placeholder="이름을 입력해주세요"
+                            id="name"
+                            onChange={onChange}
+                          />
+                          <br />
+                          이메일
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="email"
+                            placeholder="이메일을 입력해주세요"
+                            name="email"
+                            onChange={onChange}
+                          />
+                        </Modal.Body>
+                        <hr />
+                        <Modal.Footer>
+                          <Button
+                            type="button"
+                            variant="secondary"
+                            className="btn btn-outline-primary"
+                            data-dismiss="modal"
+                            onClick={closeModal}
+                          >
+                            Close
+                          </Button>
+                          <Button
+                            variant="secondary"
+                            className="btn btn-outline-primary"
+                            onClick={onSubmit}
+                          >
+                            초대하기
+                          </Button>
+                        </Modal.Footer>
+                      </Modal>
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>
