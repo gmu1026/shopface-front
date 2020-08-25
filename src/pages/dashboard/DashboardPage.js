@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from 'react';
-import { Route, withRouter, Switch } from 'react-router-dom';
+import { withRouter, Switch } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 const BusinessDashboardContainer = lazy(() =>
@@ -18,8 +18,7 @@ const DashboardPage = ({ match }) => {
     <div>
       <Suspense fallback={<div>Loading...</div>}>
         <Switch>
-          <Route path={match.url} component={EmployDashboardContainer} />
-          {/* {user !== null ? (
+          {user !== null ? (
             user.type === 'B' ? (
               <BusinessDashboardContainer />
             ) : (
@@ -27,7 +26,7 @@ const DashboardPage = ({ match }) => {
             )
           ) : (
             <div></div>
-          )} */}
+          )}
         </Switch>
       </Suspense>
     </div>

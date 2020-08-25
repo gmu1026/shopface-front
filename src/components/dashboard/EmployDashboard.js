@@ -91,16 +91,7 @@ const CTableBody = ({ Ctable, onWork, onQuit }) => {
   );
 };
 
-const EmployDashboard = ({
-  employR,
-  employW,
-  employC,
-  error,
-  loading,
-  match,
-  onWork,
-  onQuit,
-}) => {
+const EmployDashboard = ({ employR, employW, employC, onWork, onQuit }) => {
   return (
     <div className="container-fluid p-0">
       <div className="row">
@@ -165,6 +156,7 @@ const EmployDashboard = ({
                       <th>상태</th>
                       <th>실제시간</th>
                       <th>실제 급여</th>
+                      <th></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -197,6 +189,7 @@ const EmployDashboard = ({
                       <th>상태</th>
                       <th>실제시간</th>
                       <th>실제 급여</th>
+                      <th></th>
                     </tr>
                   </thead>
                   <tbody>
