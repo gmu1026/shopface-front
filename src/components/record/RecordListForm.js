@@ -75,8 +75,8 @@ const RecordListForm = ({ records, recordError, loading }) => {
                       >
                         <thead id="table_head">
                           <tr>
-                            <th>업무 명</th>
-                            <th>사업자 명</th>
+                            <th>업무</th>
+                            <th>사업장</th>
                             <th>근무자 명</th>
                             <th>근무 시간</th>
                             <th>출근 시간</th>
