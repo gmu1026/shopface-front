@@ -123,11 +123,10 @@ const OccupationListContainer = ({ history }) => {
       alert('업무가 변경 되었습니다');
     }
 
-    dispatch(initializeForm());
-
     if (selectedBranch !== null && selectedBranch !== '') {
       dispatch(getOccupationList({ selectedBranch }));
     }
+    dispatch(initializeForm());
   }, [occupationPostResult, occupationChangeResult, dispatch, selectedBranch]);
 
   useEffect(() => {
@@ -142,6 +141,7 @@ const OccupationListContainer = ({ history }) => {
   return (
     <OccupationListForm
       occupations={occupations}
+      occupationPost={occupationPost}
       occupationError={occupationError}
       onSubmit={onSubmit}
       onEdit={onEdit}

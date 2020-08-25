@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy } from 'react';
 import { SchedulerData, ViewTypes, DATE_FORMAT } from 'react-big-scheduler';
 import 'react-big-scheduler/lib/css/style.css';
 import moment from 'moment';
 import DragDropContext from './DndContext';
 import { withRouter } from 'react-router-dom';
 import ScheduleListForm from '../../components/schedule/ScheduleListForm';
-import SchedulerModalForm from '../../components/schedule/SchedulerModalForm';
+//import SchedulerModalForm from '../../components/schedule/SchedulerModalForm'; //ToDo lazy 사용
 import { useSelector, useDispatch } from 'react-redux';
 import { checkExpire } from '../../lib/api/common/authAPI';
 import {
@@ -21,6 +21,10 @@ import {
 import { getOccupationList } from '../../modules/occupation/occupation';
 import { logout } from '../../modules/common/auth';
 import { getEmployList } from '../../modules/employ/employList';
+
+const schedulerModalForm = lazy(() =>
+  import('../../components/schedule/SchedulerModalForm'),
+);
 
 const ScheduleListContainer = ({ history }) => {
   moment.locale('en');
@@ -65,7 +69,24 @@ const ScheduleListContainer = ({ history }) => {
     setShow(false);
     setError('');
   };
-  const openModal = () => setShow(true);
+  const openModal = () => {
+    setShow(true);
+    return (
+      <schedulerModalForm
+        schedule={scheduleEvent}
+        occupations={occupations}
+        show={show}
+        closeModal={closeModal}
+        employs={employs}
+        modalType={modalType}
+        onChange={onChange}
+        onTimeChange={onTimeChange}
+        onScheduleSubmit={onScheduleSubmit}
+        onScheduleDelete={onScheduleDelete}
+        error={error}
+      />
+    );
+  };
 
   const prevClick = (data) => {
     data.prev();
@@ -178,7 +199,7 @@ const ScheduleListContainer = ({ history }) => {
           changeUpdate({
             key: 'workStartTime',
             value:
-              targetTime.substring(0, targetTime.indexOf('T') + 1) +
+              targetTime.substring(0, targetTime.indexOf('T') + 1) + // TODO 삼항 연산자로 변경
               time[0].format('HH:mm:ss'),
           }),
         );
@@ -420,7 +441,7 @@ const ScheduleListContainer = ({ history }) => {
           nonAgendaCellHeaderTemplateResolver
         }
       />
-      <SchedulerModalForm
+      {/*  <SchedulerModalForm
         schedule={scheduleEvent}
         occupations={occupations}
         show={show}
@@ -432,7 +453,7 @@ const ScheduleListContainer = ({ history }) => {
         onScheduleSubmit={onScheduleSubmit}
         onScheduleDelete={onScheduleDelete}
         error={error}
-      />
+      /> */}
     </>
   );
 };

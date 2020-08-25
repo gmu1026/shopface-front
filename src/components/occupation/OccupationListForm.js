@@ -46,17 +46,13 @@ const OccupationTableBody = ({
 
 const OccupationListForm = ({
   occupations,
-  occupationError,
-  loading,
+  occupationPost,
   onSubmit,
   onChange,
   onDelete,
   onEdit,
   error,
   updateChange,
-  handleComplete,
-  name,
-  color,
 }) => {
   return (
     <>
@@ -78,6 +74,7 @@ const OccupationListForm = ({
                             className="form-control ml-2 mr-2"
                             name="name"
                             onChange={onChange}
+                            value={occupationPost.name}
                           />
                           <br />
                         </div>

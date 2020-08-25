@@ -50,6 +50,7 @@ const branchPostForm = ({
                   <div className="form-group col-md-4">
                     우편 번호 :
                     <Button
+                      type="button"
                       style={{ margin: '10px' }}
                       className="btn btn-outline-primary"
                       onClick={openModal}

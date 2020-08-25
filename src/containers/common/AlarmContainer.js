@@ -21,7 +21,6 @@ const AlarmContainer = () => {
   const [formAlarm, setFormAlarm] = useState(null);
 
   function changeContentType({ type }) {
-    console.log(type);
     switch (type) {
       case 'ABSENTEEISM_SCHEDULE':
         return '근무 결근';
