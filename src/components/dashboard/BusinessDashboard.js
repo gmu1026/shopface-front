@@ -12,8 +12,8 @@ const RTableBody = ({ dashboard }) => {
         <td>
           {dashboard.workStartTime}~{dashboard.workEndTime}
         </td>
-        <td>{dashboard.hoursPlan}</td>
-        <td>{dashboard.salaryPlan}</td>
+        <td>{Math.ceil(dashboard.hoursPlan)}</td>
+        <td>{Math.ceil(dashboard.salaryPlan)}</td>
         <td>
           {dashboard.scheduleStatus === 'R'
             ? '근무중'
@@ -23,8 +23,8 @@ const RTableBody = ({ dashboard }) => {
             ? '근무 예정'
             : ''}
         </td>
-        <td>{dashboard.actualWorkingHours}</td>
-        <td>{dashboard.actualSalary}</td>
+        <td>{Math.ceil(dashboard.actualWorkingHours)}</td>
+        <td>{Math.ceil(dashboard.actualSalary)}</td>
       </tr>
     </>
   );
@@ -39,8 +39,8 @@ const WTableBody = ({ dashboard }) => {
         <td>
           {dashboard.workStartTime}~{dashboard.workEndTime}
         </td>
-        <td>{dashboard.hoursPlan}</td>
-        <td>{dashboard.salaryPlan}</td>
+        <td>{Math.ceil(dashboard.hoursPlan)}</td>
+        <td>{Math.ceil(dashboard.salaryPlan)}</td>
       </tr>
     </>
   );
@@ -55,31 +55,25 @@ const CTableBody = ({ dashboard }) => {
         <td>
           {dashboard.workStartTime}~{dashboard.workEndTime}
         </td>
-        <td>{dashboard.hoursPlan}</td>
-        <td>{dashboard.salaryPlan}</td>
-        {dashboard.scheduleStatus === 'R'
-          ? '근무중'
-          : dashboard.scheduleStatus === 'W'
-          ? '근무 완료'
-          : dashboard.scheduleStatus === 'C'
-          ? '근무 예정'
-          : ''}
-        <td>{dashboard.actualWorkingHours}</td>
-        <td>{dashboard.actualSalary}</td>
+        <td>{Math.ceil(dashboard.hoursPlan)}</td>
+        <td>{Math.ceil(dashboard.salaryPlan)}</td>
+        <td>
+          {dashboard.scheduleStatus === 'R'
+            ? '근무중'
+            : dashboard.scheduleStatus === 'W'
+            ? '근무 완료'
+            : dashboard.scheduleStatus === 'C'
+            ? '근무 예정'
+            : ''}
+        </td>
+        <td>{Math.ceil(dashboard.actualWorkingHours)}</td>
+        <td>{Math.ceil(dashboard.actualSalary)}</td>
       </tr>
     </>
   );
 };
 
-const BusinessDashboard = ({
-  businessW,
-  businessR,
-  businessC,
-  error,
-  loading,
-  match,
-  onRefresh,
-}) => {
+const BusinessDashboard = ({ businessW, businessR, businessC, onRefresh }) => {
   return (
     <div className="container-fluid p-0">
       <h1 className="h3 mb-3">근무 현황</h1>

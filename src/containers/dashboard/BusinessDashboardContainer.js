@@ -11,23 +11,15 @@ import {
 } from '../../modules/dashboard/dashboard';
 const BusinessDashboardContainer = () => {
   const dispatch = useDispatch();
-  const {
-    businessW,
-    businessR,
-    businessC,
-    error,
-    loading,
-    user,
-    selectedBranch,
-  } = useSelector(({ dashboard, loading, auth, branchSelect }) => ({
-    businessW: dashboard.businessW,
-    businessR: dashboard.businessR,
-    businessC: dashboard.businessC,
-    error: dashboard.error,
-    loading: loading,
-    user: auth.user,
-    selectedBranch: branchSelect.selectedBranch,
-  }));
+  const { businessW, businessR, businessC, user, selectedBranch } = useSelector(
+    ({ dashboard, loading, auth, branchSelect }) => ({
+      businessW: dashboard.businessW,
+      businessR: dashboard.businessR,
+      businessC: dashboard.businessC,
+      user: auth.user,
+      selectedBranch: branchSelect.selectedBranch,
+    }),
+  );
 
   useEffect(() => {
     if (user !== null) {
@@ -90,8 +82,6 @@ const BusinessDashboardContainer = () => {
       businessW={businessW}
       businessR={businessR}
       businessC={businessC}
-      error={error}
-      loading={loading}
       onRefresh={onRefresh}
     ></BusinessDashboard>
   );

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import EmployDashboard from '../../components/dashboard/EmployDashboard';
 import { checkExpire } from '../../lib/api/common/authAPI';
@@ -35,6 +35,7 @@ const EmployDashboardContainer = ({ history }) => {
 
   const onWork = (e) => {
     const no = e.target.value;
+
     dispatch(putWorkTime({ no }));
   };
 
