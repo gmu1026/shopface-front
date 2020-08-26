@@ -22,7 +22,7 @@ const DashboardPage = ({ match }) => {
             user.type === 'B' ? (
               <BusinessDashboardContainer />
             ) : (
-              user.type === 'E'(<EmployDashboardContainer />)
+              user.type === 'E' && <EmployDashboardContainer />
             )
           ) : (
             <div></div>
