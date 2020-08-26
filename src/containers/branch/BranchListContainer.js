@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import BranchListForm from '../../components/branch/BranchListForm';
-import {
-  getBranchList,
-  getAdminBranchList,
-  confirmBranch,
-  rejectBranch,
-  initializeForm,
-} from '../../modules/branch/branchList';
 import { withRouter } from 'react-router-dom';
+import BranchListForm from '../../components/branch/BranchListForm';
 import { checkExpire } from '../../lib/api/common/authAPI';
+import {
+  confirmBranch,
+  getAdminBranchList,
+  getBranchList,
+  initializeForm,
+  rejectBranch,
+} from '../../modules/branch/branchList';
 import { logout } from '../../modules/common/auth';
 
 const BranchListContainer = () => {

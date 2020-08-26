@@ -19,7 +19,7 @@ const RecordTableBody = ({ record }) => {
   );
 };
 
-const RecordListForm = ({ records, recordError, loading }) => {
+const RecordListForm = ({ employRecords, businessRecords }) => {
   return (
     <div className="container-fluid p-0">
       <h1 className="h3 mb-3">근무 기록</h1>
@@ -83,11 +83,18 @@ const RecordListForm = ({ records, recordError, loading }) => {
                         </tr>
                       </thead>
                       <tbody id="table_body">
-                        {records !== null ? (
-                          records.map((record, index) => (
+                        {businessRecords !== null ? (
+                          businessRecords.map((businessrecord, index) => (
                             <RecordTableBody
                               key={index}
-                              record={record}
+                              record={businessrecord}
+                            ></RecordTableBody>
+                          ))
+                        ) : employRecords !== null ? (
+                          employRecords.map((emprecord, index) => (
+                            <RecordTableBody
+                              key={index}
+                              record={emprecord}
                             ></RecordTableBody>
                           ))
                         ) : (

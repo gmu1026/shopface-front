@@ -54,6 +54,15 @@ const EmployScheduleContainer = ({ history }) => {
     history.push('/schedule');
   };
 
+  const onSelectDate = (schedulerData, date) => {
+    schedulerData.setDate(date);
+    schedulerData.setEvents(employEvents);
+
+    setSchedulerData(schedulerData);
+
+    history.push('/schedule');
+  };
+
   const onScrollRight = (data, schedulerContent, maxScrollLeft) => {
     if (data.ViewTypes === ViewTypes.Day) {
       data.next();
@@ -179,6 +188,7 @@ const EmployScheduleContainer = ({ history }) => {
       prevClick={prevClick}
       nextClick={nextClick}
       onViewChange={onViewChange}
+      onSelectDate={onSelectDate}
       onScrollLeft={onScrollLeft}
       onScrollRight={onScrollRight}
       nonAgendaCellHeaderTemplateResolver={nonAgendaCellHeaderTemplateResolver}
