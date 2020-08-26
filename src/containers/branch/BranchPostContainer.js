@@ -11,7 +11,7 @@ import { checkExpire } from '../../lib/api/common/authAPI';
 import { logout } from '../../modules/common/auth';
 
 const BranchPostContainer = ({ history }) => {
-  const [error, setError] = useState(null);
+  const [error, setError] = useState('');
   const [zipCode, setZipCode] = useState('');
   const [address, setAddress] = useState('');
   const [show, setShow] = useState(false);
@@ -56,8 +56,7 @@ const BranchPostContainer = ({ history }) => {
       setError('빈 칸을 모두 입력하세요');
       return;
     }
-    setError(null);
-    //TODO memberId  값 수정
+
     dispatch(
       postBranch({
         post: {
@@ -110,15 +109,15 @@ const BranchPostContainer = ({ history }) => {
 
   return (
     <BranchPostForm
-      onSubmit={onSubmit}
-      onChange={onChange}
       error={error}
-      handleComplete={handleComplete}
       show={show}
       closeModal={closeModal}
       openModal={openModal}
       zipCode={zipCode}
       address={address}
+      handleComplete={handleComplete}
+      onSubmit={onSubmit}
+      onChange={onChange}
     ></BranchPostForm>
   );
 };

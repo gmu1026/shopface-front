@@ -13,6 +13,16 @@ import { withRouter } from 'react-router-dom';
 import { logout } from '../../modules/common/auth';
 
 const MemberDetailContainer = ({ match, history }) => {
+  const dispatch = useDispatch();
+  const { member, memberResult, memberError, user } = useSelector(
+    ({ memberDetail, auth }) => ({
+      member: memberDetail.member,
+      memberResult: memberDetail.memberResult,
+      memberError: memberDetail.memberError,
+      user: auth.user,
+    }),
+  );
+
   const [id, setId] = useState(match.params.id);
   const [error, setError] = useState(null);
   const [zoneCode, setZoneCode] = useState('');
@@ -34,16 +44,6 @@ const MemberDetailContainer = ({ match, history }) => {
 
     closeModal();
   };
-
-  const dispatch = useDispatch();
-  const { member, memberResult, memberError, user } = useSelector(
-    ({ memberDetail, auth }) => ({
-      member: memberDetail.member,
-      memberResult: memberDetail.memberResult,
-      memberError: memberDetail.memberError,
-      user: auth.user,
-    }),
-  );
 
   const onChange = (e) => {
     const { name, value } = e.target;
