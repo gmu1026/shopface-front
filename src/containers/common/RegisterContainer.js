@@ -54,6 +54,8 @@ const RegisterContainer = ({ history, match }) => {
       setError('빈칸을 모두 입력해주세요');
       return;
     }
+
+    dispatch(initializeForm());
     dispatch(registerMember({ member, certCode }));
   };
 
