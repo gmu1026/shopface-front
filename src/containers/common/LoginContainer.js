@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import AuthForm from '../../components/common/AuthForm';
-import { changeInput, login } from '../../modules/common/auth';
+import { changeInput, login, initializeForm } from '../../modules/common/auth';
 import AuthTemplate from '../../components/common/AuthTemplate';
 import { withRouter } from 'react-router-dom';
 import { initialize } from '../../modules/common/certCode';
@@ -36,6 +36,7 @@ const LoginForm = ({ history, match }) => {
 
       return;
     }
+    dispatch(initializeForm());
     dispatch(login({ id, password }));
   };
 
@@ -51,7 +52,7 @@ const LoginForm = ({ history, match }) => {
       }
       setError(authError);
     }
-  }, [authError]);
+  }, [authError, dispatch]);
 
   useEffect(() => {
     if (user !== null) {

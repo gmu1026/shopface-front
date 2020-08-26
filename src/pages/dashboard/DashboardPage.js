@@ -17,17 +17,15 @@ const DashboardPage = ({ match }) => {
   return (
     <div>
       <Suspense fallback={<div>Loading...</div>}>
-        <Switch>
-          {user !== null ? (
-            user.type === 'B' ? (
-              <BusinessDashboardContainer />
-            ) : (
-              user.type === 'E' && <EmployDashboardContainer />
-            )
+        {user !== null ? (
+          user.type === 'B' ? (
+            <BusinessDashboardContainer />
           ) : (
-            <div></div>
-          )}
-        </Switch>
+            user.type === 'E' && <EmployDashboardContainer />
+          )
+        ) : (
+          <div></div>
+        )}
       </Suspense>
     </div>
   );
