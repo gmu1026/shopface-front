@@ -63,7 +63,7 @@ const LoginForm = ({ history, match }) => {
       history.push('/');
     }
     dispatch(initialize());
-  }, [history, user]);
+  }, [history, dispatch, user]);
 
   return (
     <AuthTemplate>
