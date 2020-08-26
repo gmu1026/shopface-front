@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import BranchDetailForm from '../../components/branch/BranchDetailForm';
-import { useSelector, useDispatch } from 'react-redux';
+import { checkExpire } from '../../lib/api/common/authAPI';
 import {
+  branchDelete,
+  branchUpdate,
   changeInput,
   getbranchDetail,
-  branchUpdate,
-  branchDelete,
   initializeResult,
 } from '../../modules/branch/branchDetail';
-import { withRouter } from 'react-router-dom';
-import { checkExpire } from '../../lib/api/common/authAPI';
 import { logout } from '../../modules/common/auth';
 
 const BranchDetailContainer = ({ match, history }) => {

@@ -144,6 +144,72 @@ const ScheduleListContainer = ({ history }) => {
     openModal();
   };
 
+  const onSelectDate = (schedulerData, date) => {
+    schedulerData.setDate(date);
+    schedulerData.setEvents(filterEvents);
+
+    setSchedulerData(schedulerData);
+
+    history.push('/schedule');
+  };
+
+  const onScrollRight = (data, schedulerContent, maxScrollLeft) => {
+    if (data.ViewTypes === ViewTypes.Day) {
+      data.next();
+      data.setEvents(filterEvents);
+      setSchedulerData(data);
+
+      schedulerContent.scrollLeft = maxScrollLeft - 10;
+    }
+  };
+
+  const onScrollLeft = (data, schedulerContent, maxScrollLeft) => {
+    if (data.ViewTypes === ViewTypes.Day) {
+      data.prev();
+      setSchedulerData(data);
+
+      schedulerContent.scrollLeft = 10;
+    }
+  };
+
+  const toggleExpandFunc = (schedulerData, slotId) => {
+    schedulerData.toggleExpandStatus(slotId);
+    setSchedulerData(schedulerData);
+  };
+
+  const nonAgendaCellHeaderTemplateResolver = (
+    data,
+    item,
+    formattedDateItems,
+    style,
+  ) => {
+    let datetime = data.localeMoment(item.time);
+    let isCurrentDate = false;
+
+    if (data.viewType === ViewTypes.Day) {
+      isCurrentDate = datetime.isSame(new Date(), 'hour');
+    } else {
+      isCurrentDate = datetime.isSame(new Date(), 'day');
+    }
+
+    if (isCurrentDate) {
+      style.backgroundColor = '#118dea';
+      style.color = 'white';
+    }
+    return (
+      <th key={item.time} className={`header3-text`} style={style}>
+        {formattedDateItems.map((formattedItem, index) => (
+          <div
+            key={index}
+            dangerouslySetInnerHTML={{
+              __html: formattedItem.replace(/[0-9]/g, '<b>$&</b>'),
+            }}
+          />
+        ))}
+      </th>
+    );
+  };
+
   const onChange = (e) => {
     setError('');
 
@@ -252,72 +318,6 @@ const ScheduleListContainer = ({ history }) => {
 
   const onScheduleDelete = () => {
     dispatch(deleteSchedule({ no: scheduleEvent.id }));
-  };
-
-  const onSelectDate = (schedulerData, date) => {
-    schedulerData.setDate(date);
-    schedulerData.setEvents(filterEvents);
-
-    setSchedulerData(schedulerData);
-
-    history.push('/schedule');
-  };
-
-  const onScrollRight = (data, schedulerContent, maxScrollLeft) => {
-    if (data.ViewTypes === ViewTypes.Day) {
-      data.next();
-      data.setEvents(filterEvents);
-      setSchedulerData(data);
-
-      schedulerContent.scrollLeft = maxScrollLeft - 10;
-    }
-  };
-
-  const onScrollLeft = (data, schedulerContent, maxScrollLeft) => {
-    if (data.ViewTypes === ViewTypes.Day) {
-      data.prev();
-      setSchedulerData(data);
-
-      schedulerContent.scrollLeft = 10;
-    }
-  };
-
-  const toggleExpandFunc = (schedulerData, slotId) => {
-    schedulerData.toggleExpandStatus(slotId);
-    setSchedulerData(schedulerData);
-  };
-
-  const nonAgendaCellHeaderTemplateResolver = (
-    data,
-    item,
-    formattedDateItems,
-    style,
-  ) => {
-    let datetime = data.localeMoment(item.time);
-    let isCurrentDate = false;
-
-    if (data.viewType === ViewTypes.Day) {
-      isCurrentDate = datetime.isSame(new Date(), 'hour');
-    } else {
-      isCurrentDate = datetime.isSame(new Date(), 'day');
-    }
-
-    if (isCurrentDate) {
-      style.backgroundColor = '#118dea';
-      style.color = 'white';
-    }
-    return (
-      <th key={item.time} className={`header3-text`} style={style}>
-        {formattedDateItems.map((formattedItem, index) => (
-          <div
-            key={index}
-            dangerouslySetInnerHTML={{
-              __html: formattedItem.replace(/[0-9]/g, '<b>$&</b>'),
-            }}
-          />
-        ))}
-      </th>
-    );
   };
 
   useEffect(() => {

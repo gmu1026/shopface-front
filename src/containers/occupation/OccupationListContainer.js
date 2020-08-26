@@ -15,7 +15,6 @@ import { checkExpire } from '../../lib/api/common/authAPI';
 import { logout } from '../../modules/common/auth';
 
 const OccupationListContainer = ({ history }) => {
-  const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const {
     occupations,
@@ -34,6 +33,8 @@ const OccupationListContainer = ({ history }) => {
     user: auth.user,
     selectedBranch: branchSelect.selectedBranch,
   }));
+
+  const [error, setError] = useState('');
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -77,7 +78,7 @@ const OccupationListContainer = ({ history }) => {
       }),
     );
 
-    setError(null);
+    setError('');
   };
 
   const onEdit = (e) => {
@@ -118,14 +119,13 @@ const OccupationListContainer = ({ history }) => {
   useEffect(() => {
     if (occupationPostResult === 'OK') {
       alert('업무가 등록 되었습니다');
+      dispatch(getOccupationList({ selectedBranch }));
     }
     if (occupationChangeResult) {
       alert('업무가 변경 되었습니다');
-    }
-
-    if (selectedBranch !== null && selectedBranch !== '') {
       dispatch(getOccupationList({ selectedBranch }));
     }
+
     dispatch(initializeForm());
   }, [occupationPostResult, occupationChangeResult, dispatch, selectedBranch]);
 
