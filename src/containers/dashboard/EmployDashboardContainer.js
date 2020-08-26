@@ -13,18 +13,15 @@ import {
   initializeForm,
 } from '../../modules/dashboard/dashboard';
 const EmployDashboardContainer = ({ history }) => {
-  const [Error, setError] = useState(null);
   const dispatch = useDispatch();
   const {
     employW,
     employR,
     employC,
-    error,
     loading,
     user,
     workResult,
     quitResult,
-    dashboardError,
   } = useSelector(({ dashboard, loading, auth }) => ({
     employW: dashboard.employW,
     employR: dashboard.employR,
@@ -32,7 +29,6 @@ const EmployDashboardContainer = ({ history }) => {
     error: dashboard.error,
     loading: loading,
     user: auth.user,
-    dashboardError: dashboard.dashboardError,
     workResult: dashboard.workResult,
     quitResult: dashboard.quitResult,
   }));
@@ -114,18 +110,11 @@ const EmployDashboardContainer = ({ history }) => {
     }
   }, [quitResult, dispatch, history]);
 
-  useEffect(() => {
-    if (dashboardError !== null) {
-      setError(dashboardError);
-    }
-  }, [dashboardError]);
-
   return (
     <EmployDashboard
       employW={employW}
       employR={employR}
       employC={employC}
-      error={error}
       loading={loading}
       onWork={onWork}
       onQuit={onQuit}

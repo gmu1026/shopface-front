@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from 'react';
-import { Route, withRouter, Switch } from 'react-router-dom';
+import { withRouter, Switch } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 const BusinessDashboardContainer = lazy(() =>
