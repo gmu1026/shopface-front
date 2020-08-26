@@ -243,12 +243,12 @@ const dashboard = handleActions(
     }),
     [EMPLOY_PUTQUITTIME_SUCCESS]: (state, { payload: { code } }) => ({
       ...state,
-      workResult: code,
+      quitResult: code,
       error: null,
     }),
     [EMPLOY_PUTQUITTIME_FAILURE]: (state, { payload: { message } }) => ({
       ...state,
-      workResult: null,
+      quitResult: null,
       error: message,
     }),
   },

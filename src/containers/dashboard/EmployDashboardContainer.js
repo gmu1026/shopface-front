@@ -105,23 +105,21 @@ const EmployDashboardContainer = ({ history }) => {
           state: 'R',
         }),
       );
-      history.push('/');
     }
-  }, [workResult, history, dispatch, user]);
+  }, [workResult, dispatch, user]);
 
   useEffect(() => {
     if (quitResult === 'OK') {
       alert('퇴근하셨습니다');
       dispatch(initializeForm());
-      // // dispatch(
-      // //   getEmployRDashboard({
-      // //     id: user.name,
-      // //     state: 'R',
-      // //   }),
-      // );
-      history.push('/');
+      dispatch(
+        getEmployRDashboard({
+          id: user.name,
+          state: 'R',
+        }),
+      );
     }
-  }, [quitResult, dispatch, history, user]);
+  }, [quitResult, dispatch, user]);
 
   return (
     <EmployDashboard
