@@ -150,16 +150,30 @@ const initialState = {
   businessW: null,
   businessR: null,
   businessC: null,
-  dashboardResult: null,
   workResult: null,
   quitResult: null,
   error: null,
+  dashboardList: {
+    branchName: '',
+    occupationName: '',
+    state: '',
+    scheduleNo: '',
+    actualSalary: '',
+    actualWorkingHours: '',
+    employSalary: '',
+    hoursplan: '',
+    salaryPlan: '',
+    workEndTime: '',
+    workStartTime: '',
+    workingTime: '',
+  },
 };
 
 const dashboard = handleActions(
   {
     [INITIALIZE_FORM]: (state) => ({
       ...state,
+      dashboardList: initialState,
       dashboardResult: null,
     }),
     [BUSINESS_WDASHBOARD_SUCCESS]: (state, { payload: { data } }) => ({

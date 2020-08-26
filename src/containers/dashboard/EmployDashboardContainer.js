@@ -99,17 +99,29 @@ const EmployDashboardContainer = ({ history }) => {
     if (workResult === 'OK') {
       alert('출근하셨습니다');
       dispatch(initializeForm());
+      dispatch(
+        getEmployRDashboard({
+          id: user.name,
+          state: 'R',
+        }),
+      );
       history.push('/');
     }
-  }, [workResult, history, dispatch]);
+  }, [workResult, history, dispatch, user]);
 
   useEffect(() => {
     if (quitResult === 'OK') {
-      alert('출근하셨습니다');
+      alert('퇴근하셨습니다');
       dispatch(initializeForm());
+      // // dispatch(
+      // //   getEmployRDashboard({
+      // //     id: user.name,
+      // //     state: 'R',
+      // //   }),
+      // );
       history.push('/');
     }
-  }, [quitResult, dispatch, history]);
+  }, [quitResult, dispatch, history, user]);
 
   return (
     <EmployDashboard

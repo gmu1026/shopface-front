@@ -10,7 +10,31 @@ const RTableBody = ({ Rtable, onWork, onQuit }) => {
           {Rtable.occupationName})
         </td>
         <td>
-          <Button
+          {Rtable != null ? (
+            Rtable.state === 'R' ? (
+              <Button
+                type="button"
+                className="btn btn-primary"
+                onClick={onWork}
+                value={Rtable.scheduleNo}
+              >
+                출근
+              </Button>
+            ) : (
+              Rtable.state === 'W' && (
+                <Button
+                  className="btn btn-primary"
+                  onClick={onQuit}
+                  value={Rtable.scheduleNo}
+                >
+                  퇴근
+                </Button>
+              )
+            )
+          ) : (
+            <div></div>
+          )}
+          {/* <Button
             type="button"
             className="btn btn-primary"
             onClick={onWork}
@@ -24,7 +48,7 @@ const RTableBody = ({ Rtable, onWork, onQuit }) => {
             value={Rtable.scheduleNo}
           >
             퇴근
-          </Button>
+          </Button> */}
         </td>
       </tr>
     </>
