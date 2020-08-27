@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import BusinessDashboard from '../../components/dashboard/BusinessDashboard';
 import { checkExpire } from '../../lib/api/common/authAPI';
@@ -9,6 +9,8 @@ import {
   getBusinessRDashboard,
   getBusinessCDashboard,
 } from '../../modules/dashboard/dashboard';
+import moment from 'moment';
+
 const BusinessDashboardContainer = () => {
   const dispatch = useDispatch();
   const { businessW, businessR, businessC, user, selectedBranch } = useSelector(
@@ -20,7 +22,33 @@ const BusinessDashboardContainer = () => {
       selectedBranch: branchSelect.selectedBranch,
     }),
   );
+  const [time, setTime] = useState(null);
 
+  function getDashBoardList() {
+    setTime(moment().format('YYYY-MM-DD HH:mm'));
+
+    dispatch(
+      getBusinessWDashboard({
+        id: user.name,
+        selectedBranch,
+        state: 'W',
+      }),
+    );
+    dispatch(
+      getBusinessRDashboard({
+        id: user.name,
+        selectedBranch,
+        state: 'R',
+      }),
+    );
+    dispatch(
+      getBusinessCDashboard({
+        id: user.name,
+        selectedBranch,
+        state: 'C',
+      }),
+    );
+  }
   useEffect(() => {
     if (user !== null) {
       checkExpire().then((isExpired) => {
@@ -28,57 +56,18 @@ const BusinessDashboardContainer = () => {
           dispatch(logout());
         }
       });
-      dispatch(
-        getBusinessWDashboard({
-          id: user.name,
-          selectedBranch,
-          state: 'W',
-        }),
-      );
-    }
-  }, [dispatch, user, selectedBranch]);
 
-  useEffect(() => {
-    if (user !== null) {
-      checkExpire().then((isExpired) => {
-        if (isExpired) {
-          dispatch(logout());
-        }
-      });
-      dispatch(
-        getBusinessRDashboard({
-          id: user.name,
-          selectedBranch,
-          state: 'R',
-        }),
-      );
+      getDashBoardList();
     }
-  }, [dispatch, user, selectedBranch]);
+  }, [dispatch, user]);
 
-  useEffect(() => {
-    if (user !== null) {
-      checkExpire().then((isExpired) => {
-        if (isExpired) {
-          dispatch(logout());
-        }
-      });
-      dispatch(
-        getBusinessCDashboard({
-          id: user.name,
-          selectedBranch,
-          state: 'C',
-        }),
-      );
-    }
-  }, [dispatch, user, selectedBranch]);
-
-  const onRefresh = (e) => {
-    e.preventDefault();
-    window.location.reload(false);
+  const onRefresh = () => {
+    getDashBoardList();
   };
 
   return (
     <BusinessDashboard
+      time={time}
       businessW={businessW}
       businessR={businessR}
       businessC={businessC}

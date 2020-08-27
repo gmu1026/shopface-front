@@ -58,42 +58,56 @@ const EmployDashboardContainer = ({ history }) => {
             state: 'R',
           }),
         );
+
+        dispatch(
+          getEmployWDashboard({
+            id: user.name,
+            state: 'W',
+          }),
+        );
+
+        dispatch(
+          getEmployCDashboard({
+            id: user.name,
+            state: 'C',
+          }),
+        );
       }
     },
     [dispatch, user],
   );
 
-  useEffect(() => {
-    if (user !== null) {
-      checkExpire().then((isExpired) => {
-        if (isExpired) {
-          dispatch(logout());
-        }
-      });
-      dispatch(
-        getEmployWDashboard({
-          id: user.name,
-          state: 'W',
-        }),
-      );
-    }
-  }, [dispatch, user]);
+  // useEffect(() => {
+  //   if (user !== null) {
+  //     checkExpire().then((isExpired) => {
+  //       if (isExpired) {
+  //         dispatch(logout());
+  //       }
+  //     });
+  //     dispatch(
+  //       getEmployWDashboard({
+  //         id: user.name,
+  //         state: 'W',
+  //       }),
+  //     );
+  //   }
+  // }, [dispatch, user]);
 
-  useEffect(() => {
-    if (user !== null) {
-      checkExpire().then((isExpired) => {
-        if (isExpired) {
-          dispatch(logout());
-        }
-      });
-      dispatch(
-        getEmployCDashboard({
-          id: user.name,
-          state: 'C',
-        }),
-      );
-    }
-  }, [dispatch, user]);
+  // useEffect(() => {
+  //   if (user !== null) {
+  //     checkExpire().then((isExpired) => {
+  //       if (isExpired) {
+  //         dispatch(logout());
+  //       }
+  //     });
+  //     dispatch(
+  //       getEmployCDashboard({
+  //         id: user.name,
+  //         state: 'C',
+  //       }),
+  //     );
+  //   }
+  // }, [dispatch, user]);
 
   useEffect(() => {
     if (workResult === 'OK') {
