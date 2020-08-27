@@ -14,7 +14,7 @@ const [
   OCCUPATION_LIST,
   OCCUPATION_LIST_SUCCESS,
   OCCUPATION_LIST_FAILURE,
-] = createRequestActionTypes('occupation/occupation_LIST');
+] = createRequestActionTypes('occupation/OCCUPATION_LIST');
 
 const [
   OCCUPATION_POST,

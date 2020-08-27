@@ -1,7 +1,6 @@
 import React from 'react';
 import Button from '../common/Button';
 import { withRouter } from 'react-router-dom';
-// import ErrorMessage from '../common/ErrorMessage';
 const RTableBody = ({ Rtable, onWork, onQuit }) => {
   return (
     <>
@@ -11,7 +10,31 @@ const RTableBody = ({ Rtable, onWork, onQuit }) => {
           {Rtable.occupationName})
         </td>
         <td>
-          <Button
+          {Rtable != null ? (
+            Rtable.state === 'R' ? (
+              <Button
+                type="button"
+                className="btn btn-primary"
+                onClick={onWork}
+                value={Rtable.scheduleNo}
+              >
+                출근
+              </Button>
+            ) : (
+              Rtable.state === 'W' && (
+                <Button
+                  className="btn btn-primary"
+                  onClick={onQuit}
+                  value={Rtable.scheduleNo}
+                >
+                  퇴근
+                </Button>
+              )
+            )
+          ) : (
+            <div></div>
+          )}
+          {/* <Button
             type="button"
             className="btn btn-primary"
             onClick={onWork}
@@ -25,7 +48,7 @@ const RTableBody = ({ Rtable, onWork, onQuit }) => {
             value={Rtable.scheduleNo}
           >
             퇴근
-          </Button>
+          </Button> */}
         </td>
       </tr>
     </>
@@ -40,8 +63,8 @@ const WTableBody = ({ Wtable, onWork, onQuit }) => {
         <td>
           {Wtable.workStartTime}~{Wtable.workEndTime}
         </td>
-        <td>{Wtable.hoursPlan}</td>
-        <td>{Wtable.salaryPlan}</td>
+        <td>{Math.ceil(Wtable.hoursPlan)}</td>
+        <td>{Math.ceil(Wtable.salaryPlan)}</td>
         <td>
           {Wtable.state === 'R'
             ? '근무중'
@@ -51,8 +74,8 @@ const WTableBody = ({ Wtable, onWork, onQuit }) => {
             ? '근무 완료'
             : ''}
         </td>
-        <td>{Wtable.actualWorkingHours}</td>
-        <td>{Wtable.actualSalary}</td>
+        <td>{Math.ceil(Wtable.actualWorkingHours)}</td>
+        <td>{Math.ceil(Wtable.actualSalary)}</td>
         <td>
           <Button>요청하기</Button>
         </td>
@@ -70,8 +93,8 @@ const CTableBody = ({ Ctable, onWork, onQuit }) => {
         <td>
           {Ctable.workStartTime}~{Ctable.workEndTime}
         </td>
-        <td>{Ctable.hoursPlan}</td>
-        <td>{Ctable.salaryPlan}</td>
+        <td>{Math.ceil(Ctable.hoursPlan)}</td>
+        <td>{Math.ceil(Ctable.salaryPlan)}</td>
         <td>
           {Ctable.state === 'R'
             ? '근무중'
@@ -81,8 +104,8 @@ const CTableBody = ({ Ctable, onWork, onQuit }) => {
             ? '근무 완료'
             : ''}
         </td>
-        <td>{Ctable.actualWorkingHours}</td>
-        <td>{Ctable.actualSalary}</td>
+        <td>{Math.ceil(Ctable.actualWorkingHours)}</td>
+        <td>{Math.ceil(Ctable.actualSalary)}</td>
         <td>
           <Button>요청하기</Button>
         </td>

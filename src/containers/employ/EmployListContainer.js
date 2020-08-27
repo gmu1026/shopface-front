@@ -37,8 +37,6 @@ const EmployListContainer = ({ history, match }) => {
   const dispatch = useDispatch();
   const {
     employs,
-    employError,
-    loading,
     employPost,
     postResult,
     postError,
@@ -46,20 +44,9 @@ const EmployListContainer = ({ history, match }) => {
     name,
     branchs,
     selectedBranch,
-    selectedSchedule,
   } = useSelector(
-    ({
-      employList,
-      employPost,
-      loading,
-      auth,
-      branchList,
-      branchSelect,
-      scheduleSelect,
-    }) => ({
+    ({ employList, employPost, loading, auth, branchList, branchSelect }) => ({
       employs: employList.employs,
-      employError: employList.employError,
-      loading: loading,
       employPost: employPost.post,
       postResult: employPost.postResult,
       postError: employPost.postError,
@@ -67,7 +54,6 @@ const EmployListContainer = ({ history, match }) => {
       name: employPost.post.name,
       branchs: branchList.branchs,
       selectedBranch: branchSelect.selectedBranch,
-      selectedSchedule: scheduleSelect.selectedSchedule,
     }),
   );
 
@@ -152,7 +138,7 @@ const EmployListContainer = ({ history, match }) => {
       dispatch(getEmployList({ selectedBranch }));
       dispatch(initializeForm('post'));
     }
-  }, [dispatch, selectedBranch, user]);
+  }, [dispatch, selectedBranch, user, history]);
 
   // useEffect(() => {
   //   const employsFilter = employs.filter((employ) => employ.state !== 'D');
@@ -163,13 +149,11 @@ const EmployListContainer = ({ history, match }) => {
     <EmployListForm
       employs={employs}
       employFilt={employFilt}
-      employError={employError}
-      loading={loading}
       onChange={onChange}
       onSubmit={onSubmit}
+      error={error}
       onSearch={onSearch}
       onKeyPress={onKeyPress}
-      error={error}
       filterEmploys={filterEmploys}
       show={show}
       closeModal={closeModal}

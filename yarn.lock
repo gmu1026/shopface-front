@@ -5658,6 +5658,11 @@ asap@^2.0.6, asap@~2.0.3, asap@~2.0.6:
   resolved "https://registry.yarnpkg.com/asap/-/asap-2.0.6.tgz#e50347611d7e690943208bbdafebcbc2fb866d46"
   integrity sha1-5QNHYR1+aQlDIIu9r+vLwvuGbUY=
 
+ascii-math@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/ascii-math/-/ascii-math-2.0.0.tgz#aa0e79f675a85466d366ac8c42e332fd1c3200eb"
+  integrity sha1-qg559nWoVGbTZqyMQuMy/RwyAOs=
+
 asn1.js@^4.0.0:
   version "4.10.1"
   resolved "https://registry.yarnpkg.com/asn1.js/-/asn1.js-4.10.1.tgz#b9c2bf5805f1e64aadeed6df3a2bfafb5a73f5a0"
@@ -15223,6 +15228,13 @@ react-live-clock@^4.0.5:
     moment-timezone "0.5.27"
     prop-types "15.7.2"
     react-moment "0.9.7"
+
+react-math@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/react-math/-/react-math-0.0.1.tgz#f01176b760ec7fbcf7e619fa20ae9e1064ad6121"
+  integrity sha1-8BF2t2Dsf7z35hn6IK6eEGStYSE=
+  dependencies:
+    ascii-math "^2.0.0"
 
 react-moment@0.9.7:
   version "0.9.7"

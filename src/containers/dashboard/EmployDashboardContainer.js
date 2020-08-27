@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import EmployDashboard from '../../components/dashboard/EmployDashboard';
 import { checkExpire } from '../../lib/api/common/authAPI';
@@ -35,6 +35,7 @@ const EmployDashboardContainer = ({ history }) => {
 
   const onWork = (e) => {
     const no = e.target.value;
+
     dispatch(putWorkTime({ no }));
   };
 
@@ -98,17 +99,27 @@ const EmployDashboardContainer = ({ history }) => {
     if (workResult === 'OK') {
       alert('출근하셨습니다');
       dispatch(initializeForm());
-      history.push('/');
+      dispatch(
+        getEmployRDashboard({
+          id: user.name,
+          state: 'R',
+        }),
+      );
     }
-  }, [workResult, history, dispatch]);
+  }, [workResult, dispatch, user]);
 
   useEffect(() => {
     if (quitResult === 'OK') {
-      alert('출근하셨습니다');
+      alert('퇴근하셨습니다');
       dispatch(initializeForm());
-      history.push('/');
+      dispatch(
+        getEmployRDashboard({
+          id: user.name,
+          state: 'R',
+        }),
+      );
     }
-  }, [quitResult, dispatch, history]);
+  }, [quitResult, dispatch, user]);
 
   return (
     <EmployDashboard
