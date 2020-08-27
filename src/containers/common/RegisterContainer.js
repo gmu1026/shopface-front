@@ -60,13 +60,19 @@ const RegisterContainer = ({ history, match }) => {
   };
 
   useEffect(() => {
+    if (user !== null) {
+      history.push('/');
+      return;
+    }
+
     dispatch(initializeForm('register'));
     setError(null);
-  }, [dispatch]);
+  }, [history, dispatch]);
 
   useEffect(() => {
     if (authError !== null) {
       setError(authError);
+      dispatch(initializeForm());
     }
   }, [authError]);
 
@@ -77,12 +83,6 @@ const RegisterContainer = ({ history, match }) => {
       history.push('/login');
     }
   }, [history, registerResult]);
-
-  useEffect(() => {
-    if (user !== null) {
-      history.push('/');
-    }
-  });
 
   return (
     <AuthTemplate>

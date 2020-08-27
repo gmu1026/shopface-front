@@ -1,67 +1,95 @@
 import React, { useState, useEffect } from 'react';
-import AuthCodeForm from '../../components/common/AuthCordForm';
 import AuthTemplate from '../../components/common/AuthTemplate';
+import ForgotPasswordForm from '../../components/common/ForgotPasswordForm';
 import { useSelector, useDispatch } from 'react-redux';
-import { checkCertCode, changeInput } from '../../modules/common/certCode';
 import { withRouter } from 'react-router-dom';
+import {
+  sendForgotPassword,
+  initializeForm,
+  changeInput,
+  changeForgotPassword,
+} from '../../modules/common/forgotPassword';
 
 const ForgotPasswordContainer = ({ history }) => {
-  const [error, setError] = useState('');
   const dispatch = useDispatch();
-  const { certCode, certCodeResult, certCodeError, user } = useSelector(
-    ({ certCode, auth }) => ({
-      certCode: certCode.certCode,
-      certCodeError: certCode.certCodeError,
-      certCodeResult: certCode.certCodeResult,
-      user: auth.user,
-    }),
-  );
+  const {
+    user,
+    changePassword,
+    sendCodeResult,
+    changePasswordResult,
+    forgotPasswordError,
+  } = useSelector(({ auth, forgotPassword }) => ({
+    user: auth.user,
+    changePassword: forgotPassword.changePassword,
+    sendCodeResult: forgotPassword.sendCodeResult,
+    changePasswordResult: forgotPassword.changePasswordResult,
+    forgotPasswordError: forgotPassword.forgotPasswordError,
+  }));
+
+  const [error, setError] = useState('');
+  const [result, setResult] = useState(null);
 
   const onChange = (e) => {
-    const certCode = e.target.value;
-    dispatch(changeInput({ certCode }));
+    const { name, value } = e.target;
+    dispatch(changeInput({ key: name, value }));
 
     setError('');
   };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-
-    if (certCode === '') {
-      setError('인증코드를 입력해주세요');
-
+  const onSubmitCode = () => {
+    if (changePassword.name === '') {
+      setError('아이디를 입력해주세요');
       return;
     }
-    dispatch(checkCertCode({ certCode }));
+    dispatch(sendForgotPassword({ name: changePassword.name }));
   };
 
-  useEffect(() => {
-    if (certCodeResult === true) {
-      history.push('/register');
-
+  const onChangePassword = () => {
+    const data = changePassword;
+    if ([data.name, data.changePassword, data.code].includes('')) {
+      setError('빈 칸을 입력해주세요');
       return;
     }
-    if (certCodeResult === false) {
-      setError('잘못된 인증코드입니다.');
-    }
-  });
+    dispatch(changeForgotPassword({ data }));
+  };
 
   useEffect(() => {
     if (user !== null) {
       history.push('/');
     }
-  }, [user, history]);
+    dispatch(initializeForm('changePassword'));
+  }, [user, history, dispatch]);
 
   useEffect(() => {
-    if (certCodeError != null) {
-      setError(certCodeError);
+    if (sendCodeResult === 'OK') {
+      setResult(sendCodeResult);
+
+      dispatch(initializeForm(''));
+      return;
     }
-  }, [certCodeError]);
+    if (changePasswordResult === 'OK') {
+      history.push('/login');
+      dispatch(initializeForm('changePassword'));
+    }
+  }, [sendCodeResult, history, changePasswordResult, dispatch]);
+
+  useEffect(() => {
+    if (forgotPasswordError != null) {
+      setError(forgotPasswordError);
+      dispatch(initializeForm(''));
+    }
+  }, [forgotPasswordError, dispatch]);
 
   return (
     <>
       <AuthTemplate>
-        <AuthCodeForm onChange={onChange} onSubmit={onSubmit} error={error} />
+        <ForgotPasswordForm
+          result={result}
+          onChange={onChange}
+          onSubmitCode={onSubmitCode}
+          onChangePassword={onChangePassword}
+          error={error}
+        />
       </AuthTemplate>
     </>
   );
