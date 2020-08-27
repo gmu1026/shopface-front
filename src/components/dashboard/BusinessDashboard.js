@@ -73,7 +73,13 @@ const CTableBody = ({ dashboard }) => {
   );
 };
 
-const BusinessDashboard = ({ businessW, businessR, businessC, onRefresh }) => {
+const BusinessDashboard = ({
+  time,
+  businessW,
+  businessR,
+  businessC,
+  onRefresh,
+}) => {
   return (
     <div className="container-fluid p-0">
       <h1 className="h3 mb-3">근무 현황</h1>
@@ -81,7 +87,7 @@ const BusinessDashboard = ({ businessW, businessR, businessC, onRefresh }) => {
         <div className="col-12">
           <div className="card">
             <div className="card-body">
-              <Clock format={'YYYY년 MM월 DD일 HH:mm:ss'} ticking={true} />
+              {time !== null && time}
               <Button onClick={onRefresh}>
                 새로 고침
                 <BiRefresh />
