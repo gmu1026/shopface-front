@@ -8,6 +8,8 @@ import produce from 'immer';
 
 const CHANGE_INPUT = 'employDetail/CHANGE_INPUT';
 const INITIALIZE_RESULT = 'employDetail/INITIALIZE_FORM';
+const INITIALIZE_DISABLE = 'employDetail/INITIALIZE_DISABLE';
+const INITIALIZE_INVITE = 'employDetail/INITIALIZE_INVITE';
 
 const [
   EMPLOY_DETAIL,
@@ -38,8 +40,10 @@ export const changeInput = createAction(CHANGE_INPUT, ({ key, value }) => ({
   value,
 }));
 export const initializeResult = createAction(INITIALIZE_RESULT);
+export const initializeDisable = createAction(INITIALIZE_DISABLE);
+export const initializeInvite = createAction(INITIALIZE_INVITE);
 
-export const getEmployhDetail = createAction(EMPLOY_DETAIL, ({ no }) => ({
+export const getEmployDetail = createAction(EMPLOY_DETAIL, ({ no }) => ({
   no,
 }));
 export const employUpdate = createAction(EMPLOY_UPDATE, ({ no, data }) => ({
@@ -80,6 +84,8 @@ export function* employDetailSaga() {
 const initialState = {
   employ: null,
   employResult: null,
+  disableResult: null,
+  inviteResult: null,
   employError: null,
 };
 export const employDetail = handleActions(
@@ -91,6 +97,17 @@ export const employDetail = handleActions(
     [INITIALIZE_RESULT]: (state) => ({
       ...state,
       employResult: null,
+      employError: null,
+    }),
+
+    [INITIALIZE_DISABLE]: (state) => ({
+      ...state,
+      disableResult: null,
+      employError: null,
+    }),
+    [INITIALIZE_INVITE]: (state) => ({
+      ...state,
+      inviteResult: null,
       employError: null,
     }),
     [EMPLOY_DETAIL_SUCCESS]: (state, { payload: { data } }) => ({
@@ -115,23 +132,23 @@ export const employDetail = handleActions(
     }),
     [EMPLOY_DISABLE_SUCCESS]: (state, { payload: { code } }) => ({
       ...state,
-      employResult: code,
+      disableResult: code,
       employError: null,
     }),
     [EMPLOY_DISABLE_FAILURE]: (state, { payload: { message } }) => ({
       ...state,
-      employResult: null,
+      disableResult: null,
       employError: message,
     }),
 
     [EMPLOY_INVITE_SUCCESS]: (state, { payload: { code } }) => ({
       ...state,
-      employResult: code,
+      inviteResult: code,
       employError: null,
     }),
     [EMPLOY_INVITE_FAILURE]: (state, { payload: { message } }) => ({
       ...state,
-      employResult: null,
+      inviteResult: null,
       employError: message,
     }),
   },
