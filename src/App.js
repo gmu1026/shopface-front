@@ -8,6 +8,7 @@ import { checkExpire } from './lib/api/common/authAPI';
 import { getBranchList } from './modules/branch/branchList';
 import { logout } from './modules/common/auth';
 import SchedulePage from './pages/schedule/SchedulePage';
+import ForgotPasswordPage from './pages/common/ForgotPasswordPage';
 
 const LoginPage = lazy(() => import('./pages/common/LoginPage'));
 const CertCodePage = lazy(() => import('./pages/common/CertCodePage'));
@@ -46,7 +47,7 @@ const App = ({ history }) => {
     } else {
       if (
         window.location.pathname === '/certcode' ||
-        //window.location.pathname === '/forgotpassword' ||
+        window.location.pathname === '/forgotpassword' ||
         window.location.pathname === '/register'
       ) {
         return;
@@ -58,12 +59,14 @@ const App = ({ history }) => {
   if (
     window.location.pathname === '/login' ||
     window.location.pathname === '/register' ||
+    window.location.pathname === '/forgotpassword' ||
     window.location.pathname === '/certcode'
   ) {
     return (
       <Suspense fallback={<div>Loading...</div>}>
         <Switch>
           <Route path="/login" component={LoginPage} />
+          <Route path="/forgotpassword" component={ForgotPasswordPage} />
           <Route path="/register" component={RegisterPage} />
           <Route path="/certcode" component={CertCodePage} />
         </Switch>

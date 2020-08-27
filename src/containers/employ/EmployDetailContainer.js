@@ -6,23 +6,38 @@ import {
   employUpdate,
   employDisable,
   employInvite,
-  getEmployhDetail,
+  getEmployDetail,
   initializeResult,
+  initializeDisable,
+  initializeInvite,
+  // initializeDetail,
 } from '../../modules/employ/employDetail';
+import { getEmployList } from '../../modules/employ/employList';
 import { checkExpire, logout } from '../../lib/api/common/authAPI';
+import branchSelect from '../../modules/branch/branchSelect';
+// import { initializeForm } from '../../modules/common/alarm';
 
 const EmployDetailContainer = ({ match, history }) => {
   const [error, setError] = useState(null);
 
   const dispatch = useDispatch();
-  const { employ, employResult, employError, user } = useSelector(
-    ({ employDetail, auth }) => ({
-      employ: employDetail.employ,
-      employError: employDetail.employError,
-      employResult: employDetail.employResult,
-      user: auth.user,
-    }),
-  );
+  const {
+    employ,
+    employResult,
+    employError,
+    user,
+    inviteResult,
+    disableResult,
+    selectedBranch,
+  } = useSelector(({ employDetail, auth, branchSelect }) => ({
+    employ: employDetail.employ,
+    employError: employDetail.employError,
+    employResult: employDetail.employResult,
+    inviteResult: employDetail.inviteResult,
+    disableResult: employDetail.disableResult,
+    selectedBranch: branchSelect.selectedBranch,
+    user: auth.user,
+  }));
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -63,9 +78,29 @@ const EmployDetailContainer = ({ match, history }) => {
         }
       });
       const no = match.params.no;
-      dispatch(getEmployhDetail({ no }));
+      dispatch(getEmployDetail({ no }));
     }
   }, [dispatch, match.params.no, user]);
+
+  useEffect(() => {
+    if (disableResult === 'OK') {
+      alert('비활성화 되었습니다');
+      dispatch(initializeDisable());
+      history.push('/employ');
+      const no = match.params.no;
+      dispatch(getEmployDetail({ no }));
+    }
+  }, [disableResult, history, dispatch, match.params.no]);
+
+  useEffect(() => {
+    if (inviteResult === 'OK') {
+      alert('다시 초대했습니다');
+      dispatch(initializeInvite());
+      history.push('/employ');
+      const no = match.params.no;
+      dispatch(getEmployDetail({ no }));
+    }
+  }, [inviteResult, history, dispatch, match.params.no]);
 
   useEffect(() => {
     if (employResult === 'OK') {

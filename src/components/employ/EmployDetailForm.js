@@ -114,6 +114,7 @@ const EmployDetailForm = ({
 
                           {employ.state === 'D' ? (
                             <Button
+                              type="button"
                               className="btn btn-primary mr-1 ml-1"
                               onClick={onInvite}
                             >

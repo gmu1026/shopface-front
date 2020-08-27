@@ -3,17 +3,31 @@ import Modal from 'react-bootstrap/Modal';
 import DaumPostcode from 'react-daum-postcode';
 import Button from '../common/Button';
 import ErrorMessage from '../common/ErrorMessage';
+import styled from 'styled-components';
+
+const InfoMessage = styled.div`
+  color: gray;
+  text-align: left;
+  font-size: 0.8rem;
+  margin-bottom: 1rem;
+`;
 
 const MemberDetailForm = ({
   member,
+  show,
+  showForm,
+  error,
+  pwdError,
   onSubmit,
   onChange,
+  onChangePassword,
+  onUpdatePassword,
   onDelete,
-  error,
-  handleComplete,
-  closeModal,
   openModal,
-  show,
+  closeModal,
+  openForm,
+  closeForm,
+  handleComplete,
   disabled,
 }) => {
   if (member === null) {
@@ -40,23 +54,48 @@ const MemberDetailForm = ({
                         disabled={disabled}
                       />
                     </div>
+                    {showForm ? (
+                      <div>
+                        <br />
+                        <div className="form-group col-md-4">
+                          <label>기존 비밀번호 :</label>
+                          <input
+                            type="password"
+                            className="form-control"
+                            name="originPassword"
+                            onChange={onChangePassword}
+                          />
+                        </div>
+                        <br />
+                        <div className="form-group col-md-4">
+                          <label>새로운 비밀번호 :</label>
+                          <input
+                            type="password"
+                            className="form-control"
+                            name="newPassword"
+                            onChange={onChangePassword}
+                          />
+                          <InfoMessage>
+                            비밀번호는 특수문자, 소문자, 대문자, 숫자를 포함한
+                            8자리 이상
+                          </InfoMessage>
+                        </div>
+                        <ErrorMessage>{pwdError}</ErrorMessage>
+                        <Button type="button" onClick={onUpdatePassword}>
+                          비밀번호 변경
+                        </Button>
+                        <Button type="button" onClick={closeForm}>
+                          취소
+                        </Button>
+                        <ErrorMessage></ErrorMessage>
+                      </div>
+                    ) : (
+                      <Button type="button" onClick={openForm}>
+                        비밀번호 수정
+                      </Button>
+                    )}
+
                     <br />
-                    {/*     <div className="form-group col-md-4">
-                      비밀번호 :
-                      <input
-                        type="password"
-                        className="form-control"
-                        name="password"
-                        onChange={onChange}
-                      />
-                      <button
-                      type="button"
-                      id="password_edit_button"
-                      className="btn btn-outline-primary"
-                    >
-                      비밀번호 수정
-                    </button> 
-                    </div> */}
 
                     <div className="form-group col-md-4">
                       전화번호 :

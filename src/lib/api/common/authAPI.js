@@ -68,6 +68,49 @@ export const signUp = async ({ member, certCode }) => {
   return response;
 };
 
+export const sendForgotPasswordCode = async ({ name }) => {
+  const response = await Auth.forgotPassword(name)
+    .then(() => {
+      return { data: { code: 'OK' } };
+    })
+    .catch((error) => {
+      throw error;
+    });
+
+  return response;
+};
+
+export const changeForgotPassword = async ({ data }) => {
+  const response = await Auth.forgotPasswordSubmit(
+    data.name,
+    data.code,
+    data.changePassword,
+  )
+    .then((data) => {
+      return { data: { code: 'OK' } };
+    })
+    .catch((error) => {
+      throw error;
+    });
+
+  return response;
+};
+
+export const changePassword = async ({ data }) => {
+  const response = await Auth.currentAuthenticatedUser()
+    .then((user) => {
+      return Auth.changePassword(user, data.originPassword, data.newPassword);
+    })
+    .then((data) => {
+      return { data: { code: 'OK' } };
+    })
+    .catch((error) => {
+      throw error;
+    });
+
+  return response;
+};
+
 export const checkExpire = async () => {
   let isExpired = false;
   await Auth.currentSession()
