@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
 import Button from './Button';
+import ErrorMessage from './ErrorMessage';
 
 const AuthFormBlock = styled.div`
   h3 {
@@ -40,19 +41,18 @@ const Footer = styled.div`
   }
 `;
 
-const ErrorMessage = styled.div`
-  color: red;
-  text-align: center;
-  font-size: 0.875rem;
-  margin-top: 1rem;
+const InfoMessage = styled.div`
+  color: gray;
+  text-align: left;
+  font-size: 0.8rem;
+  margin-bottom: 1rem;
 `;
-
 const typeMap = {
   login: '로그인',
   register: '회원가입',
 };
 
-const AuthForm = ({ type, form, onChange, onSubmit, error }) => {
+const AuthForm = ({ type, onChange, onSubmit, error }) => {
   const text = typeMap[type];
   return (
     <AuthFormBlock>
@@ -63,15 +63,19 @@ const AuthForm = ({ type, form, onChange, onSubmit, error }) => {
           name="id"
           placeholder="이메일"
           onChange={onChange}
-          value={form.id}
         />
         <StyledInput
           type="password"
           name="password"
           placeholder="비밀번호"
           onChange={onChange}
-          value={form.password}
         />
+        {type === 'register' && (
+          <InfoMessage>
+            비밀번호는 특수문자, 소문자, 대문자, 숫자를 포함한 8자리 이상
+          </InfoMessage>
+        )}
+
         {type === 'register' && (
           <>
             <StyledInput
@@ -79,29 +83,21 @@ const AuthForm = ({ type, form, onChange, onSubmit, error }) => {
               name="name"
               placeholder="이름"
               onChange={onChange}
-              value={form.name}
             />
             <StyledInput
               type="text"
               name="phone"
               placeholder="전화번호"
               onChange={onChange}
-              value={form.phone}
             />
-            <StyledInput
-              type="text"
-              name="email"
-              placeholder="이메일"
-              onChange={onChange}
-              value={form.email}
-            />
+            <InfoMessage>'-'를 제외한 숫자만 입력하세요</InfoMessage>
           </>
         )}
+        <ErrorMessage>{error}</ErrorMessage>
         <Footer>
           {type === 'login' && (
             <div>
-              <Link to="/">아이디 찾기</Link> {/*TODO 추후 링크 path 변경 */}
-              <Link to="/">비밀번호 찾기</Link>
+              <Link to="/forgotpassword">비밀번호 재발급</Link>
             </div>
           )}
         </Footer>
@@ -114,7 +110,6 @@ const AuthForm = ({ type, form, onChange, onSubmit, error }) => {
             )}
           </div>
         </Footer>
-        {error && <ErrorMessage>{error}</ErrorMessage>}
         <div style={{ textAlign: 'center' }}>
           <Button>{text}</Button>
         </div>

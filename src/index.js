@@ -1,18 +1,19 @@
+import Amplify from 'aws-amplify';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import { createStore, applyMiddleware } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import createSagaMiddleware from 'redux-saga';
 import App from './App';
+import config from './config';
 import './index.css';
+import client from './lib/api/client';
+import './lib/styles/scss/_app.scss';
 import rootReducer, { rootSaga } from './modules';
 import * as serviceWorker from './serviceWorker';
-import Amplify from 'aws-amplify';
-import config from './config';
-import createSagaMiddleware from 'redux-saga';
-import { tempSetUser } from './modules/common/auth';
 
 const sagaMiddleWare = createSagaMiddleware();
 const store = createStore(
@@ -35,7 +36,13 @@ function loadUser() {
     const user = localStorage.getItem('user');
     if (!user) return;
     const parseUser = JSON.parse(user);
-    store.dispatch(tempSetUser(parseUser));
+
+    import('./modules/common/auth').then((auth) => {
+      store.dispatch(auth.tempSetUser(parseUser));
+    });
+
+    client.defaults.headers.common['Authorization'] =
+      'bearer ' + JSON.parse(user).jwt;
   } catch (e) {
     console.log('localstorage가 동작하지 않습니다.');
   }
