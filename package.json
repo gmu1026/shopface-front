@@ -25,7 +25,7 @@
     "datatables.net-responsive-bs4": "^2.2.5",
     "daterangepicker": "^3.1.0",
     "dragula": "^3.7.2",
-    "immer": "^7.0.5",
+    "immer": "^9.0.6",
     "jvectormap-next": "^3.1.1",
     "moment": "^2.27.0",
     "node-sass": "^4.14.1",
